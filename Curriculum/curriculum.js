@@ -108,24 +108,19 @@ document.addEventListener('DOMContentLoaded', function () {
         var loader = showOverlay('<div style="width:40px;height:40px;border:4px solid #e0e0e0;border-top-color:#4a9eff;border-radius:50%;animation:pspin 0.8s linear infinite;margin:0 auto 16px;"></div><p style="font-family:Segoe UI,sans-serif;font-size:15px;color:#333;margin:0;">Generando PDF...</p>');
 
         setTimeout(function () {
-            var opt = {
-                margin: [8, 8, 8, 8],
+            html2pdf().set({
+                margin: { top: 0, bottom: 0, left: 0, right: 0 },
                 filename: 'Curriculum-JaimeMunozNicolas.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
+                image: { type: 'jpeg', quality: 0.95 },
                 html2canvas: {
                     scale: 2,
                     useCORS: true,
-                    letterRendering: true,
-                    logging: false,
                     backgroundColor: '#ffffff',
-                    width: cv.scrollWidth,
-                    height: cv.scrollHeight,
-                    windowHeight: cv.scrollHeight,
+                    logging: false,
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak: { mode: ['css', 'legacy'] }
-            };
-            html2pdf().set(opt).from(cv).save().then(function () {
+            }).from(cv).save().then(function () {
                 loader.remove();
                 if (backBtn) backBtn.style.display = '';
             }).catch(function () {

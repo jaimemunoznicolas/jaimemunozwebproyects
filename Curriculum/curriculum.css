@@ -265,19 +265,33 @@ body {
 }
 
 @media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
     html, body {
         background: #fff;
         padding: 0;
         margin: 0;
+        width: 210mm;
+        height: 297mm;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+    }
+    body {
+        display: block;
+        padding: 0;
+        min-height: auto;
     }
     .cv-container {
         box-shadow: none;
         border-radius: 0;
         max-width: 100%;
+        width: 100%;
+        margin: 0;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        page-break-after: avoid;
     }
     .cv-container * {
         opacity: 1 !important;
@@ -294,6 +308,13 @@ body {
     }
     button {
         display: none !important;
+    }
+    .sidebar {
+        width: 35%;
+        min-width: 35%;
+    }
+    .main-content {
+        padding: 25px 20px;
     }
 }
 

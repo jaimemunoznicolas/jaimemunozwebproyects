@@ -30,14 +30,6 @@
       desc: 'Calculadora científica completa con trigonometría, logaritmos, factorial y más.',
       tags: ['html', 'css', 'js'],
     },
-    {
-      name: 'Linktree',
-      path: 'https://linktr.ee/jaimemunoznicolas',
-      icon: '🔗',
-      desc: 'Todos mis enlaces en un solo lugar: redes, contacto y más.',
-      tags: ['html', 'css', 'js'],
-      external: true,
-    },
   ];
 
   /* ---- Canvas particles ---- */
@@ -145,14 +137,10 @@
       const card = document.createElement('a');
       card.href = p.path;
       card.className = 'project-card';
-      if (p.external) {
-        card.target = '_blank';
-        card.rel = 'noopener';
-      }
       card.innerHTML = `
         <div class="card-top">
           <span class="card-icon">${p.icon}</span>
-          <span class="card-arrow">${p.external ? '↗' : '→'}</span>
+          <span class="card-arrow">→</span>
         </div>
         <h2>${p.name}</h2>
         <p>${p.desc}</p>

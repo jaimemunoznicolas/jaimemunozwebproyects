@@ -11,83 +11,210 @@
     <header class="calc-header">
       <a href="../index.html" class="back-btn">&larr; Volver al menú</a>
       <h1>Ultimate Calculadora</h1>
-      <span class="mode-badge" id="modeBadge">DEG</span>
+      <span class="mode-badge" id="modeBadge">Básica</span>
     </header>
 
-    <div class="calc-body">
-      <div class="display-area">
-        <div class="expression" id="expression"></div>
-        <div class="result" id="result">0</div>
-      </div>
+    <div class="mode-tabs" id="modeTabs">
+      <button class="mode-tab active" data-mode="basic">Básica</button>
+      <button class="mode-tab" data-mode="scientific">Científica</button>
+      <button class="mode-tab" data-mode="graphing">Gráficas</button>
+      <button class="mode-tab" data-mode="matrix">Matrices</button>
+      <button class="mode-tab" data-mode="stats">Estadística</button>
+      <button class="mode-tab" data-mode="converter">Conversor</button>
+      <button class="mode-tab" data-mode="programmer">Programador</button>
+    </div>
 
-      <div class="history-panel" id="historyPanel">
-        <div class="history-header">
-          <span>Historial</span>
-          <button class="clear-history" id="clearHistory">&times;</button>
+    <div class="calc-body" id="calcBody">
+
+      <!-- ===== BASIC / SCIENTIFIC ===== -->
+      <div class="mode-panel active" id="panelCalc">
+        <div class="display-area">
+          <div class="expression" id="expression"></div>
+          <div class="result" id="result">0</div>
         </div>
-        <div class="history-list" id="historyList"></div>
+        <div class="history-panel" id="historyPanel">
+          <div class="history-header">
+            <span>Historial</span>
+            <button class="clear-history" id="clearHistory">&times;</button>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </div>
+        <div class="button-grid" id="buttonGrid"></div>
       </div>
 
-      <div class="button-grid">
-        <button class="btn func" data-action="clear">AC</button>
-        <button class="btn func" data-action="backspace">⌫</button>
-        <button class="btn func" data-action="percent">%</button>
-        <button class="btn func" data-action="divide">÷</button>
-
-        <button class="btn func" data-action="sin">sin</button>
-        <button class="btn func" data-action="cos">cos</button>
-        <button class="btn func" data-action="tan">tan</button>
-        <button class="btn op" data-action="multiply">×</button>
-
-        <button class="btn func" data-action="ln">ln</button>
-        <button class="btn func" data-action="log">log</button>
-        <button class="btn func" data-action="sqrt">√</button>
-        <button class="btn op" data-action="subtract">−</button>
-
-        <button class="btn func" data-action="square">x²</button>
-        <button class="btn func" data-action="cube">x³</button>
-        <button class="btn func" data-action="power">xⁿ</button>
-        <button class="btn op" data-action="add">+</button>
-
-        <button class="btn func" data-action="factorial">n!</button>
-        <button class="btn func" data-action="inv">1/x</button>
-        <button class="btn func" data-action="abs">|x|</button>
-        <button class="btn func" data-action="toggleSign">±</button>
-
-        <button class="btn num" data-value="7">7</button>
-        <button class="btn num" data-value="8">8</button>
-        <button class="btn num" data-value="9">9</button>
-        <button class="btn func" data-action="cbrt">∛</button>
-
-        <button class="btn num" data-value="4">4</button>
-        <button class="btn num" data-value="5">5</button>
-        <button class="btn num" data-value="6">6</button>
-        <button class="btn func" data-action="pi">π</button>
-
-        <button class="btn num" data-value="1">1</button>
-        <button class="btn num" data-value="2">2</button>
-        <button class="btn num" data-value="3">3</button>
-        <button class="btn func" data-action="e">e</button>
-
-        <button class="btn num zero" data-value="0">0</button>
-        <button class="btn num" data-value=".">.</button>
-        <button class="btn func" data-action="lparen">(</button>
-        <button class="btn func" data-action="rparen">)</button>
-
-        <button class="btn func" data-action="rand">rand</button>
-        <button class="btn func" data-action="floor">floor</button>
-        <button class="btn func" data-action="ceil">ceil</button>
-        <button class="btn func" data-action="round">round</button>
-
-        <button class="btn fn-wide" data-action="history">📜 Historial</button>
-        <button class="btn fn-wide" data-action="degRad">DEG / RAD</button>
-        <button class="btn equals" data-action="equals">=</button>
+      <!-- ===== GRAPHING ===== -->
+      <div class="mode-panel" id="panelGraphing">
+        <div class="graphing-container">
+          <div class="graph-controls">
+            <div class="graph-input-row">
+              <label>f(x) =</label>
+              <input type="text" id="graphFunc" value="sin(x)" placeholder="ej: sin(x) + x^2" spellcheck="false">
+              <button class="btn-graph" id="btnPlot">Dibujar</button>
+            </div>
+            <div class="graph-input-row">
+              <label>x min</label>
+              <input type="number" id="graphXmin" value="-10" step="1">
+              <label>x max</label>
+              <input type="number" id="graphXmax" value="10" step="1">
+              <label>y min</label>
+              <input type="number" id="graphYmin" value="-10" step="1">
+              <label>y max</label>
+              <input type="number" id="graphYmax" value="10" step="1">
+            </div>
+          </div>
+          <canvas id="graphCanvas"></canvas>
+          <div class="graph-presets">
+            <button class="preset-btn" data-fn="sin(x)">sin(x)</button>
+            <button class="preset-btn" data-fn="cos(x)">cos(x)</button>
+            <button class="preset-btn" data-fn="tan(x)">tan(x)</button>
+            <button class="preset-btn" data-fn="x^2">x²</button>
+            <button class="preset-btn" data-fn="sqrt(x)">√x</button>
+            <button class="preset-btn" data-fn="x^3">x³</button>
+            <button class="preset-btn" data-fn="sin(1/x)">sin(1/x)</button>
+            <button class="preset-btn" data-fn="e^(-x^2)">e⁻ˣ²</button>
+            <button class="preset-btn" data-fn="log(x)">log(x)</button>
+            <button class="preset-btn" data-fn="abs(x)">|x|</button>
+          </div>
+        </div>
       </div>
+
+      <!-- ===== MATRIX ===== -->
+      <div class="mode-panel" id="panelMatrix">
+        <div class="matrix-container">
+          <div class="matrix-controls">
+            <label>Tamaño:</label>
+            <select id="matrixSize">
+              <option value="2">2×2</option>
+              <option value="3">3×3</option>
+            </select>
+            <label>Operación:</label>
+            <select id="matrixOp">
+              <option value="add">A + B</option>
+              <option value="sub">A − B</option>
+              <option value="mul">A × B</option>
+              <option value="detA">det(A)</option>
+              <option value="detB">det(B)</option>
+              <option value="invA">A⁻¹</option>
+              <option value="invB">B⁻¹</option>
+              <option value="transA">Aᵀ</option>
+              <option value="transB">Bᵀ</option>
+            </select>
+            <button class="btn-graph" id="btnMatrixCalc">Calcular</button>
+          </div>
+          <div class="matrix-grid">
+            <div class="matrix-side">
+              <h3>Matriz A</h3>
+              <div id="matrixA" class="matrix-inputs"></div>
+            </div>
+            <div class="matrix-side">
+              <h3>Matriz B</h3>
+              <div id="matrixB" class="matrix-inputs"></div>
+            </div>
+          </div>
+          <div class="matrix-result">
+            <h3>Resultado</h3>
+            <div id="matrixResult" class="matrix-output">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== STATISTICS ===== -->
+      <div class="mode-panel" id="panelStats">
+        <div class="stats-container">
+          <div class="stats-controls">
+            <label>Datos (separados por coma):</label>
+            <textarea id="statsData" rows="3" placeholder="ej: 4, 8, 15, 16, 23, 42"></textarea>
+            <button class="btn-graph" id="btnStatsCalc">Calcular</button>
+          </div>
+          <div class="stats-results-grid" id="statsResults">
+            <div class="stat-card"><span class="stat-label">n</span><span class="stat-val" id="statN">—</span></div>
+            <div class="stat-card"><span class="stat-label">Suma</span><span class="stat-val" id="statSum">—</span></div>
+            <div class="stat-card"><span class="stat-label">Media</span><span class="stat-val" id="statMean">—</span></div>
+            <div class="stat-card"><span class="stat-label">Mediana</span><span class="stat-val" id="statMedian">—</span></div>
+            <div class="stat-card"><span class="stat-label">Moda</span><span class="stat-val" id="statMode">—</span></div>
+            <div class="stat-card"><span class="stat-label">Varianza</span><span class="stat-val" id="statVar">—</span></div>
+            <div class="stat-card"><span class="stat-label">Desv. Est.</span><span class="stat-val" id="statStd">—</span></div>
+            <div class="stat-card"><span class="stat-label">Mín</span><span class="stat-val" id="statMin">—</span></div>
+            <div class="stat-card"><span class="stat-label">Máx</span><span class="stat-val" id="statMax">—</span></div>
+            <div class="stat-card"><span class="stat-label">Rango</span><span class="stat-val" id="statRange">—</span></div>
+            <div class="stat-card"><span class="stat-label">Q1</span><span class="stat-val" id="statQ1">—</span></div>
+            <div class="stat-card"><span class="stat-label">Q3</span><span class="stat-val" id="statQ3">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CONVERTER ===== -->
+      <div class="mode-panel" id="panelConverter">
+        <div class="converter-container">
+          <div class="conv-controls">
+            <select id="convCategory">
+              <option value="length">Longitud</option>
+              <option value="mass">Masa</option>
+              <option value="temp">Temperatura</option>
+              <option value="speed">Velocidad</option>
+              <option value="area">Área</option>
+              <option value="volume">Volumen</option>
+              <option value="time">Tiempo</option>
+              <option value="data">Datos</option>
+              <option value="currency">Moneda (USD/EUR)</option>
+            </select>
+          </div>
+          <div class="conv-grid">
+            <div class="conv-side">
+              <select id="convFrom"></select>
+              <input type="number" id="convValue" value="1" step="any">
+            </div>
+            <div class="conv-equals">=</div>
+            <div class="conv-side">
+              <select id="convTo"></select>
+              <input type="text" id="convResult" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PROGRAMMER ===== -->
+      <div class="mode-panel" id="panelProgrammer">
+        <div class="prog-container">
+          <div class="prog-controls">
+            <label>Base:</label>
+            <select id="progBase">
+              <option value="2">Binario (2)</option>
+              <option value="8">Octal (8)</option>
+              <option value="10" selected>Decimal (10)</option>
+              <option value="16">Hexadecimal (16)</option>
+            </select>
+            <input type="text" id="progInput" value="0" spellcheck="false">
+          </div>
+          <div class="prog-conversions">
+            <div class="prog-row"><span>Binario</span><span id="progBin">0</span></div>
+            <div class="prog-row"><span>Octal</span><span id="progOct">0</span></div>
+            <div class="prog-row"><span>Decimal</span><span id="progDec">0</span></div>
+            <div class="prog-row"><span>Hexadecimal</span><span id="progHex">0</span></div>
+          </div>
+          <div class="prog-bitwise">
+            <h3>Bitwise</h3>
+            <div class="prog-bit-row">
+              <input type="text" id="progBitA" placeholder="valor A" spellcheck="false">
+              <input type="text" id="progBitB" placeholder="valor B" spellcheck="false">
+            </div>
+            <div class="prog-bit-btns">
+              <button class="btn-bit" data-op="AND">AND</button>
+              <button class="btn-bit" data-op="OR">OR</button>
+              <button class="btn-bit" data-op="XOR">XOR</button>
+              <button class="btn-bit" data-op="NOT">NOT A</button>
+              <button class="btn-bit" data-op="LSH">A &lt;&lt; B</button>
+              <button class="btn-bit" data-op="RSH">A &gt;&gt; B</button>
+            </div>
+            <div class="prog-bit-result" id="progBitResult">—</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="toast" id="toast"></div>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>

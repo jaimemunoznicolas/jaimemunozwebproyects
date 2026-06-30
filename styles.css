@@ -315,6 +315,47 @@ h1 {
   font-size: 1.1rem;
 }
 
+.linktree-section {
+  text-align: center;
+  margin-top: 40px;
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+
+.linktree-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  color: #0a0a1a;
+  padding: 14px 32px;
+  border-radius: 60px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 24px rgba(67, 233, 123, 0.25);
+}
+
+.linktree-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 40px rgba(67, 233, 123, 0.4);
+}
+
+.linktree-icon {
+  font-size: 1.4rem;
+}
+
+.linktree-arrow {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  transition: transform 0.2s;
+}
+
+.linktree-btn:hover .linktree-arrow {
+  transform: translate(3px, -3px);
+  opacity: 1;
+}
+
 footer {
   text-align: center;
   margin-top: 60px;

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Mario Bros — Zona secreta</title>
+
+  <!-- Estilos Matrix -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script src="../js/matrix.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #111827 0, #020617 38%, #000000 100%);
+      color: var(--text-main);
+      font-family: "JetBrains Mono", monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .secret-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .secret-card {
+      width: 100%;
+      max-width: 1000px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, rgba(0,255,106,0.15), var(--bg-card));
+      border: 1px solid var(--border-neon);
+      box-shadow: var(--shadow-neon);
+      padding: 2rem;
+      text-align: center;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .game-container {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid var(--accent-green);
+      box-shadow: 0 0 20px rgba(0,255,106,0.4);
+      background: black;
+    }
+
+    .game-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .game-exit {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+      color: #020617;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0,255,106,0.7);
+      transition: 0.2s ease;
+    }
+
+    .game-exit:hover {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+      box-shadow: 0 0 18px rgba(39,226,255,0.9);
+      transform: translateY(-2px);
+    }
+
+    .game-hint {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      .game-container {
+        height: 420px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .game-container {
+        height: 340px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="secret-wrapper fade-in">
+    <div class="secret-card">
+      <h1 class="hacker-prefix mb-3">Super Mario Bros</h1>
+      <p class="section-subtitle mb-4">El clásico de Nintendo</p>
+
+      <div class="game-container">
+        <button class="game-exit" onclick="window.location.href='menusecreto.html'">Salir</button>
+
+        <iframe
+          src="https://www.retrogames.cc/embed/24093-super-mario-bros-1985-nes.html"
+          class="game-frame"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <p class="game-hint">
+        Usa las teclas para moverte y saltar. Puede tardar unos segundos en cargar.
+      </p>
+    </div>
+  </main>
+</body>
+</html>

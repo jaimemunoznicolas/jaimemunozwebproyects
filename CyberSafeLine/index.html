@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberSafeLine — Ciberseguridad para Pymes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="themeModal" class="theme-modal" aria-modal="true" role="dialog">
+  <div class="theme-modal-box">
+    <div class="theme-modal-logo">
+      <img src="Logotipo.png" alt="CyberSafeLine" class="theme-modal-img">
+    </div>
+    <h2 class="theme-modal-title">Bienvenido a <span>CyberSafeLine</span></h2>
+    <p class="theme-modal-desc">Elige el tema visual que prefieras. Podrás cambiarlo en cualquier momento desde la barra de navegación.</p>
+    <div class="theme-modal-options">
+      <button class="theme-option dark-option" id="chooseDark">
+        <div class="theme-preview dark-preview">
+          <div class="tp-nav"></div>
+          <div class="tp-body">
+            <div class="tp-card"></div>
+            <div class="tp-card"></div>
+            <div class="tp-card"></div>
+          </div>
+        </div>
+        <div class="theme-option-label">
+          <span class="theme-option-icon">🌙</span>
+          <span class="theme-option-name">Tema Oscuro</span>
+          <span class="theme-option-desc">Fondo negro con colores neón</span>
+        </div>
+      </button>
+      <button class="theme-option light-option" id="chooseLight">
+        <div class="theme-preview light-preview">
+          <div class="tp-nav"></div>
+          <div class="tp-body">
+            <div class="tp-card"></div>
+            <div class="tp-card"></div>
+            <div class="tp-card"></div>
+          </div>
+        </div>
+        <div class="theme-option-label">
+          <span class="theme-option-icon">☀️</span>
+          <span class="theme-option-name">Tema Claro</span>
+          <span class="theme-option-desc">Fondo blanco con colores vibrantes</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#inicio" class="nav-logo">
+      <img src="Logotipo.png" alt="CyberSafeLine" class="nav-logo-img">
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre-nosotros">Nosotros</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#cursos">Cursos</a></li>
+      <li><a href="#guias">Guías</a></li>
+      <li><a href="#organizacion">Sedes</a></li>
+      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+      <span class="theme-icon-dark">🌙</span>
+      <span class="theme-icon-light">☀️</span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hex-bg"></div>
+  <div class="hero-content">
+    <img src="Logotipo.png" alt="CyberSafeLine Logo" class="hero-logo animate-in">
+    <h1 class="hero-title animate-in delay-1">Cyber<span class="text-blue">Safe</span><span class="text-green">Line</span></h1>
+    <p class="hero-sub animate-in delay-2">Formación y servicios de ciberseguridad para pequeñas empresas</p>
+    <p class="hero-authors animate-in delay-3">Marcin &amp; Jaime</p>
+    <div class="hero-btns animate-in delay-4">
+      <a href="#servicios" class="btn btn-primary">Nuestros Servicios</a>
+      <a href="#sobre-nosotros" class="btn btn-outline">Conoce más</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<section class="section intro-section" id="sobre-nosotros">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-text">
+        <div class="section-tag">¿Quiénes somos?</div>
+        <h2 class="section-title">Introducción a <span class="gradient-text">CyberSafeLine</span></h2>
+        <p>CyberSafeLine es una empresa que ayuda a las pequeñas empresas a entender, aplicar y delegar la ciberseguridad de forma sencilla y cercana. Ofrecemos <strong>formación práctica</strong> para capacitar a tu equipo y <strong>servicios completos de ciberseguridad</strong> para que no tengas que preocuparte por proteger tu negocio: nosotros nos encargamos. Usamos ejemplos claros del día a día, tecnologías profesionales y un acompañamiento constante para que cualquier pyme pueda proteger sus datos y trabajar tranquila sin complicaciones ni palabras técnicas difíciles.</p>
+      </div>
+      <div class="intro-cards">
+        <div class="intro-card">
+          <div class="intro-card-icon">🛡️</div>
+          <div>
+            <h3>Protección Digital Gestionada</h3>
+            <p>Nos encargamos de la seguridad de tu empresa para que tú te centres en lo que importa</p>
+          </div>
+        </div>
+        <div class="intro-card">
+          <div class="intro-card-icon">📚</div>
+          <div>
+            <h3>Formación y Concienciación</h3>
+            <p>Capacitamos a tu equipo para identificar y prevenir amenazas digitales</p>
+          </div>
+        </div>
+        <div class="intro-card">
+          <div class="intro-card-icon">⚖️</div>
+          <div>
+            <h3>Cumplimiento Legal y RGPD</h3>
+            <p>Te ayudamos a cumplir con la normativa evitando sanciones y pérdidas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section mvv-section" id="mvv">
+  <div class="container">
+    <div class="section-tag center">Identidad Corporativa</div>
+    <h2 class="section-title center">Misión, Visión &amp; Valores</h2>
+    <div class="mvv-grid">
+      <div class="mvv-card" data-reveal>
+        <div class="mvv-number">01</div>
+        <h3>Misión</h3>
+        <p>Capacitar y proteger a las pymes en ciberseguridad de forma clara y cercana. Formamos a los equipos, gestionamos la protección digital y fomentamos una cultura de prevención para que cada empresa gane autonomía y confianza en la tecnología.</p>
+      </div>
+      <div class="mvv-card" data-reveal>
+        <div class="mvv-number">02</div>
+        <h3>Visión</h3>
+        <p>Ser referente en ciberseguridad para pymes en España y Europa, reconocidos por la calidad, la confianza y el trato humano. Crecimiento sostenible, adaptación constante y expansión internacional comenzando por Polonia.</p>
+      </div>
+      <div class="mvv-card values-card" data-reveal>
+        <div class="mvv-number">03</div>
+        <h3>Valores</h3>
+        <div class="values-grid">
+          <div class="value-item"><span class="value-dot"></span>Claridad</div>
+          <div class="value-item"><span class="value-dot"></span>Responsabilidad</div>
+          <div class="value-item"><span class="value-dot"></span>Cercanía</div>
+          <div class="value-item"><span class="value-dot"></span>Actualización constante</div>
+          <div class="value-item"><span class="value-dot"></span>Honestidad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services-section" id="servicios">
+  <div class="container">
+    <div class="section-tag center">Lo que hacemos</div>
+    <h2 class="section-title center">Nuestros <span class="gradient-text">Servicios</span></h2>
+    <div class="services-grid">
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">🔐</div>
+        <h3>Cursos Prácticos de Ciberseguridad</h3>
+        <ul>
+          <li>Cursos adaptados desde nivel básico hasta avanzado</li>
+          <li>Modalidad presencial en empresa o aula, y online</li>
+          <li>Ejemplos prácticos, ejercicios reales y casos de ataques frecuentes</li>
+          <li>Seguimiento personalizado para garantizar la aplicación del aprendizaje</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">🛡️</div>
+        <h3>Protección Gestionada 24/7</h3>
+        <ul>
+          <li>Monitorización continua de la seguridad de tus sistemas</li>
+          <li>Detección y respuesta ante amenazas en tiempo real</li>
+          <li>Gestión completa de firewalls, antivirus y actualizaciones</li>
+          <li>Protección proactiva para que tú no tengas que preocuparte</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">🤝</div>
+        <h3>Asesoramiento Personalizado</h3>
+        <ul>
+          <li>Evaluación inicial del estado de seguridad de la empresa</li>
+          <li>Informe sencillo con recomendaciones claras</li>
+          <li>Sesiones de acompañamiento continuo</li>
+          <li>Consultarnos siempre que se necesite</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">🎓</div>
+        <h3>Talleres y Charlas Educativas</h3>
+        <ul>
+          <li>Eventos periódicos sobre ciberseguridad</li>
+          <li>Totalmente interactivos</li>
+          <li>Los participantes identifican riesgos por sí mismos</li>
+          <li>Temáticos: adaptados a cada sector o necesidad</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">📚</div>
+        <h3>Guías Digitales, Herramientas y Checklists</h3>
+        <ul>
+          <li>Guías claras y sencillas con imágenes y ejemplos</li>
+          <li>Herramientas digitales y plantillas de seguridad</li>
+          <li>Checklists de buenas prácticas y pasos a seguir</li>
+          <li>Actualizaciones constantes: nuevas amenazas y mejores prácticas</li>
+          <li>Formato digital para consultar en cualquier momento</li>
+          <li>Incluye plantillas de evaluación de riesgo y planes de acción</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-reveal>
+        <div class="service-icon">⚔️</div>
+        <h3>Simulaciones de Ataques</h3>
+        <ul>
+          <li>Entornos seguros y controlados</li>
+          <li>Simulaciones con Kali Linux, Ubuntu y Windows</li>
+          <li>Sesiones prácticas guiadas</li>
+          <li>Identificación de debilidades reales de la empresa</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section pricing-section" id="precios">
+  <div class="container">
+    <div class="section-tag center">Tarifas</div>
+    <h2 class="section-title center">Packs de <span class="gradient-text">Servicios</span></h2>
+    <div class="pricing-grid">
+
+      <div class="pricing-card basic" data-reveal>
+        <div class="pricing-badge">Pack Básico</div>
+        <div class="pricing-price">120<span>€/mes</span></div>
+        <div class="pricing-annual">o 1.200 €/año</div>
+        <ul class="pricing-features">
+          <li>✅ Formación online y presencial sobre ciberseguridad básica</li>
+          <li>✅ Guías paso a paso</li>
+          <li>✅ Checklists iniciales para proteger datos y sistemas</li>
+        </ul>
+        <a href="#contacto" class="btn btn-outline-sm">Solicitar</a>
+      </div>
+
+      <div class="pricing-card pyme featured" data-reveal>
+        <div class="pricing-popular">MÁS POPULAR</div>
+        <div class="pricing-badge">Pack PYME</div>
+        <div class="pricing-price">250<span>€/mes</span></div>
+        <div class="pricing-annual">o 2.500 €/año</div>
+        <ul class="pricing-features">
+          <li>✅ Todo el Pack Básico</li>
+          <li>✅ Asesoramiento personalizado</li>
+          <li>✅ Auditoría básica de sistemas</li>
+          <li>✅ Participación en talleres o charlas educativas</li>
+        </ul>
+        <a href="#contacto" class="btn btn-primary">Solicitar</a>
+      </div>
+
+      <div class="pricing-card advanced" data-reveal>
+        <div class="pricing-badge">Pack Avanzado</div>
+        <div class="pricing-price">400<span>€/mes</span></div>
+        <div class="pricing-annual">o 4.000 €/año</div>
+        <ul class="pricing-features">
+          <li>✅ Todo el Pack PYME</li>
+          <li>✅ Simulaciones de ataques</li>
+          <li>✅ Acceso completo a kits de herramientas</li>
+          <li>✅ Soporte continuo para implementar medidas avanzadas</li>
+        </ul>
+        <a href="#contacto" class="btn btn-outline-sm">Solicitar</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section cursos-section" id="cursos">
+  <div class="container">
+    <div class="section-tag center">Aprende</div>
+    <h2 class="section-title center">Cursos Prácticos de <span class="gradient-text">Ciberseguridad</span></h2>
+    <div class="cursos-grid">
+      <div class="cursos-card" data-reveal>
+        <div class="cursos-icon">📖</div>
+        <h3>Niveles Adaptados</h3>
+        <p>Desde básico hasta avanzado, cada curso se adapta al nivel de tu equipo.</p>
+      </div>
+      <div class="cursos-card" data-reveal>
+        <div class="cursos-icon">🏢</div>
+        <h3>Presencial u Online</h3>
+        <p>Elige la modalidad que mejor se ajuste a tu empresa: en aula, en tu oficina o desde casa.</p>
+      </div>
+      <div class="cursos-card" data-reveal>
+        <div class="cursos-icon">🎯</div>
+        <h3>Casos Reales</h3>
+        <p>Ejercicios prácticos basados en ataques frecuentes para aprender haciendo.</p>
+      </div>
+      <div class="cursos-card" data-reveal>
+        <div class="cursos-icon">📊</div>
+        <h3>Seguimiento</h3>
+        <p>Acompañamiento personalizado para garantizar que lo aprendido se aplique en el día a día.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section guias-section" id="guias">
+  <div class="container">
+    <div class="section-tag center">Recursos</div>
+    <h2 class="section-title center">Guías Digitales <span class="gradient-text">Paso a Paso</span></h2>
+    <div class="guias-grid">
+      <div class="guias-card" data-reveal>
+        <div class="guias-icon">📘</div>
+        <h3>Guías Claras</h3>
+        <p>Explicaciones visuales con ejemplos para que cualquiera pueda aplicarlas sin conocimientos técnicos.</p>
+      </div>
+      <div class="guias-card" data-reveal>
+        <div class="guias-icon">✅</div>
+        <h3>Checklists Prácticas</h3>
+        <p>Listas de verificación con pasos concretos para proteger tu negocio al instante.</p>
+      </div>
+      <div class="guias-card" data-reveal>
+        <div class="guias-icon">🛠️</div>
+        <h3>Plantillas y Herramientas</h3>
+        <p>Evaluaciones de riesgo, planes de acción y plantillas descargables listas para usar.</p>
+      </div>
+      <div class="guias-card" data-reveal>
+        <div class="guias-icon">🔄</div>
+        <h3>Actualización Constante</h3>
+        <p>Contenido revisado periódicamente con las nuevas amenazas y mejores prácticas del sector.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section org-section" id="organizacion">
+  <div class="container">
+    <div class="section-tag center">Empresa</div>
+    <h2 class="section-title center">Nuestras <span class="gradient-text">Sedes</span></h2>
+    <p class="sedes-desc-top">Contamos con sedes estratégicamente ubicadas para ofrecer un servicio cercano y ágil a todas las pymes.</p>
+    <div class="sedes-cards-grid">
+      <div class="sede-card" data-reveal>
+        <div class="sede-card-img">
+          <img src="montealto.jpg" alt="Monte Alto, A Coruña" loading="lazy">
+          <div class="sede-card-overlay"><span></span></div>
+        </div>
+        <div class="sede-card-body">
+          <div class="sede-card-marker" style="background:#00c8b4"></div>
+          <h3>Monte Alto</h3>
+          <p>Sede principal y centro de operaciones</p>
+        </div>
+      </div>
+      <div class="sede-card" data-reveal>
+        <div class="sede-card-img">
+          <img src="madrid.jpg" alt="Madrid" loading="lazy">
+          <div class="sede-card-overlay"><span></span></div>
+        </div>
+        <div class="sede-card-body">
+          <div class="sede-card-marker" style="background:#1a6fff"></div>
+          <h3>Madrid</h3>
+          <p>Sede central — Departamento Principal</p>
+        </div>
+      </div>
+      <div class="sede-card" data-reveal>
+        <div class="sede-card-img">
+          <img src="barcelona.jpg" alt="Barcelona" loading="lazy">
+          <div class="sede-card-overlay"><span></span></div>
+        </div>
+        <div class="sede-card-body">
+          <div class="sede-card-marker" style="background:#3bd16f"></div>
+          <h3>Barcelona</h3>
+          <p>Sede noreste</p>
+        </div>
+      </div>
+      <div class="sede-card" data-reveal>
+        <div class="sede-card-img">
+          <img src="alicante.jpg" alt="Alicante" loading="lazy">
+          <div class="sede-card-overlay"><span></span></div>
+        </div>
+        <div class="sede-card-body">
+          <div class="sede-card-marker" style="background:#f39c12"></div>
+          <h3>Alicante</h3>
+          <p>Sede sureste</p>
+        </div>
+      </div>
+    </div>
+    <div class="poland-mini" data-reveal>
+      <span class="poland-badge">🇵🇱</span>
+      <div>
+        <strong>Próxima apertura — Polonia (Varsovia)</strong>
+        <span>Expansión internacional prevista para 2027 · Equipo local · Servicios adaptados al mercado polaco</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section market-section" id="mercado">
+  <div class="container">
+    <div class="section-tag center">Mercado</div>
+    <h2 class="section-title center">Clientes &amp; <span class="gradient-text">Mercado</span></h2>
+    <div class="market-grid">
+      <div class="market-stat" data-reveal>
+        <div class="market-number counter" data-target="3">0</div>
+        <div class="market-unit">millones+</div>
+        <p>Pymes registradas en España</p>
+      </div>
+      <div class="market-stat" data-reveal>
+        <div class="market-number">99<span>%</span></div>
+        <div class="market-unit"></div>
+        <p>Del tejido empresarial del país son pymes y medianas</p>
+      </div>
+      <div class="market-stat" data-reveal>
+        <div class="market-number counter" data-target="70">0</div>
+        <div class="market-unit">%+</div>
+        <p>Ya utilizan sistemas digitales básicos pero sin ciberseguridad adecuada</p>
+      </div>
+    </div>
+    <div class="market-text" data-reveal>
+      <p>El mercado de la ciberseguridad para pymes está en plena expansión. Más del <strong>70%</strong> de las pequeñas empresas ya usan sistemas digitales, pero la mayoría carece de protección adecuada. Nuestro objetivo es claro: ofrecer soluciones <strong>claras, prácticas y asequibles</strong> adaptadas al tamaño y recursos de cada negocio. Con la próxima apertura en <strong>Polonia</strong>, ampliamos nuestro alcance al mercado europeo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section ventaja-section" id="ventaja">
+  <div class="container">
+    <div class="section-tag center">Diferenciación</div>
+    <h2 class="section-title center">Ventaja <span class="gradient-text">Competitiva</span></h2>
+    <div class="ventaja-grid">
+      <div class="ventaja-visual-main" data-reveal>
+        <div class="ventaja-pillars-big">
+          <div class="pillar-big">
+            <span class="pillar-icon">🏠</span>
+            <span class="pillar-label">Cercanía</span>
+            <span class="pillar-desc">Trato humano y cercano</span>
+          </div>
+          <div class="pillar-big">
+            <span class="pillar-icon">💬</span>
+            <span class="pillar-label">Claridad</span>
+            <span class="pillar-desc">Sin tecnicismos complicados</span>
+          </div>
+          <div class="pillar-big">
+            <span class="pillar-icon">💰</span>
+            <span class="pillar-label">Precios Justos</span>
+            <span class="pillar-desc">Adaptados a cada pyme</span>
+          </div>
+          <div class="pillar-big">
+            <span class="pillar-icon">🎯</span>
+            <span class="pillar-label">100% Pymes</span>
+            <span class="pillar-desc">Especializados en pequeñas empresas</span>
+          </div>
+          <div class="pillar-big">
+            <span class="pillar-icon">🛡️</span>
+            <span class="pillar-label">Protección Activa</span>
+            <span class="pillar-desc">Monitorizamos y protegemos 24/7</span>
+          </div>
+          <div class="pillar-big">
+            <span class="pillar-icon">📚</span>
+            <span class="pillar-label">Formación Continua</span>
+            <span class="pillar-desc">Siempre actualizados</span>
+          </div>
+        </div>
+      </div>
+      <div class="ventaja-highlight" data-reveal>
+        <div class="ventaja-quote-card">
+          <div class="ventaja-quote-icon">🪙</div>
+          <p class="ventaja-quote-text">Somos la opción que <strong>destaca</strong> entre las demás</p>
+          <p class="ventaja-quote-sub">CyberSafeLine: la ciberseguridad para pymes, clara, cercana y eficaz.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section class="section contact-section" id="contacto">
+  <div class="container">
+    <div class="section-tag center">Contacto</div>
+    <h2 class="section-title center">Ponte en <span class="gradient-text">Contacto</span></h2>
+    <div class="contact-grid">
+      <div class="contact-info" data-reveal>
+        <img src="Logotipo.png" alt="CyberSafeLine" class="contact-logo">
+        <div class="contact-items">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <strong>Sedes:</strong>
+              <p>Monte Alto · Madrid · Barcelona · Alicante · <span class="poland-highlight">Próximamente Polonia</span></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <strong>Email:</strong>
+              <p>info@cybersafeline.es</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div>
+              <strong>Teléfono:</strong>
+              <p>+34 901 853 442</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💬</span>
+            <div>
+              <strong>Whatsapp:</strong>
+              <p>+34 901 853 442</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" data-reveal action="https://formspree.io/f/xeewraak" method="POST">
+        <div class="form-group">
+          <label>Nombre de la empresa</label>
+          <input type="text" name="empresa" placeholder="Tu empresa" required>
+        </div>
+        <div class="form-group">
+          <label>Email de contacto</label>
+          <input type="email" name="email" placeholder="email@empresa.com" required>
+        </div>
+        <div class="form-group">
+          <label>Pack de interés</label>
+          <select name="pack">
+            <option>Pack Básico — 120€/mes</option>
+            <option>Pack PYME — 250€/mes</option>
+            <option>Pack Avanzado — 400€/mes</option>
+            <option>Consulta personalizada</option>
+            <option>Servicio de protección gestionada</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensaje</label>
+          <textarea name="message" placeholder="Cuéntanos sobre tu empresa y sus necesidades..." rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary full-width">Enviar Consulta</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="Logotipo.png" alt="CyberSafeLine" class="footer-logo">
+        <p>Formación y servicios de ciberseguridad para pequeñas empresas. Te formamos, te protegemos y te acompañamos. Cercanos, claros y siempre actualizados.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#servicios">Cursos Prácticos</a></li>
+          <li><a href="#servicios">Asesoramiento</a></li>
+          <li><a href="#servicios">Talleres</a></li>
+          <li><a href="#servicios">Simulaciones</a></li>
+          <li><a href="#servicios">Protección Gestionada</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+          <li><a href="#cursos">Cursos Prácticos</a></li>
+          <li><a href="#guias">Guías Digitales</a></li>
+          <li><a href="#organizacion">Nuestras Sedes</a></li>
+          <li><a href="#ventaja">Ventaja Competitiva</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Sedes</h4>
+        <ul>
+          <li>Monte Alto</li>
+          <li>Madrid</li>
+          <li>Barcelona</li>
+          <li>Alicante</li>
+          <li><span class="poland-highlight">Polonia (2027)</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 CyberSafeLine S.L. — <a href="legal.html" style="color: inherit; text-decoration: underline;">Todos los derechos reservados</a> | RGPD Compliant | LSSI-CE</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="script.js"></script>
+
+<div id="reviewsSidebar" class="reviews-sidebar">
+    <div id="reviewsTab" class="reviews-tab">
+        <span class="tab-stars">★★★★★</span>
+        <span class="tab-text">VALORACIONES</span>
+    </div>
+
+    <div class="reviews-content">
+        <div class="reviews-header">
+            <div class="reviews-header-left">
+                <h3>Valoraciones</h3>
+                <div class="reviews-summary" id="reviewsSummary">
+                    <div class="reviews-avg" id="reviewsAvg">0.0</div>
+                    <div class="reviews-stars-display" id="reviewsStarsDisplay">
+                        <span class="star empty">☆</span>
+                        <span class="star empty">☆</span>
+                        <span class="star empty">☆</span>
+                        <span class="star empty">☆</span>
+                        <span class="star empty">☆</span>
+                    </div>
+                    <div class="reviews-count" id="reviewsCount">0 valoraciones</div>
+                </div>
+            </div>
+            <button id="closeReviews" class="close-btn">&times;</button>
+        </div>
+
+        <div class="reviews-list-container">
+            <div id="reviewsList" class="reviews-list">
+                <div class="loading-reviews">
+                    <div class="loading-spinner"></div>
+                    <span>Cargando valoraciones...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="reviews-form-container">
+            <h4>Deja tu valoración</h4>
+            <form id="reviewForm">
+                <div class="rev-form-row">
+                    <input type="text" id="revName" placeholder="Tu nombre o empresa" required>
+                </div>
+                <div class="rev-form-row star-selector-row">
+                    <label class="star-selector-label">Tu puntuación:</label>
+                    <div class="star-rating-selector" id="starRatingSelector">
+                        <span class="star-select" data-value="1">☆</span>
+                        <span class="star-select" data-value="2">☆</span>
+                        <span class="star-select" data-value="3">☆</span>
+                        <span class="star-select" data-value="4">☆</span>
+                        <span class="star-select" data-value="5">☆</span>
+                    </div>
+                    <input type="hidden" id="revStars" value="">
+                    <span class="star-rating-text" id="starRatingText">Selecciona</span>
+                </div>
+                <div class="rev-form-row">
+                    <textarea id="revText" placeholder="Comparte tu experiencia con CyberSafeLine..." rows="3" required></textarea>
+                    <div class="char-counter"><span id="charCount">0</span>/500</div>
+                </div>
+                <button type="submit" id="submitBtn">
+                    <span class="btn-text">Publicar valoración</span>
+                    <span class="btn-spinner" style="display:none"></span>
+                </button>
+            </form>
+            <div class="form-msg" id="reviewFormMsg"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

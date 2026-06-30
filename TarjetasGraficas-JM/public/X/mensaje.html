@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantalla azul</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0078d7;
+      color: #ffffff;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bsod-wrapper {
+      max-width: 720px;
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .bsod-face {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .bsod-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .bsod-percent {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .bsod-small {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .bsod-code {
+      font-family: "Consolas", monospace;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bsod-wrapper">
+    <div class="bsod-face">:(</div>
+
+    <div class="bsod-text">
+      Se ha producido un problema en su PC y necesita reiniciarse. Vamos a recopilar información sobre el error y después se reiniciará automáticamente.
+    </div>
+
+    <div class="bsod-percent">
+      <span id="bsodProgress">0</span>% completado
+    </div>
+
+    <div class="bsod-small">
+      Para obtener más información acerca de este problema y posibles correcciones, visita<br />
+      <span class="bsod-code">https://www.windows.com/stopcode</span>
+    </div>
+
+    <div class="bsod-small">
+      Si llamas a una persona de soporte técnico, dale esta información:<br />
+      <span class="bsod-code">Detener código: CRITICAL_PROCESS_DIED</span>
+    </div>
+  </div>
+
+  <audio id="bsodSound" src="sounds/bsod.mp3" preload="auto"></audio>
+  <script src="mensaje.js"></script>
+</body>
+</html>
+
+
+

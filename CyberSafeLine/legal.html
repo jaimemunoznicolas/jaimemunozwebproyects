@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Legal y Normativo — CyberSafeLine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="icono.png">
+<link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-page { padding-top: 10rem; padding-bottom: 4rem; }
+        .legal-section { margin-bottom: 3.5rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; box-shadow: var(--shadow-card); transition: var(--transition); }
+        .legal-section:hover { border-color: var(--teal); }
+        .legal-section h2 { color: var(--teal); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--border); padding-bottom: 0.7rem; font-size: 1.4rem; }
+        .legal-section h3 { color: var(--blue-light); margin: 1.8rem 0 1rem 0; font-size: 1.15rem; }
+        .legal-section h4 { color: var(--green); margin: 1.2rem 0 0.6rem 0; font-size: 1rem; }
+        .legal-section p, .legal-section li { line-height: 1.9; color: var(--text-muted); margin-bottom: 0.9rem; text-align: justify; font-size: 0.95rem; }
+        .legal-section ul, .legal-section ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .legal-section ul li { list-style: disc; }
+        .legal-section ol li { list-style: decimal; }
+        .legal-section strong { color: var(--text); }
+        .legal-toc { background: var(--bg-section-alt); padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 3.5rem; box-shadow: var(--shadow-card); }
+        .legal-toc h2 { border: none; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--teal); }
+        .legal-toc ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 2rem; }
+        .legal-toc ul li { margin-bottom: 0; list-style: none; }
+        .legal-toc a { color: var(--teal); text-decoration: none; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.8rem; border-radius: 8px; }
+        .legal-toc a:hover { color: var(--accent); background: rgba(0,200,180,.06); padding-left: 1.2rem; }
+        .legal-toc-num { color: var(--green); font-family: var(--font-mono); font-size: 0.8rem; }
+        .legal-badge { display: inline-block; background: rgba(0,200,180,.1); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 0.7rem; color: var(--teal); font-family: var(--font-mono); margin-left: 0.5rem; }
+        .legal-highlight { background: rgba(0,200,180,.05); border-left: 3px solid var(--teal); padding: 1rem 1.5rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+        .legal-highlight p { margin-bottom: 0; }
+        .legal-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        .legal-card-grid .legal-card-item { background: var(--bg-section-3); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
+        .legal-card-grid .legal-card-item h4 { margin-top: 0; }
+        .cookie-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(0,0,0,0.15); border-radius: 10px; overflow: hidden; }
+        .cookie-table th, .cookie-table td { border: 1px solid var(--border); padding: 0.9rem 1.2rem; text-align: left; font-size: 0.9rem; }
+        .cookie-table th { background: var(--navy-3); color: var(--teal); font-weight: 700; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.05em; }
+        .cookie-table td { color: var(--text-muted); }
+        .cookie-table tr:hover td { background: rgba(0,200,180,.03); }
+        .legal-footer-bar { margin-top: 4rem; padding: 2rem; background: var(--bg-section-alt); border-radius: 16px; border: 1px solid var(--border); text-align: center; }
+        .legal-footer-bar p { color: var(--text-muted); font-size: 0.85rem; }
+        .legal-separator { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+        .version-tag { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); background: var(--bg-section-3); padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-left: 0.5rem; }
+        .legal-subsection { padding-left: 1rem; border-left: 2px solid rgba(0,200,180,.1); margin: 0.5rem 0 1rem; }
+        @media (max-width: 768px) {
+            .legal-toc ul { grid-template-columns: 1fr; }
+            .legal-card-grid { grid-template-columns: 1fr; }
+            .legal-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar scrolled">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="Logo.png" alt="CyberSafeLine" class="nav-logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-cta">Volver al Portal Principal</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section legal-page">
+        <div class="container">
+            <div class="section-tag">Compliance & Legal Framework</div>
+            <h1 class="section-title">Centro de <span class="gradient-text">Cumplimiento Legal</span></h1>
+            <p style="color:var(--text-muted); text-align:center; max-width:700px; margin:0 auto 3rem; font-size:1.05rem;">En CyberSafeLine cumplimos con la normativa vigente en materia de protección de datos, seguridad de la información y servicios digitales. Este documento recoge nuestra política legal completa.</p>
+            
+            <div class="legal-toc">
+                <h2>📋 Índice de Contenidos</h2>
+                <ul>
+                    <li><a href="#aviso-legal"><span class="legal-toc-num">01</span> Aviso Legal (LSSI-CE)</a></li>
+                    <li><a href="#terminos"><span class="legal-toc-num">02</span> Términos y Condiciones de Uso</a></li>
+                    <li><a href="#privacidad"><span class="legal-toc-num">03</span> Política de Privacidad (RGPD)</a></li>
+                    <li><a href="#cookies"><span class="legal-toc-num">04</span> Política de Cookies</a></li>
+                    <li><a href="#seguridad"><span class="legal-toc-num">05</span> Política de Seguridad de la Información</a></li>
+                    <li><a href="#tratamiento"><span class="legal-toc-num">06</span> Acuerdo de Tratamiento de Datos (DPA)</a></li>
+                    <li><a href="#retencion"><span class="legal-toc-num">07</span> Política de Retención de Datos</a></li>
+                    <li><a href="#certificados"><span class="legal-toc-num">08</span> Certificaciones y Seguridad Técnica</a></li>
+                    <li><a href="#incidentes"><span class="legal-toc-num">09</span> Plan de Respuesta a Incidentes</a></li>
+                    <li><a href="#contacto-legal"><span class="legal-toc-num">10</span> Contacto Legal</a></li>
+                </ul>
+            </div>
+
+            <div class="legal-content">
+
+                <!-- 1. AVISO LEGAL -->
+                <article id="aviso-legal" class="legal-section">
+                    <h2>1. Aviso Legal <span class="version-tag">v2.0</span></h2>
+                    <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se informa a los usuarios de los siguientes datos identificativos del titular de este sitio web:</p>
+                    
+                    <div class="legal-card-grid">
+                        <div class="legal-card-item">
+                            <h4>Datos del Titular</h4>
+                            <ul>
+                                <li><strong>Razón Social:</strong> CyberSafeLine Seguridad Digital S.L.</li>
+                                <li><strong>NIF:</strong> B-00000000</li>
+                                <li><strong>Domicilio Social:</strong> Parque Tecnológico de Madrid, Edificio Alpha 2.0, 28001 Madrid, España.</li>
+                                <li><strong>Inscripción Registral:</strong> Registro Mercantil de Madrid, Tomo 12.345, Folio 67, Sección 8, Hoja M-123456.</li>
+                                <li><strong>Email:</strong> legal@cybersafeline.com</li>
+                            </ul>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>Contacto Delegado</h4>
+                            <ul>
+                                <li><strong>Delegado de Protección de Datos (DPO):</strong> dpo@cybersafeline.com</li>
+                                <li><strong>Teléfono de contacto:</strong> +34 900 000 000</li>
+                                <li><strong>Horario de atención legal:</strong> Lunes a viernes, 9:00 - 18:00</li>
+                                <li><strong>Idiomas disponibles:</strong> Español, Inglés, Polaco</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>1.1. Finalidad del Sitio Web</h3>
+                    <p>El sitio web de CyberSafeLine tiene como finalidad principal ofrecer información sobre nuestros servicios de formación y ciberseguridad para pequeñas y medianas empresas, así como permitir la contratación de dichos servicios y la comunicación con nuestros clientes y usuarios.</p>
+
+                    <h3>1.2. Propiedad Intelectual e Industrial</h3>
+                    <p>CyberSafeLine es titular de todos los derechos de propiedad intelectual e industrial de su página web, así como de los elementos contenidos en la misma, incluyendo pero no limitándose a: imágenes, logotipos, marcas, combinaciones de colores, estructura y diseño, materiales didácticos, software, bases de datos y contenidos textuales.</p>
+                    <div class="legal-highlight">
+                        <p>Queda expresamente prohibida la reproducción, distribución, comunicación pública o transformación de los contenidos de este sitio web sin la autorización previa y por escrito de CyberSafeLine, salvo para uso personal y no comercial.</p>
+                    </div>
+
+                    <h3>1.3. Legislación Aplicable y Jurisdicción</h3>
+                    <p>Las presentes condiciones se rigen por la legislación española. Para cualquier controversia que pudiera derivarse del acceso o uso del sitio web, las partes se someten a los juzgados y tribunales de Madrid, renunciando expresamente a cualquier otro fuero que pudiera corresponderles.</p>
+                </article>
+
+                <!-- 2. TÉRMINOS Y CONDICIONES -->
+                <article id="terminos" class="legal-section">
+                    <h2>2. Términos y Condiciones de Uso <span class="version-tag">v2.1</span></h2>
+                    
+                    <h3>2.1. Objeto y Ámbito de Aplicación</h3>
+                    <p>Las presentes condiciones regulan el acceso, navegación y utilización de la web de CyberSafeLine. El acceso a la web implica la aceptación sin reservas de todas las disposiciones incluidas en este texto. Si el usuario no está de acuerdo con estas condiciones, deberá abstenerse de utilizar el sitio web.</p>
+
+                    <h3>2.2. Acceso y Registro</h3>
+                    <p>El acceso a la mayoría de los contenidos del sitio web es libre y gratuito. No obstante, para la contratación de servicios o la participación en determinadas actividades formativas, el usuario deberá registrarse proporcionando datos veraces y manteniendo la confidencialidad de sus credenciales de acceso.</p>
+
+                    <h3>2.3. Obligaciones del Usuario</h3>
+                    <ul>
+                        <li>Hacer un uso lícito, responsable y respetuoso del sitio web y sus contenidos</li>
+                        <li>No realizar actividades que puedan dañar, sobrecargar o deteriorar el funcionamiento del sitio</li>
+                        <li>No introducir virus, código malicioso o cualquier otro elemento que pueda causar daños</li>
+                        <li>No intentar acceder a áreas restringidas sin autorización</li>
+                        <li>Respetar los derechos de propiedad intelectual e industrial de CyberSafeLine</li>
+                    </ul>
+
+                    <h3>2.4. Limitación de Responsabilidad</h3>
+                    <p>CyberSafeLine no se hace responsable, en ningún caso, de los daños y perjuicios de cualquier naturaleza que pudieran ocasionarse por:</p>
+                    <ul>
+                        <li>Errores u omisiones en los contenidos del sitio web</li>
+                        <li>Falta de disponibilidad del portal por causas técnicas, de mantenimiento o fuerza mayor</li>
+                        <li>La transmisión de virus o programas maliciosos a pesar de haber adoptado las medidas tecnológicas necesarias</li>
+                        <li>El uso que terceros hagan de la información publicada en el sitio</li>
+                    </ul>
+
+                    <h3>2.5. Modificaciones</h3>
+                    <p>CyberSafeLine se reserva el derecho de modificar unilateralmente las presentes condiciones en cualquier momento, notificando los cambios a los usuarios registrados a través del correo electrónico proporcionado. La navegación continuada tras la publicación de cambios implicará la aceptación de los mismos.</p>
+                </article>
+
+                <!-- 3. POLÍTICA DE PRIVACIDAD -->
+                <article id="privacidad" class="legal-section">
+                    <h2>3. Política de Privacidad (RGPD) <span class="version-tag">v3.0</span></h2>
+                    <p>CyberSafeLine cumple con las directrices del Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016 (RGPD), y la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD).</p>
+
+                    <h3>3.1. Responsable del Tratamiento</h3>
+                    <p>El responsable del tratamiento de los datos personales recabados a través de este sitio web es CyberSafeLine Seguridad Digital S.L., con NIF B-00000000 y domicilio en Parque Tecnológico de Madrid, Edificio Alpha 2.0, 28001 Madrid, España.</p>
+
+                    <h3>3.2. Delegado de Protección de Datos (DPO)</h3>
+                    <p>Hemos designado un Delegado de Protección de Datos para supervisar el cumplimiento de esta política. Puede contactar con nuestro DPO en la dirección dpo@cybersafeline.com o mediante correo postal a la dirección indicada anteriormente, indicando "Att. DPO".</p>
+
+                    <h3>3.3. Categorías de Datos Tratados y Finalidades</h3>
+                    <div class="legal-card-grid">
+                        <div class="legal-card-item">
+                            <h4>Datos Identificativos</h4>
+                            <p>Nombre, apellidos, empresa, NIF/CIF, dirección postal, teléfono, correo electrónico. Finalidad: gestión de la relación contractual, prestación de servicios y facturación.</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>Datos de Navegación</h4>
+                            <p>Dirección IP, tipo de navegador, sistema operativo, páginas visitadas. Finalidad: análisis estadístico, mejora de la experiencia de usuario y seguridad del sitio.</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>Datos de Formación</h4>
+                            <p>Historial formativo, evaluaciones, certificaciones obtenidas. Finalidad: gestión académica, emisión de diplomas y seguimiento del aprendizaje.</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>Metadatos Técnicos</h4>
+                            <p>Registros de acceso, logs de seguridad, huellas digitales del dispositivo. Finalidad: prevención de fraudes, detección de intrusiones y cumplimiento normativo.</p>
+                        </div>
+                    </div>
+
+                    <h3>3.4. Base Legal del Tratamiento</h3>
+                    <p>El tratamiento de datos se realiza sobre las siguientes bases legales:</p>
+                    <ul>
+                        <li><strong>Ejecución de un contrato:</strong> prestación de servicios de formación y ciberseguridad contratados</li>
+                        <li><strong>Consentimiento del interesado:</strong> para comunicaciones comerciales y análisis de navegación</li>
+                        <li><strong>Cumplimiento de obligaciones legales:</strong> facturación, archivado fiscal y obligaciones regulatorias</li>
+                        <li><strong>Interés legítimo:</strong> mejora de servicios, seguridad de sistemas y análisis estadístico</li>
+                    </ul>
+
+                    <h3>3.5. Derechos del Interesado</h3>
+                    <p>El usuario podrá ejercer sus derechos de acceso, rectificación, supresión (derecho al olvido), limitación del tratamiento, portabilidad de datos y oposición enviando una comunicación escrita acompañada de copia de su DNI o documento identificativo equivalente a:</p>
+                    <div class="legal-highlight">
+                        <p><strong>Email:</strong> legal@cybersafeline.com | <strong>Dirección postal:</strong> Parque Tecnológico de Madrid, Edificio Alpha 2.0, 28001 Madrid, España. <strong>Asunto:</strong> "Ejercicio de derechos RGPD"</p>
+                    </div>
+                    <p>CyberSafeLine responderá a las solicitudes en el plazo máximo de un mes desde su recepción, prorrogable por dos meses adicionales en caso de solicitudes complejas o numerosas. En cualquier caso, el usuario tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD).</p>
+
+                    <h3>3.6. Destinatarios y Transferencias Internacionales</h3>
+                    <p>Los datos personales no serán cedidos a terceros salvo obligación legal. CyberSafeLine utiliza proveedores de servicios de hosting, email y análisis ubicados en la Unión Europea y Estados Unidos (estos últimos acogidos al marco Privacy Shield o a las Cláusulas Contractuales Tipo de la Comisión Europea).</p>
+                </article>
+
+                <!-- 4. POLÍTICA DE COOKIES -->
+                <article id="cookies" class="legal-section">
+                    <h2>4. Política de Cookies <span class="version-tag">v2.0</span></h2>
+                    <p>Este sitio web utiliza cookies propias y de terceros para garantizar el correcto funcionamiento del portal, analizar el tráfico y mejorar la experiencia del usuario. Al navegar y continuar en nuestro sitio web, aceptas el uso de cookies según esta política.</p>
+
+                    <h3>4.1. ¿Qué son las Cookies?</h3>
+                    <p>Las cookies son pequeños archivos de texto que se almacenan en el navegador del usuario cuando visita un sitio web. Su finalidad es recordar preferencias, mejorar la navegación y obtener información estadística anónima.</p>
+
+                    <h3>4.2. Tipos de Cookies Utilizadas</h3>
+                    <table class="cookie-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Finalidad</th>
+                                <th>Duración</th>
+                                <th>Tipo</th>
+                                <th>Gestión</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_ga</td>
+                                <td>Análisis de tráfico y comportamiento de navegación (Google Analytics)</td>
+                                <td>2 años</td>
+                                <td>Terceros</td>
+                                <td><a href="https://tools.google.com/dlpage/gaoptout" target="_blank" style="color:var(--teal)">Desactivar</a></td>
+                            </tr>
+                            <tr>
+                                <td>_gid</td>
+                                <td>Identificador de sesión de Google Analytics</td>
+                                <td>24 horas</td>
+                                <td>Terceros</td>
+                                <td><a href="https://tools.google.com/dlpage/gaoptout" target="_blank" style="color:var(--teal)">Desactivar</a></td>
+                            </tr>
+                            <tr>
+                                <td>session_id</td>
+                                <td>Mantenimiento de sesión de usuario autenticado y preferencias de navegación</td>
+                                <td>Sesión</td>
+                                <td>Propia</td>
+                                <td>Automática al cerrar sesión</td>
+                            </tr>
+                            <tr>
+                                <td>csl_theme</td>
+                                <td>Preferencia de modo visual (claro/oscuro)</td>
+                                <td>Persistente (1 año)</td>
+                                <td>Propia</td>
+                                <td>Desde el selector de tema</td>
+                            </tr>
+                            <tr>
+                                <td>csl_theme_chosen</td>
+                                <td>Registro de primera elección de tema</td>
+                                <td>Persistente (1 año)</td>
+                                <td>Propia</td>
+                                <td>Automática</td>
+                            </tr>
+                            <tr>
+                                <td>csrf_token</td>
+                                <td>Protección contra falsificación de solicitudes en formularios</td>
+                                <td>Sesión</td>
+                                <td>Propia</td>
+                                <td>Automática</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>4.3. Cómo Gestionar las Cookies</h3>
+                    <p>El usuario puede configurar su navegador para aceptar, rechazar o eliminar cookies modificando la configuración de privacidad. A continuación, se indican enlaces a las guías de configuración de los navegadores más comunes:</p>
+                    <ul>
+                        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" style="color:var(--teal)">Google Chrome</a></li>
+                        <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" style="color:var(--teal)">Mozilla Firefox</a></li>
+                        <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" style="color:var(--teal)">Safari</a></li>
+                        <li><a href="https://support.microsoft.com/es-es/windows/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" style="color:var(--teal)">Microsoft Edge</a></li>
+                    </ul>
+                    <p>La desactivación de cookies técnicas puede afectar al funcionamiento de algunas funcionalidades del sitio web.</p>
+
+                    <h3>4.4. Cookies de Terceros</h3>
+                    <p>Este sitio web utiliza Google Analytics, un servicio de análisis web prestado por Google LLC. La información generada por la cookie acerca de su uso del sitio web será directamente transmitida y archivada por Google en servidores de Estados Unidos. Google utilizará esta información para evaluar el uso del sitio web y elaborar informes de actividad. Google no asociará su dirección IP con ningún otro dato del que disponga Google.</p>
+                </article>
+
+                <!-- 5. POLÍTICA DE SEGURIDAD -->
+                <article id="seguridad" class="legal-section">
+                    <h2>5. Política de Seguridad de la Información <span class="version-tag">v1.0</span></h2>
+                    <p>Como empresa de ciberseguridad, CyberSafeLine aplica los más rigurosos estándares de protección de la información en todos sus procesos internos y servicios ofrecidos a clientes.</p>
+
+                    <h3>5.1. Principios Fundamentales</h3>
+                    <ul>
+                        <li><strong>Confidencialidad:</strong> la información solo es accesible por personal autorizado</li>
+                        <li><strong>Integridad:</strong> se garantiza que la información no ha sido alterada sin autorización</li>
+                        <li><strong>Disponibilidad:</strong> los sistemas y datos están accesibles cuando se necesitan</li>
+                        <li><strong>Resiliencia:</strong> capacidad de mantener operaciones ante incidentes de seguridad</li>
+                    </ul>
+
+                    <h3>5.2. Medidas de Seguridad Implementadas</h3>
+                    <div class="legal-card-grid">
+                        <div class="legal-card-item">
+                            <h4>Medidas Técnicas</h4>
+                            <ul>
+                                <li>Cifrado SSL/TLS de 256 bits en todas las comunicaciones</li>
+                                <li>Cifrado de datos en reposo (AES-256)</li>
+                                <li>Firewalls perimetrales y segmentación de red</li>
+                                <li>Sistemas de detección y prevención de intrusiones (IDS/IPS)</li>
+                                <li>Autenticación multifactor (MFA) en accesos privilegiados</li>
+                            </ul>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>Medidas Organizativas</h4>
+                            <ul>
+                                <li>Política de contraseñas robustas y rotación periódica</li>
+                                <li>Formación continua en seguridad para todo el personal</li>
+                                <li>Auditorías internas y externas de seguridad</li>
+                                <li>Plan de respuesta a incidentes documentado</li>
+                                <li>Acuerdos de confidencialidad con empleados y proveedores</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>5.3. Notificación de Vulnerabilidades</h3>
+                    <p>Si descubres una vulnerabilidad de seguridad en nuestro sitio web o servicios, te agradecemos que nos lo comuniques de forma responsable a través de security@cybersafeline.com. Nos comprometemos a responder en un plazo máximo de 72 horas y a trabajar contigo para resolver el problema de manera coordinada.</p>
+                    <div class="legal-highlight">
+                        <p>🔒 CyberSafeLine mantiene un programa de recompensa por descubrimiento de vulnerabilidades (Bug Bounty) para investigadores de seguridad ética. Consulta las condiciones en security@cybersafeline.com.</p>
+                    </div>
+                </article>
+
+                <!-- 6. ACUERDO DE TRATAMIENTO DE DATOS -->
+                <article id="tratamiento" class="legal-section">
+                    <h2>6. Acuerdo de Tratamiento de Datos (DPA) <span class="version-tag">v1.0</span></h2>
+                    <p>El presente Acuerdo de Tratamiento de Datos (Data Processing Agreement o DPA) regula el tratamiento de datos personales que CyberSafeLine realiza por cuenta de sus clientes en la prestación de servicios de formación y ciberseguridad.</p>
+
+                    <h3>6.1. Ámbito de Aplicación</h3>
+                    <p>Este DPA se aplica a todos los servicios contratados por el cliente en los que CyberSafeLine actúe como encargado del tratamiento de datos personales de los que el cliente sea responsable del tratamiento.</p>
+
+                    <h3>6.2. Obligaciones de CyberSafeLine como Encargado del Tratamiento</h3>
+                    <ul>
+                        <li>Tratar los datos personales únicamente siguiendo las instrucciones documentadas del responsable</li>
+                        <li>Garantizar la confidencialidad de las personas autorizadas para tratar los datos</li>
+                        <li>Implementar las medidas de seguridad técnicas y organizativas adecuadas</li>
+                        <li>No subcontratar servicios de tratamiento sin autorización previa del responsable</li>
+                        <li>Asistir al responsable en la atención de los derechos de los interesados</li>
+                        <li>Notificar al responsable las violaciones de seguridad sin dilación indebida</li>
+                        <li>Suprimir o devolver los datos al finalizar la prestación del servicio</li>
+                    </ul>
+
+                    <h3>6.3. Subencargados Autorizados</h3>
+                    <p>CyberSafeLine cuenta con los siguientes subencargados del tratamiento para la prestación de sus servicios:</p>
+                    <ul>
+                        <li><strong>Google Cloud Platform (Firebase):</strong> infraestructura de base de datos y hosting, UE</li>
+                        <li><strong>Mailchimp / The Rocket Science Group:</strong> plataforma de email marketing, EE.UU. (Privacy Shield)</li>
+                        <li><strong>Stripe:</strong> procesamiento de pagos, UE/EE.UU. (SCC)</li>
+                    </ul>
+                    <p>El cliente autoriza expresamente la contratación de estos subencargados. CyberSafeLine notificará cualquier cambio en la lista de subencargados con al menos 30 días de antelación.</p>
+                </article>
+
+                <!-- 7. RETENCIÓN DE DATOS -->
+                <article id="retencion" class="legal-section">
+                    <h2>7. Política de Retención de Datos <span class="version-tag">v1.0</span></h2>
+                    <p>CyberSafeLine conserva los datos personales únicamente durante el tiempo necesario para cumplir con las finalidades para las que fueron recogidos, de acuerdo con los siguientes plazos:</p>
+
+                    <table class="cookie-table">
+                        <thead>
+                            <tr>
+                                <th>Categoría de Datos</th>
+                                <th>Plazo de Conservación</th>
+                                <th>Fundamento Legal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Datos contractuales y de facturación</td>
+                                <td>5 años desde la finalización del contrato</td>
+                                <td>Código de Comercio (art. 30) y Ley General Tributaria</td>
+                            </tr>
+                            <tr>
+                                <td>Datos de formación y certificaciones</td>
+                                <td>3 años desde la finalización del curso</td>
+                                <td>Interés legítimo y consentimiento</td>
+                            </tr>
+                            <tr>
+                                <td>Datos de navegación y cookies analíticas</td>
+                                <td>2 años (máximo)</td>
+                                <td>Consentimiento</td>
+                            </tr>
+                            <tr>
+                                <td>Datos de contacto para comunicaciones</td>
+                                <td>Hasta revocación del consentimiento</td>
+                                <td>Consentimiento del interesado</td>
+                            </tr>
+                            <tr>
+                                <td>Logs de seguridad y registros de acceso</td>
+                                <td>1 año</td>
+                                <td>Obligación legal y seguridad</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Una vez transcurridos los plazos indicados, los datos serán bloqueados y posteriormente suprimidos de forma segura, salvo que exista una obligación legal que requiera su conservación por un período adicional.</p>
+                </article>
+
+                <!-- 8. CERTIFICACIONES -->
+                <article id="certificados" class="legal-section">
+                    <h2>8. Certificaciones y Seguridad Técnica <span class="version-tag">v2.0</span></h2>
+                    <p>Como empresa especializada en ciberseguridad, CyberSafeLine opera bajo los más altos estándares internacionales de seguridad y calidad:</p>
+
+                    <div class="legal-card-grid">
+                        <div class="legal-card-item">
+                            <h4>ISO/IEC 27001:2022</h4>
+                            <p>Sistema de Gestión de la Seguridad de la Información (SGSI). Certificación que acredita que nuestros procesos cumplen con los requisitos internacionales para la gestión segura de la información.</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>ENS - Nivel Alto</h4>
+                            <p>Esquema Nacional de Seguridad. Nivel Alto en infraestructuras críticas y sistemas de información, conforme al Real Decreto 311/2022.</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>Certificación SSL/TLS</h4>
+                            <p>Cifrado de grado militar de 256 bits en todas las comunicaciones entre navegadores y nuestros servidores. Certificados emitidos por autoridades de certificación reconocidas.</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>RGPD Compliance</h4>
+                            <p>Pleno cumplimiento del Reglamento General de Protección de Datos (UE) 2016/679 y de la LOPDGDD 3/2018. Auditorías anuales de cumplimiento.</p>
+                        </div>
+                    </div>
+
+                    <h3>8.1. Auditorías y Cumplimiento</h3>
+                    <p>CyberSafeLine se somete anualmente a auditorías externas de seguridad y cumplimiento normativo realizadas por entidades acreditadas. Los resultados de dichas auditorías están disponibles para clientes bajo acuerdo de confidencialidad.</p>
+
+                    <h3>8.2. Copias de Seguridad y Continuidad</h3>
+                    <p>Se realizan copias de seguridad cifradas de todos los sistemas críticos con una frecuencia mínima diaria. Disponemos de un Plan de Continuidad de Negocio (BCP) y un Plan de Recuperación ante Desastres (DRP) probados semestralmente, con un objetivo de tiempo de recuperación (RTO) inferior a 4 horas y un objetivo de punto de recuperación (RPO) inferior a 24 horas.</p>
+                </article>
+
+                <!-- 9. PLAN DE RESPUESTA A INCIDENTES -->
+                <article id="incidentes" class="legal-section">
+                    <h2>9. Plan de Respuesta a Incidentes <span class="version-tag">v1.0</span></h2>
+                    <p>CyberSafeLine dispone de un Plan de Respuesta a Incidentes de Seguridad (IRP) documentado y probado, que sigue las directrices del NIST SP 800-61 y el Esquema Nacional de Seguridad.</p>
+
+                    <h3>9.1. Fases del Plan</h3>
+                    <ol>
+                        <li><strong>Preparación:</strong> formación continua del equipo, herramientas de detección y protocolos definidos</li>
+                        <li><strong>Detección y Análisis:</strong> monitorización 24/7, sistemas SIEM y análisis forense inicial</li>
+                        <li><strong>Contención, Erradicación y Recuperación:</strong> aislamiento de sistemas afectados, eliminación de la amenaza y restauración de servicios</li>
+                        <li><strong>Actividad Post-Incidente:</strong> análisis de causas raíz, informe ejecutivo y mejora continua de las medidas de seguridad</li>
+                    </ol>
+
+                    <h3>9.2. Notificación a Clientes y Autoridades</h3>
+                    <p>En caso de que un incidente de seguridad afecte a datos personales de clientes, CyberSafeLine se compromete a:</p>
+                    <ul>
+                        <li>Notificar al cliente afectado en un plazo máximo de 24 horas desde la confirmación del incidente</li>
+                        <li>Notificar a la autoridad de control (AEPD) en un plazo máximo de 72 horas, conforme al art. 33 del RGPD</li>
+                        <li>Proporcionar un informe detallado del incidente, incluyendo naturaleza, alcance, medidas correctoras y recomendaciones</li>
+                    </ul>
+
+                    <h3>9.3. Contacto para Incidentes</h3>
+                    <div class="legal-highlight">
+                        <p><strong>Email:</strong> security@cybersafeline.com | <strong>Teléfono 24/7:</strong> +34 901 853 443 | <strong>PGP Key:</strong> Disponible en nuestro servidor de claves públicas</p>
+                    </div>
+                </article>
+
+                <!-- 10. CONTACTO LEGAL -->
+                <article id="contacto-legal" class="legal-section">
+                    <h2>10. Contacto Legal <span class="version-tag">v1.0</span></h2>
+                    <p>Para cualquier consulta relacionada con estos documentos legales o para ejercer tus derechos en materia de protección de datos, puedes contactar con nuestro equipo legal a través de los siguientes canales:</p>
+
+                    <div class="legal-card-grid">
+                        <div class="legal-card-item">
+                            <h4>📍 Dirección Postal</h4>
+                            <p>CyberSafeLine Seguridad Digital S.L.<br>Parque Tecnológico de Madrid, Edificio Alpha 2.0<br>28001 Madrid, España</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>📧 Correo Electrónico</h4>
+                            <p><strong>Consultas legales generales:</strong> legal@cybersafeline.com<br><strong>Delegado de Protección de Datos:</strong> dpo@cybersafeline.com<br><strong>Incidencias de seguridad:</strong> security@cybersafeline.com</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>📞 Teléfono</h4>
+                            <p><strong>Atención legal:</strong> +34 901 853 442 (L-V, 9:00-18:00)<br><strong>Incidencias 24/7:</strong> +34 901 853 443</p>
+                        </div>
+                        <div class="legal-card-item">
+                            <h4>🔗 Enlaces de Interés</h4>
+                            <p><a href="https://www.aepd.es" target="_blank" style="color:var(--teal)">Agencia Española de Protección de Datos</a><br><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673" target="_blank" style="color:var(--teal)">LOPDGDD 3/2018</a><br><a href="https://www.boe.es/doue/2016/119/L00001-00088.pdf" target="_blank" style="color:var(--teal)">RGPD (UE) 2016/679</a></p>
+                        </div>
+                    </div>
+                </article>
+
+                <hr class="legal-separator">
+
+                <div class="legal-footer-bar">
+                    <p><strong>Última actualización:</strong> Mayo 2026 | <strong>Versión del documento:</strong> v2.0 | <strong>Próxima revisión:</strong> Mayo 2027</p>
+                    <p>CyberSafeLine se reserva el derecho de actualizar estos documentos legales en cualquier momento. Se recomienda revisar periódicamente esta página para estar informado de posibles cambios.</p>
+                    <p style="margin-top: 1.5rem;">
+                        <a href="index.html" class="btn btn-primary" style="padding: 1.2rem 2.5rem; font-size: 1.1rem;">← Volver al Portal Principal</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="Logo.png" alt="CyberSafeLine" class="footer-logo">
+                    <p>Formación y servicios de ciberseguridad para pequeñas empresas. Te formamos, te protegemos y te acompañamos.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#aviso-legal">Aviso Legal</a></li>
+                        <li><a href="#privacidad">Política de Privacidad</a></li>
+                        <li><a href="#cookies">Política de Cookies</a></li>
+                        <li><a href="#seguridad">Seguridad</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="index.html">Portal Principal</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                        <li><a href="index.html#servicios">Servicios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contacto Legal</h4>
+                    <ul>
+                        <li>legal@cybersafeline.com</li>
+                        <li>dpo@cybersafeline.com</li>
+                        <li>+34 901 853 442</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CyberSafeLine S.L. — Todos los derechos reservados | RGPD Compliant | LSSI-CE | ISO 27001</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

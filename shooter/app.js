@@ -1246,6 +1246,23 @@ document.addEventListener('keydown', e => {
   keys[e.code] = true;
   if (!G.gameRunning || G.dead) return;
   if (e.code === 'KeyR') reload();
+  // ESC to toggle pause (only when pointer was ever locked)
+  if (e.code === 'Escape' && pointerEverLocked) {
+    if (document.pointerLockElement === renderer.domElement) {
+      document.exitPointerLock();
+    } else {
+      renderer.domElement.requestPointerLock();
+    }
+    return;
+  }
+  // Emergency direct movement (bypass all collision & pause)
+  if (G.gameRunning && !G.dead) {
+    const step = 0.5;
+    if (e.code === 'KeyW' || e.code === 'ArrowUp') camera.position.z -= step;
+    if (e.code === 'KeyS' || e.code === 'ArrowDown') camera.position.z += step;
+    if (e.code === 'KeyA' || e.code === 'ArrowLeft') camera.position.x -= step;
+    if (e.code === 'KeyD' || e.code === 'ArrowRight') camera.position.x += step;
+  }
   const n = parseInt(e.key);
   if (n >= 1 && n <= WORDER.length) switchWeapon(WORDER[n-1]);
 });
@@ -1253,10 +1270,19 @@ document.addEventListener('keyup', e => { keys[e.code] = false; });
 document.addEventListener('mousemove', e => { if(isPointerLocked){mouseDX+=e.movementX;mouseDY+=e.movementY;} });
 document.addEventListener('mousedown', e => { if(e.button===0){G.mouseDown=true;if(isPointerLocked&&!G.dead&&G.gameRunning)shoot();} });
 document.addEventListener('mouseup', e => { if(e.button===0)G.mouseDown=false; });
+let pointerEverLocked = false;
+const pauseOverlay = $('pauseOverlay');
 document.addEventListener('pointerlockchange', () => {
   isPointerLocked = document.pointerLockElement === renderer.domElement;
-  if(!isPointerLocked&&G.gameRunning&&!G.dead) G.paused=true;
-  else if(isPointerLocked) { G.paused=false; mouseDX=0; mouseDY=0; }
+  if(isPointerLocked) {
+    pointerEverLocked = true;
+    G.paused = false;
+    pauseOverlay.style.display = 'none';
+    mouseDX = 0; mouseDY = 0;
+  } else if(pointerEverLocked && G.gameRunning && !G.dead) {
+    G.paused = true;
+    pauseOverlay.style.display = 'flex';
+  }
 });
 window.addEventListener('resize', () => {
   camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight);
@@ -1287,6 +1313,15 @@ $('btnRestart').addEventListener('click', () => {
 });
 $('btnMenu').addEventListener('click', () => {
   gameOver.style.display='none'; menu.style.display='flex'; hud.style.display='none';
+  for(const z of zombies) z.hpBar.bg.style.display='none';
+});
+$('btnResume').addEventListener('click', () => {
+  renderer.domElement.requestPointerLock();
+});
+$('btnPauseMenu').addEventListener('click', () => {
+  pauseOverlay.style.display='none';
+  G.gameRunning = false;
+  menu.style.display='flex'; hud.style.display='none';
   for(const z of zombies) z.hpBar.bg.style.display='none';
 });
 

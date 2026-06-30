@@ -18,13 +18,72 @@
         <span class="title-line accent">STRIKE</span>
       </div>
       <p class="menu-sub">Supervivencia zombie · Oleadas infinitas · 5 armas</p>
+
       <div class="menu-btns">
         <button class="menu-btn primary" id="btnPlay">JUGAR</button>
+        <button class="menu-btn" id="btnWeaponSelect">ARMAS</button>
+        <button class="menu-btn" id="btnDifficulty">DIFICULTAD</button>
+        <button class="menu-btn" id="btnSettings">CONFIGURACIÓN</button>
+        <button class="menu-btn" id="btnScores">PUNTUACIONES</button>
         <button class="menu-btn" id="btnControls">CONTROLES</button>
         <a href="../index.html" class="menu-btn back-btn">← MENÚ PRINCIPAL</a>
       </div>
-      <div class="menu-info"><span id="menuWeapon">PISTOLA</span> · <span id="menuDifficulty">NORMAL</span></div>
+
+      <div class="menu-info" id="menuInfo">
+        <span id="menuWeapon">PISTOLA</span> ·
+        <span id="menuDifficulty">NORMAL</span> ·
+        <span id="menuSnd">🔊</span>
+      </div>
       <div class="menu-footer">WASD · Dispara · Sobrevive a las oleadas</div>
+    </div>
+  </div>
+
+  <!-- WEAPON SELECT -->
+  <div id="weaponSelect" class="overlay" style="display:none">
+    <div class="modal-box wide">
+      <h2>SELECCIONA ARMA</h2>
+      <div class="ws-grid" id="wsGrid"></div>
+      <p class="ws-note">Puedes recoger todas durante la partida con 1-5</p>
+      <button class="menu-btn primary" id="btnCloseWS">VOLVER</button>
+    </div>
+  </div>
+
+  <!-- DIFFICULTY SELECT -->
+  <div id="diffSelect" class="overlay" style="display:none">
+    <div class="modal-box">
+      <h2>DIFICULTAD</h2>
+      <div class="diff-grid" id="diffGrid"></div>
+      <button class="menu-btn primary" id="btnCloseDiff">VOLVER</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="settingsModal" class="overlay" style="display:none">
+    <div class="modal-box">
+      <h2>CONFIGURACIÓN</h2>
+      <div class="settings-body">
+        <div class="set-row">
+          <span class="set-label">Sonido</span>
+          <button class="set-toggle" id="sndToggle">ON</button>
+        </div>
+        <div class="set-row">
+          <span class="set-label">Sensibilidad</span>
+          <div class="set-slider-wrap">
+            <input type="range" id="sensSlider" min="0.5" max="5" step="0.1" value="2">
+            <span id="sensVal">2.0</span>
+          </div>
+        </div>
+      </div>
+      <button class="menu-btn primary" id="btnCloseSettings">VOLVER</button>
+    </div>
+  </div>
+
+  <!-- HIGH SCORES -->
+  <div id="scoresModal" class="overlay" style="display:none">
+    <div class="modal-box wide">
+      <h2>PUNTUACIONES ALTAS</h2>
+      <div id="scoresBody" class="scores-body"></div>
+      <button class="menu-btn primary" id="btnCloseScores">VOLVER</button>
     </div>
   </div>
 
@@ -55,17 +114,21 @@
 
   <!-- GAME OVER -->
   <div id="gameOver" class="overlay" style="display:none">
-    <div class="modal-box">
+    <div class="modal-box wide">
       <h2 class="go-title" id="goTitle">MUERTO</h2>
       <div class="go-stats">
         <div class="go-stat"><span>PUNTOS</span><span id="finalScore">0</span></div>
         <div class="go-stat"><span>BAJAS</span><span id="finalKills">0</span></div>
         <div class="go-stat"><span>OLEADA</span><span id="finalRounds">1</span></div>
         <div class="go-stat"><span>PRECISIÓN</span><span id="finalAcc">0%</span></div>
+        <div class="go-stat"><span>RACHA</span><span id="finalStreak">0</span></div>
       </div>
       <div class="go-mvp" id="mvpDisplay"></div>
-      <button class="menu-btn primary" id="btnRestart">REINTENTAR</button>
-      <button class="menu-btn" id="btnMenu">MENÚ PRINCIPAL</button>
+      <div class="go-scores" id="goScores"></div>
+      <div class="go-btns">
+        <button class="menu-btn primary" id="btnRestart">REINTENTAR</button>
+        <button class="menu-btn" id="btnMenu">MENÚ PRINCIPAL</button>
+      </div>
     </div>
   </div>
 
@@ -79,7 +142,9 @@
       </div>
       <div class="hud-score"><span id="scoreText">0</span><span class="hud-label">PTS</span></div>
       <div class="hud-kills"><span id="killsText">0</span><span class="hud-label">BAJAS</span></div>
+      <div class="hud-streak"><span id="streakText">0</span><span class="hud-label">RACHA</span></div>
       <div class="hud-round-info"><span id="hudRound">OLEADA 0</span><span class="hud-label">OLEADA</span></div>
+      <button class="hud-snd-btn" id="hudSndBtn">🔊</button>
     </div>
 
     <div class="hud-bottom">
@@ -115,6 +180,8 @@
       <canvas id="minimapCanvas" width="140" height="140"></canvas>
     </div>
     <div class="hud-reload" id="reloadIndicator">RECARGANDO</div>
+    <div class="hud-headshot" id="hsIndicator">HEADSHOT</div>
+    <div class="hud-streak-msg" id="streakMsg"></div>
   </div>
 
   <!-- PAUSE OVERLAY -->

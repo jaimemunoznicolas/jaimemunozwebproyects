@@ -34,7 +34,7 @@
       name: 'Strike Battle',
       path: 'shooter/index.html',
       icon: '🎯',
-      desc: 'FPS 3D con bots estilo Counter-Strike: dispara, sobrevive y gana rondas.',
+      desc: 'FPS táctico 3D: 5 armas, 10 rondas, mapa 120m, bots con IA, minimapa, armadura, headshots.',
       tags: ['html', 'css', 'js', 'threejs'],
     },
   ];

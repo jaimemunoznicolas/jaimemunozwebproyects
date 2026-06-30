@@ -3,47 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strike Battle — FPS 3D</title>
+  <title>Strike Battle — FPS Táctico</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- MAIN MENU -->
+  <div id="gameCanvas"></div>
+
+  <!-- ─── MAIN MENU ─── -->
   <div id="menu" class="overlay">
+    <div class="menu-bg-canvas" id="menuBg"></div>
     <div class="menu-content">
+      <div class="menu-title-glow"></div>
       <div class="menu-title">
-        <span class="title-line">STRIKE</span>
+        <span class="title-line sm">STRIKE</span>
         <span class="title-line accent">BATTLE</span>
       </div>
-      <p class="menu-sub">Combate táctico 3D contra bots</p>
+      <p class="menu-sub">Combate táctico 3D · 5 armas · 5 rondas</p>
       <div class="menu-btns">
         <button class="menu-btn primary" id="btnPlay">JUGAR</button>
+        <button class="menu-btn" id="btnSelectWeapon">ARMAS</button>
+        <button class="menu-btn" id="btnDifficulty">DIFICULTAD</button>
         <button class="menu-btn" id="btnControls">CONTROLES</button>
         <a href="../index.html" class="menu-btn back-btn">← MENÚ PRINCIPAL</a>
+      </div>
+      <div class="menu-loadout" id="menuLoadout">
+        <span class="loadout-label">CARGA:</span>
+        <span class="loadout-weapon" id="menuWeapon">ASSAULT RIFLE</span>
+      </div>
+      <div class="menu-diff" id="menuDiff">
+        <span class="loadout-label">DIFICULTAD:</span>
+        <span class="loadout-weapon" id="menuDifficulty">NORMAL</span>
       </div>
       <div class="menu-footer">WASD · Dispara · Sobrevive</div>
     </div>
   </div>
 
-  <!-- CONTROLS MODAL -->
+  <!-- ─── WEAPON SELECT ─── -->
+  <div id="weaponSelect" class="overlay" style="display:none">
+    <div class="modal-box wide">
+      <h2>SELECCIONA ARMA PRINCIPAL</h2>
+      <div class="weapon-grid" id="weaponGrid"></div>
+      <button class="menu-btn primary" id="btnCloseWeapons">LISTO</button>
+    </div>
+  </div>
+
+  <!-- ─── DIFFICULTY SELECT ─── -->
+  <div id="difficultySelect" class="overlay" style="display:none">
+    <div class="modal-box">
+      <h2>DIFICULTAD</h2>
+      <div class="diff-grid">
+        <button class="diff-btn" data-diff="easy">FÁCIL<br><small>Bots lentos, poco daño</small></button>
+        <button class="diff-btn selected" data-diff="normal">NORMAL<br><small>Equilibrado</small></button>
+        <button class="diff-btn" data-diff="hard">DIFÍCIL<br><small>Bots agresivos, más daño</small></button>
+        <button class="diff-btn" data-diff="insane">LOCO<br><small>Bots letales, oleadas masivas</small></button>
+      </div>
+      <button class="menu-btn primary" id="btnCloseDiff">LISTO</button>
+    </div>
+  </div>
+
+  <!-- ─── CONTROLS MODAL ─── -->
   <div id="controlsModal" class="overlay" style="display:none">
     <div class="modal-box">
       <h2>CONTROLES</h2>
       <div class="controls-grid">
         <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div><span>Moverse</span>
         <div><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd></div><span>Moverse</span>
-        <div><kbd>Mouse</kbd></div><span>Mirar / Apuntar</div>
+        <div><kbd>Mouse</kbd></div><span>Mirar / Apuntar</span>
         <div><kbd>CLIC</kbd></div><span>Disparar</span>
         <div><kbd>R</kbd></div><span>Recargar</span>
+        <div><kbd>1</kbd>-<kbd>5</kbd></div><span>Cambiar arma</span>
         <div><kbd>ESPACIO</kbd></div><span>Saltar</span>
         <div><kbd>ESC</kbd></div><span>Pausa / Soltar ratón</span>
       </div>
       <button class="menu-btn primary" id="btnCloseControls">VOLVER</button>
-      <p class="modal-note">Haz clic en "JUGAR" y luego en la pantalla para bloquear el ratón.</p>
     </div>
   </div>
 
-  <!-- GAME OVER -->
+  <!-- ─── GAME OVER ─── -->
   <div id="gameOver" class="overlay" style="display:none">
     <div class="modal-box">
       <h2 class="go-title">FIN DEL JUEGO</h2>
@@ -51,17 +88,20 @@
         <div class="go-stat"><span>PUNTUACIÓN</span><span id="finalScore">0</span></div>
         <div class="go-stat"><span>BAJAS</span><span id="finalKills">0</span></div>
         <div class="go-stat"><span>RONDAS</span><span id="finalRounds">1</span></div>
+        <div class="go-stat"><span>PRECISIÓN</span><span id="finalAcc">0%</span></div>
       </div>
+      <div class="go-mvp" id="mvpDisplay"></div>
       <button class="menu-btn primary" id="btnRestart">REINICIAR</button>
       <button class="menu-btn" id="btnMenu">MENÚ PRINCIPAL</button>
     </div>
   </div>
 
-  <!-- HUD -->
+  <!-- ─── HUD ─── -->
   <div id="hud" style="display:none">
     <div class="hud-top">
       <div class="hud-health">
         <div class="hud-bar-bg"><div class="hud-bar-fill" id="healthBar"></div></div>
+        <div class="hud-armor-bg"><div class="hud-armor-fill" id="armorBar"></div></div>
         <span id="healthText">100</span>
       </div>
       <div class="hud-score">
@@ -72,22 +112,54 @@
         <span id="killsText">0</span>
         <span class="hud-label">BAJAS</span>
       </div>
-    </div>
-    <div class="hud-bottom">
-      <div class="hud-ammo">
-        <span id="ammoText">30</span>
-        <span class="hud-ammo-sep">/</span>
-        <span id="ammoReserve">30</span>
+      <div class="hud-round-info">
+        <span id="hudRound">R1</span>
+        <span class="hud-label">RONDA</span>
       </div>
     </div>
-    <div class="hud-crosshair" id="crosshair">+</div>
-    <div class="hud-dmg" id="dmgOverlay"></div>
-    <div class="hud-killfeed" id="killFeed"></div>
-    <div class="hud-round" id="roundInfo">RONDA 1</div>
-    <div class="hud-bots" id="botsAlive"></div>
-  </div>
 
-  <div id="gameCanvas"></div>
+    <div class="hud-bottom">
+      <div class="hud-weapon-box">
+        <div class="hud-weapon-icon" id="weaponIcon"></div>
+        <div class="hud-weapon-info">
+          <span id="weaponName">ASSAULT RIFLE</span>
+          <div class="hud-ammo">
+            <span id="ammoText">30</span>
+            <span class="hud-ammo-sep">/</span>
+            <span id="ammoReserve">120</span>
+          </div>
+        </div>
+      </div>
+      <div class="hud-weapon-strip" id="weaponStrip"></div>
+    </div>
+
+    <div class="hud-crosshair" id="crosshair">
+      <div class="ch-line ch-top"></div>
+      <div class="ch-line ch-right"></div>
+      <div class="ch-line ch-bottom"></div>
+      <div class="ch-line ch-left"></div>
+      <div class="ch-dot"></div>
+    </div>
+
+    <div class="hud-hitmarker" id="hitmarker">
+      <div class="hm-line hm-tl"></div><div class="hm-line hm-tr"></div>
+      <div class="hm-line hm-bl"></div><div class="hm-line hm-br"></div>
+    </div>
+
+    <div class="hud-dmg" id="dmgOverlay"><div class="dmg-vignette"></div></div>
+    <div class="hud-killfeed" id="killFeed"></div>
+    <div class="hud-round" id="roundInfo"></div>
+    <div class="hud-bots" id="botsAlive"></div>
+    <div class="hud-lowhp" id="lowhpOverlay"></div>
+    <div id="damageNumbers"></div>
+
+    <!-- Minimap -->
+    <div class="hud-minimap" id="minimap">
+      <canvas id="minimapCanvas" width="140" height="140"></canvas>
+    </div>
+
+    <div class="hud-reload" id="reloadIndicator">RECARGANDO</div>
+  </div>
 
   <script type="importmap">
   {
@@ -96,6 +168,6 @@
     }
   }
   </script>
-  <script type="module" src="app.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -93,12 +93,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function generatePDF() {
-        allAnimated.forEach(function (el) { el.style.opacity = '1'; el.style.transform = 'none'; el.style.transition = 'none'; });
-        cv.style.opacity = '1'; cv.style.transform = 'none'; cv.style.transition = 'none';
+        // Reset animations for clean capture
+        allAnimated.forEach(function (el) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.transition = 'none';
+        });
+        cv.style.opacity = '1';
+        cv.style.transform = 'none';
+        cv.style.transition = 'none';
 
+        // Hide back button
         var backBtn = document.querySelector('.menu-back-btn');
         if (backBtn) backBtn.style.display = 'none';
 
+        // Temporarily make the CV fill A4 width exactly (remove flex centering)
+        document.body.style.cssText += ';display:block !important;padding:0 !important;min-height:auto !important;align-items:normal !important;';
+        cv.style.cssText += ';max-width:794px !important;width:794px !important;margin:0 auto !important;box-shadow:none !important;border-radius:0 !important;';
+
+        // Show loading overlay
         if (!document.getElementById('pspin')) {
             var st = document.createElement('style');
             st.id = 'pspin';
@@ -107,28 +120,88 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         var loader = showOverlay('<div style="width:40px;height:40px;border:4px solid #e0e0e0;border-top-color:#4a9eff;border-radius:50%;animation:pspin 0.8s linear infinite;margin:0 auto 16px;"></div><p style="font-family:Segoe UI,sans-serif;font-size:15px;color:#333;margin:0;">Generando PDF...</p>');
 
+        // Wait for layout to settle
         setTimeout(function () {
-            html2pdf().set({
-                margin: { top: 0, bottom: 0, left: 0, right: 0 },
-                filename: 'Curriculum-JaimeMunozNicolas.pdf',
-                image: { type: 'jpeg', quality: 0.95 },
-                html2canvas: {
-                    scale: 2,
-                    useCORS: true,
-                    backgroundColor: '#ffffff',
-                    logging: false,
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['css', 'legacy'] }
-            }).from(cv).save().then(function () {
+            // Capture with html2canvas
+            html2canvas(cv, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                width: 794,
+                windowWidth: 794,
+            }).then(function (canvas) {
+                // Restore original CV and body styles
+                cv.style.maxWidth = '';
+                cv.style.width = '';
+                cv.style.margin = '';
+                cv.style.boxShadow = '';
+                cv.style.borderRadius = '';
+                document.body.style.cssText = '';
+
+                // Create PDF with jsPDF
+                var pdf = new jspdf.jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4',
+                    compress: true,
+                });
+
+                var pageWidth = pdf.internal.pageSize.getWidth();
+                var pageHeight = pdf.internal.pageSize.getHeight();
+                var margin = 6;
+                var usableWidth = pageWidth - margin * 2;
+                var usableHeight = pageHeight - margin * 2;
+
+                // Image dimensions to fit width (with margins)
+                var imgWidth = usableWidth;
+                var imgHeight = (canvas.height / canvas.width) * imgWidth;
+
+                if (imgHeight <= usableHeight) {
+                    // Fits on one page — center it vertically
+                    var yOffset = margin + (usableHeight - imgHeight) / 2;
+                    pdf.addImage(canvas, 'JPEG', margin, yOffset, imgWidth, imgHeight);
+                } else {
+                    // Splits across multiple pages
+                    var ratio = canvas.width / imgWidth;
+                    var sliceHeightPx = usableHeight * ratio;
+                    var y = 0;
+                    var pageNum = 0;
+
+                    while (y < canvas.height) {
+                        if (pageNum > 0) pdf.addPage();
+                        var h = Math.min(sliceHeightPx, canvas.height - y);
+                        var destH = h / ratio;
+
+                        // Slice the canvas for this page
+                        var slice = document.createElement('canvas');
+                        slice.width = canvas.width;
+                        slice.height = h;
+                        var sliceCtx = slice.getContext('2d');
+                        sliceCtx.drawImage(canvas, 0, y, canvas.width, h, 0, 0, canvas.width, h);
+
+                        pdf.addImage(slice, 'JPEG', margin, margin, imgWidth, destH);
+                        y += h;
+                        pageNum++;
+                    }
+                }
+
+                pdf.save('Curriculum-JaimeMunozNicolas.pdf');
                 loader.remove();
                 if (backBtn) backBtn.style.display = '';
             }).catch(function () {
+                // Restore and fallback to browser print
+                cv.style.maxWidth = '';
+                cv.style.width = '';
+                cv.style.margin = '';
+                cv.style.boxShadow = '';
+                cv.style.borderRadius = '';
+                document.body.style.cssText = '';
                 loader.remove();
                 if (backBtn) backBtn.style.display = '';
                 window.print();
             });
-        }, 300);
+        }, 200);
     }
 
     var btn = document.createElement('button');

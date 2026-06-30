@@ -49,17 +49,55 @@ header {
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  font-size: 36px;
-  font-weight: 700;
-  color: #fff;
   box-shadow: 0 8px 40px rgba(102, 126, 234, 0.35);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: default;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+  user-select: none;
 }
 
 .avatar:hover {
-  transform: scale(1.06) rotate(-3deg);
   box-shadow: 0 12px 50px rgba(102, 126, 234, 0.5);
+}
+
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transform-style: preserve-3d;
+}
+
+.avatar.flipped .avatar-inner {
+  transform: rotateY(180deg);
+}
+
+.avatar-letters,
+.avatar-photo {
+  position: absolute;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.avatar-letters {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.avatar-photo {
+  transform: rotateY(180deg);
+  object-fit: cover;
+  display: block;
 }
 
 h1 {
@@ -317,42 +355,43 @@ h1 {
 
 .linktree-section {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 28px;
   animation: fadeUp 0.6s ease 0.5s both;
 }
 
-.linktree-btn {
+.linktree-link {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(135deg, #43e97b, #38f9d7);
-  color: #0a0a1a;
-  padding: 14px 32px;
-  border-radius: 60px;
+  gap: 6px;
+  color: #666699;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 24px rgba(67, 233, 123, 0.25);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.25s ease;
 }
 
-.linktree-btn:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 8px 40px rgba(67, 233, 123, 0.4);
+.linktree-link:hover {
+  color: #43e97b;
+  border-color: rgba(67, 233, 123, 0.2);
+  background: rgba(67, 233, 123, 0.05);
 }
 
 .linktree-icon {
-  font-size: 1.4rem;
+  font-size: 0.9rem;
 }
 
 .linktree-arrow {
-  font-size: 1.1rem;
-  opacity: 0.7;
+  font-size: 0.75rem;
+  opacity: 0.5;
   transition: transform 0.2s;
 }
 
-.linktree-btn:hover .linktree-arrow {
-  transform: translate(3px, -3px);
+.linktree-link:hover .linktree-arrow {
+  transform: translate(2px, -2px);
   opacity: 1;
 }
 

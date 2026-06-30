@@ -286,6 +286,9 @@ body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
+    .menu-back-btn {
+        display: none !important;
+    }
     #pdf-overlay {
         display: none !important;
     }

@@ -96,6 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
         allAnimated.forEach(function (el) { el.style.opacity = '1'; el.style.transform = 'none'; el.style.transition = 'none'; });
         cv.style.opacity = '1'; cv.style.transform = 'none'; cv.style.transition = 'none';
 
+        var backBtn = document.querySelector('.menu-back-btn');
+        if (backBtn) backBtn.style.display = 'none';
+
         if (!document.getElementById('pspin')) {
             var st = document.createElement('style');
             st.id = 'pspin';
@@ -105,17 +108,29 @@ document.addEventListener('DOMContentLoaded', function () {
         var loader = showOverlay('<div style="width:40px;height:40px;border:4px solid #e0e0e0;border-top-color:#4a9eff;border-radius:50%;animation:pspin 0.8s linear infinite;margin:0 auto 16px;"></div><p style="font-family:Segoe UI,sans-serif;font-size:15px;color:#333;margin:0;">Generando PDF...</p>');
 
         setTimeout(function () {
-            html2pdf().set({
-                margin: 0,
+            var opt = {
+                margin: [8, 8, 8, 8],
                 filename: 'Curriculum-JaimeMunozNicolas.pdf',
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 3, useCORS: true, letterRendering: true, logging: false, backgroundColor: '#ffffff' },
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    width: cv.scrollWidth,
+                    height: cv.scrollHeight,
+                    windowHeight: cv.scrollHeight,
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            }).from(cv).save().then(function () {
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(cv).save().then(function () {
                 loader.remove();
+                if (backBtn) backBtn.style.display = '';
             }).catch(function () {
                 loader.remove();
+                if (backBtn) backBtn.style.display = '';
                 window.print();
             });
         }, 300);

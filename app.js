@@ -113,6 +113,12 @@
     mouseY = e.clientY;
   });
 
+  /* ---- Avatar toggle ---- */
+  const avatar = document.getElementById('avatar');
+  avatar.addEventListener('click', () => {
+    avatar.classList.toggle('flipped');
+  });
+
   /* ---- Render projects ---- */
   const container = document.getElementById('projects');
   const searchInput = document.getElementById('searchInput');

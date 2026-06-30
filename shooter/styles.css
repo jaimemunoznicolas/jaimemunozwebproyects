@@ -11,8 +11,14 @@ body {
 }
 
 #gameCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; }
-.menu-bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-.menu-bg-canvas canvas { pointer-events: none; }
+
+/* Everything inside menu overlay is non-interactive except .menu-content */
+#menu > * { pointer-events: none; }
+#menu > .menu-content { pointer-events: auto; }
+#menu > .menu-content * { pointer-events: auto; }
+
+.menu-bg-canvas { position: absolute; inset: 0; z-index: 0; }
+.menu-bg-canvas canvas { pointer-events: none !important; }
 
 /* ─── OVERLAYS ─── */
 .overlay {
@@ -36,6 +42,7 @@ body {
   background: radial-gradient(circle, rgba(255,68,68,0.08) 0%, transparent 70%);
   transform: translate(-50%,-50%);
   animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
 }
 @keyframes glowPulse { 0%,100% { transform:translate(-50%,-50%) scale(1); opacity:0.6; } 50% { transform:translate(-50%,-50%) scale(1.2); opacity:1; } }
 

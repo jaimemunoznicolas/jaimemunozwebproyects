@@ -186,6 +186,16 @@ kbd { display:inline-block; padding:2px 7px; background:rgba(255,255,255,0.06); 
 .hud-round-info { display:flex; align-items:baseline; gap:2px; margin-left:auto; }
 #hudRound { font-size:0.8rem; font-weight:700; color:#44ff44; }
 
+/* ─── BOSS HP BAR ─── */
+.boss-bar {
+  position:absolute; top:54px; left:50%; transform:translateX(-50%);
+  text-align:center; width:280px;
+}
+.boss-bar-name { font-size:0.65rem; color:#ff4444; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:3px; }
+.boss-bar-bg { width:100%; height:6px; background:rgba(0,0,0,0.7); border-radius:3px; overflow:hidden; border:1px solid rgba(255,68,68,0.15); }
+.boss-bar-fill { height:100%; background:linear-gradient(90deg,#ff4444,#ff8844,#ff4444); border-radius:3px; transition:width 0.15s; width:100%; }
+.boss-bar .boss-hp-text { font-size:0.5rem; color:#ff4444; margin-top:2px; letter-spacing:1px; }
+
 .hud-bottom { position:absolute; bottom:14px; left:14px; display:flex; flex-direction:column; gap:4px; }
 .hud-weapon-box { display:flex; align-items:center; gap:8px; background:rgba(0,0,0,0.5); padding:6px 12px; border-radius:6px; }
 .hud-weapon-icon { width:28px; height:28px; background:rgba(255,255,255,0.05); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:1rem; }

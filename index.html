@@ -3,24 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaime Muñoz - Proyectos</title>
+  <title>Jaime Muñoz - Portafolio de Proyectos</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="stars"></div>
+  <canvas id="bgCanvas"></canvas>
+
   <div class="container">
     <header>
       <div class="avatar">
         <span>JM</span>
       </div>
       <h1>Jaime Muñoz</h1>
-      <p class="subtitle">Mis proyectos web</p>
+      <p class="subtitle">Explora todos mis proyectos web</p>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar proyecto..." autocomplete="off">
+      </div>
     </header>
+
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-number" id="projectCount">0</span>
+        <span class="stat-label">Proyectos</span>
+      </div>
+    </div>
 
     <div class="projects" id="projects"></div>
 
     <footer>
-      <p>&copy; 2026 Jaime Muñoz</p>
+      <p>&copy; 2026 Jaime Muñoz &mdash; Todos los proyectos son funcionales</p>
     </footer>
   </div>
 

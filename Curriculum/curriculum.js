@@ -103,11 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
         cv.style.transform = 'none';
         cv.style.transition = 'none';
 
-        // Hide floating buttons (back, linktree)
+        // Hide back button
         var backBtn = document.querySelector('.menu-back-btn');
         if (backBtn) backBtn.style.display = 'none';
-        var ltBtn = document.querySelector('.linktree-float-btn');
-        if (ltBtn) ltBtn.style.display = 'none';
 
         // Temporarily make the CV fill A4 width exactly (remove flex centering)
         document.body.style.cssText += ';display:block !important;padding:0 !important;min-height:auto !important;align-items:normal !important;';
@@ -153,18 +151,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 var pageHeight = pdf.internal.pageSize.getHeight();
                 var margin = 6;
                 var usableWidth = pageWidth - margin * 2;
-                var usableHeight = pageHeight - margin * 2;
+                var usableHeight = pageHeight - margin * 2 - 7;
 
                 // Image dimensions to fit width (with margins)
                 var imgWidth = usableWidth;
                 var imgHeight = (canvas.height / canvas.width) * imgWidth;
 
                 if (imgHeight <= usableHeight) {
-                    // Fits on one page — center it vertically
                     var yOffset = margin + (usableHeight - imgHeight) / 2;
                     pdf.addImage(canvas, 'JPEG', margin, yOffset, imgWidth, imgHeight);
                 } else {
-                    // Splits across multiple pages
                     var ratio = canvas.width / imgWidth;
                     var sliceHeightPx = usableHeight * ratio;
                     var y = 0;
@@ -175,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         var h = Math.min(sliceHeightPx, canvas.height - y);
                         var destH = h / ratio;
 
-                        // Slice the canvas for this page
                         var slice = document.createElement('canvas');
                         slice.width = canvas.width;
                         slice.height = h;
@@ -188,10 +183,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
 
+                // Add clickable Linktree link on each page
+                var pages = pdf.internal.getNumberOfPages();
+                for (var pi = 1; pi <= pages; pi++) {
+                    pdf.setPage(pi);
+                    pdf.setFontSize(7);
+                    var linkY = pageHeight - margin - 1;
+                    var linkText = '🔗 linktr.ee/jaimemunoznicolas';
+                    var textWidth = pdf.getTextWidth(linkText);
+                    var linkX = (pageWidth - textWidth) / 2;
+                    pdf.setTextColor(80, 80, 120);
+                    pdf.textWithLink(linkText, linkX, linkY, { url: 'https://linktr.ee/jaimemunoznicolas' });
+                }
+
                 pdf.save('Curriculum-JaimeMunozNicolas.pdf');
                 loader.remove();
                 if (backBtn) backBtn.style.display = '';
-                if (ltBtn) ltBtn.style.display = '';
             }).catch(function () {
                 // Restore and fallback to browser print
                 cv.style.maxWidth = '';
@@ -202,7 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.style.cssText = '';
                 loader.remove();
                 if (backBtn) backBtn.style.display = '';
-                if (ltBtn) ltBtn.style.display = '';
                 window.print();
             });
         }, 200);

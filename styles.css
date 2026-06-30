@@ -345,6 +345,11 @@ h1 {
   color: #66c6ea;
 }
 
+.tag-threejs {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff6b6b;
+}
+
 .no-results {
   grid-column: 1 / -1;
   text-align: center;

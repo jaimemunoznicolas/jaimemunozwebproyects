@@ -30,6 +30,13 @@
       desc: 'Calculadora científica completa con trigonometría, logaritmos, factorial y más.',
       tags: ['html', 'css', 'js'],
     },
+    {
+      name: 'Strike Battle',
+      path: 'shooter/index.html',
+      icon: '🎯',
+      desc: 'FPS 3D con bots estilo Counter-Strike: dispara, sobrevive y gana rondas.',
+      tags: ['html', 'css', 'js', 'threejs'],
+    },
   ];
 
   /* ---- Canvas particles ---- */

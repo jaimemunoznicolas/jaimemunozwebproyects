@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strike Battle — FPS 3D</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- MAIN MENU -->
+  <div id="menu" class="overlay">
+    <div class="menu-content">
+      <div class="menu-title">
+        <span class="title-line">STRIKE</span>
+        <span class="title-line accent">BATTLE</span>
+      </div>
+      <p class="menu-sub">Combate táctico 3D contra bots</p>
+      <div class="menu-btns">
+        <button class="menu-btn primary" id="btnPlay">JUGAR</button>
+        <button class="menu-btn" id="btnControls">CONTROLES</button>
+        <a href="../index.html" class="menu-btn back-btn">← MENÚ PRINCIPAL</a>
+      </div>
+      <div class="menu-footer">WASD · Dispara · Sobrevive</div>
+    </div>
+  </div>
+
+  <!-- CONTROLS MODAL -->
+  <div id="controlsModal" class="overlay" style="display:none">
+    <div class="modal-box">
+      <h2>CONTROLES</h2>
+      <div class="controls-grid">
+        <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div><span>Moverse</span>
+        <div><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd></div><span>Moverse</span>
+        <div><kbd>Mouse</kbd></div><span>Mirar / Apuntar</div>
+        <div><kbd>CLIC</kbd></div><span>Disparar</span>
+        <div><kbd>R</kbd></div><span>Recargar</span>
+        <div><kbd>ESPACIO</kbd></div><span>Saltar</span>
+        <div><kbd>ESC</kbd></div><span>Pausa / Soltar ratón</span>
+      </div>
+      <button class="menu-btn primary" id="btnCloseControls">VOLVER</button>
+      <p class="modal-note">Haz clic en "JUGAR" y luego en la pantalla para bloquear el ratón.</p>
+    </div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div id="gameOver" class="overlay" style="display:none">
+    <div class="modal-box">
+      <h2 class="go-title">FIN DEL JUEGO</h2>
+      <div class="go-stats">
+        <div class="go-stat"><span>PUNTUACIÓN</span><span id="finalScore">0</span></div>
+        <div class="go-stat"><span>BAJAS</span><span id="finalKills">0</span></div>
+        <div class="go-stat"><span>RONDAS</span><span id="finalRounds">1</span></div>
+      </div>
+      <button class="menu-btn primary" id="btnRestart">REINICIAR</button>
+      <button class="menu-btn" id="btnMenu">MENÚ PRINCIPAL</button>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" style="display:none">
+    <div class="hud-top">
+      <div class="hud-health">
+        <div class="hud-bar-bg"><div class="hud-bar-fill" id="healthBar"></div></div>
+        <span id="healthText">100</span>
+      </div>
+      <div class="hud-score">
+        <span id="scoreText">0</span>
+        <span class="hud-label">PTS</span>
+      </div>
+      <div class="hud-kills">
+        <span id="killsText">0</span>
+        <span class="hud-label">BAJAS</span>
+      </div>
+    </div>
+    <div class="hud-bottom">
+      <div class="hud-ammo">
+        <span id="ammoText">30</span>
+        <span class="hud-ammo-sep">/</span>
+        <span id="ammoReserve">30</span>
+      </div>
+    </div>
+    <div class="hud-crosshair" id="crosshair">+</div>
+    <div class="hud-dmg" id="dmgOverlay"></div>
+    <div class="hud-killfeed" id="killFeed"></div>
+    <div class="hud-round" id="roundInfo">RONDA 1</div>
+    <div class="hud-bots" id="botsAlive"></div>
+  </div>
+
+  <div id="gameCanvas"></div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -42,18 +42,50 @@ renderer.toneMappingExposure = 1.0;
 canvasContainer.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0a0a0a);
-scene.fog = new THREE.FogExp2(0x0a0a0a, 0.0045);
+scene.background = new THREE.Color(0x1a1a2e);
+scene.fog = new THREE.FogExp2(0x1a1a2e, 0.003);
+
+// Sky dome
+const skyGeo = new THREE.SphereGeometry(180, 32, 32);
+const skyMat = new THREE.ShaderMaterial({
+  side: THREE.BackSide,
+  uniforms: {
+    topColor: { value: new THREE.Color(0x1a1a4e) },
+    bottomColor: { value: new THREE.Color(0x0a0a0a) },
+    offset: { value: 10 },
+    exponent: { value: 0.4 }
+  },
+  vertexShader: `
+    varying vec3 vWorldPosition;
+    void main() {
+      vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+      vWorldPosition = worldPosition.xyz;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform vec3 topColor;
+    uniform vec3 bottomColor;
+    uniform float offset;
+    uniform float exponent;
+    varying vec3 vWorldPosition;
+    void main() {
+      float h = normalize(vWorldPosition + offset).y;
+      gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
+    }
+  `
+});
+const sky = new THREE.Mesh(skyGeo, skyMat);
+scene.add(sky);
 
 const camera = new THREE.PerspectiveCamera(72, innerWidth/innerHeight, 0.1, 200);
 scene.add(camera);
 camera.position.set(0, PH, 0);
 const clock = new THREE.Clock();
 
-scene.add(new THREE.AmbientLight(0x442222, 0.3));
-scene.add(new THREE.HemisphereLight(0x442222, 0x221111, 0.4));
-const sun = new THREE.DirectionalLight(0xff8844, 0.8);
-sun.position.set(20, 40, -20);
+let dayTime = 0.3; // start at morning
+const sun = new THREE.DirectionalLight(0xffddaa, 1.8);
+sun.position.set(30, 40, -20);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048,2048);
 sun.shadow.camera.near = 0.5; sun.shadow.camera.far = 120;
@@ -61,12 +93,13 @@ sun.shadow.camera.left = -80; sun.shadow.camera.right = 80;
 sun.shadow.camera.top = 80; sun.shadow.camera.bottom = -80;
 sun.shadow.bias = -0.002;
 scene.add(sun);
-const moon = new THREE.DirectionalLight(0x4444aa, 0.3);
-moon.position.set(-30, 20, 30);
-scene.add(moon);
-const redglow = new THREE.PointLight(0xff2200, 0.5, 50);
-redglow.position.set(0, 10, 0);
-scene.add(redglow);
+const ambLight = new THREE.AmbientLight(0x8888cc, 0.5);
+scene.add(ambLight);
+const hemiLight = new THREE.HemisphereLight(0x87ceeb, 0x443322, 0.6);
+scene.add(hemiLight);
+const fillLight = new THREE.DirectionalLight(0x8888ff, 0.3);
+fillLight.position.set(-20, 10, 30);
+scene.add(fillLight);
 
 const fogParticles = new THREE.Points(
   new THREE.BufferGeometry(),
@@ -153,7 +186,7 @@ const cw = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.3, 0.05, 16), new TH
 cw.position.set(0, 0.8, 0); scene.add(cw);
 const cs = new THREE.Mesh(new THREE.SphereGeometry(0.25, 8, 8), new THREE.MeshStandardMaterial({ color:0x8888bb, metalness:0.5 }));
 cs.position.set(0, 1.1, 0); scene.add(cs);
-walls.push({ mesh:cp, minX:-2, maxX:2, minZ:-2, maxZ:2 });
+walls.push({ mesh:cp, minX:-1.5, maxX:1.5, minZ:-1.5, maxZ:1.5 });
 for (let i=0;i<4;i++) {
   const a=i*Math.PI/2;
   const col = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 2.5, 8), new THREE.MeshStandardMaterial({ color:0x444466, roughness:0.5 }));
@@ -233,6 +266,55 @@ for (const [fx,fz] of [[-20,-40],[20,40],[-40,-20],[40,20],[-40,20],[40,-20]]) {
   const fl = new THREE.PointLight(0xff4400, 0.4, 5); fl.position.set(fx, 0.6, fz); scene.add(fl);
   walls.push({ mesh:m, minX:fx-0.35, maxX:fx+0.35, minZ:fz-0.35, maxZ:fz+0.35 });
 }
+
+// Extra details: graves, debris, blood pools
+function grave(x,z) {
+  const g = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.15, 0.2), new THREE.MeshStandardMaterial({ color:0x555555, roughness:0.9 }));
+  g.position.set(x, 0.08, z); g.castShadow=true; scene.add(g);
+  const cross = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.3, 0.04), new THREE.MeshStandardMaterial({ color:0x777777, metalness:0.3 }));
+  cross.position.set(x, 0.25, z); scene.add(cross);
+  const cross2 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.04, 0.04), new THREE.MeshStandardMaterial({ color:0x777777, metalness:0.3 }));
+  cross2.position.set(x, 0.35, z); scene.add(cross2);
+  walls.push({ mesh:g, minX:x-0.3, maxX:x+0.3, minZ:z-0.15, maxZ:z+0.15 });
+}
+for (const [gx,gz] of [[-12,-25],[12,25],[-25,12],[25,-12],[-8,38],[38,8],[8,-38],[-38,-8],[-45,-15],[45,15],[-45,15],[45,-15]])
+  grave(gx,gz);
+
+// Blood pools on ground
+function bloodPool(x,z) {
+  const m = new THREE.Mesh(new THREE.CircleGeometry(0.4+Math.random()*0.4, 6), new THREE.MeshBasicMaterial({ color:0x330000, transparent:true, opacity:0.3+Math.random()*0.2 }));
+  m.rotation.x = -Math.PI/2; m.position.set(x, 0.02, z); scene.add(m);
+}
+for (const [bx,bz] of [[-5,-5],[5,5],[-5,5],[5,-5],[-15,-20],[20,15],[-20,15],[15,-20],[-30,-35],[35,30],[-35,30],[30,-35],[-10,42],[42,-10],[10,-42],[-42,10]])
+  bloodPool(bx,bz);
+
+// Rubble piles
+function rubble(x,z) {
+  for (let i=0;i<5+Math.floor(Math.random()*8);i++) {
+    const s = 0.05+Math.random()*0.15;
+    const m = new THREE.Mesh(new THREE.DodecahedronGeometry(s, 0), new THREE.MeshStandardMaterial({ color:[0x555555,0x444444,0x666655][Math.floor(Math.random()*3)], roughness:0.9 }));
+    m.position.set(x+(Math.random()-0.5)*0.6, s*0.5, z+(Math.random()-0.5)*0.6); m.castShadow=true; scene.add(m);
+  }
+}
+for (const [rx,rz] of [[-18,-35],[18,35],[-35,18],[35,-18],[-40,-40],[40,40],[-40,40],[40,-40],[-50,-5],[50,5],[-50,5],[50,-5],[-5,-50],[5,50]])
+  rubble(rx,rz);
+
+// Wrecked helicopter (cosmetic)
+function helicopter(x,z,rot) {
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.4, 0.6), new THREE.MeshStandardMaterial({ color:0x444433, roughness:0.8 }));
+  body.position.y = 0.3; body.castShadow=true; g.add(body);
+  const tail = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.8), new THREE.MeshStandardMaterial({ color:0x555544, roughness:0.7 }));
+  tail.position.set(0, 0.5, -0.6); g.add(tail);
+  const rotor = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.03, 0.08), new THREE.MeshStandardMaterial({ color:0x666655, metalness:0.3 }));
+  rotor.position.set(0, 0.7, 0); g.add(rotor);
+  const rotor2 = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.03, 1.2), new THREE.MeshStandardMaterial({ color:0x666655, metalness:0.3 }));
+  rotor2.position.set(0, 0.7, 0); g.add(rotor2);
+  g.position.set(x, 0, z); g.rotation.y = rot; scene.add(g);
+  walls.push({ mesh:g, minX:x-1, maxX:x+1, minZ:z-0.6, maxZ:z+0.6 });
+}
+helicopter(-10, -45, 0.5);
+helicopter(45, 10, -0.8);
 
 // Spawn points
 const SPAWNS = [];
@@ -487,6 +569,61 @@ function updateSpitProjectiles(dt) {
 }
 
 let screenShake = 0;
+let dayFactor = 0.7; // starting brightness
+const CYCLE_SPEED = 0.004; // full day/night every ~260 seconds
+
+function updateDayNight(dt) {
+  dayTime = (dayTime + dt * CYCLE_SPEED) % 1;
+  const angle = dayTime * Math.PI * 2;
+  const sinVal = Math.sin(angle);
+  dayFactor = Math.max(0, Math.min(1, sinVal * 0.5 + 0.5));
+  const warm = Math.min(1, Math.max(0, (dayFactor - 0.2) * 2));
+
+  // Sun position
+  const sunAngle = angle;
+  const sunDist = 60;
+  sun.position.set(
+    Math.cos(sunAngle) * sunDist,
+    Math.sin(sunAngle) * sunDist * 0.7 + 10,
+    Math.sin(sunAngle * 0.7) * sunDist
+  );
+  sun.intensity = 0.6 + dayFactor * 1.4;
+  const sr = 0.6 + warm * 0.4;
+  const sg = 0.5 + warm * 0.4;
+  const sb = 0.3 + warm * 0.1;
+  sun.color.setRGB(sr, sg, sb);
+
+  // Ambient light
+  ambLight.intensity = 0.2 + dayFactor * 0.5;
+  const ar = 0.2 + warm * 0.4;
+  const ag = 0.2 + warm * 0.3;
+  const ab = 0.3 + (1 - dayFactor) * 0.4;
+  ambLight.color.setRGB(ar, ag, ab);
+
+  // Hemisphere
+  hemiLight.intensity = 0.2 + dayFactor * 0.6;
+  const hr = 0.3 + warm * 0.5;
+  const hg = 0.4 + warm * 0.3;
+  const hb = 0.5 + (1 - dayFactor) * 0.3;
+  hemiLight.color.setRGB(hr, hg, hb);
+
+  // Sky colors
+  const skyTopR = 0.1 + warm * 0.5;
+  const skyTopG = 0.1 + warm * 0.5;
+  const skyTopB = 0.3 + (1 - dayFactor) * 0.4;
+  skyMat.uniforms.topColor.value.setRGB(skyTopR, skyTopG, skyTopB);
+  
+  const skyBotR = 0.05 + dayFactor * 0.15;
+  const skyBotG = 0.05 + dayFactor * 0.12;
+  const skyBotB = 0.05 + dayFactor * 0.05;
+  skyMat.uniforms.bottomColor.value.setRGB(skyBotR, skyBotG, skyBotB);
+
+  // Scene background
+  scene.background.setRGB(skyTopR * 0.5, skyTopG * 0.5, skyTopB * 0.5);
+
+  // Fog
+  scene.fog.color.setRGB(skyBotR, skyBotG, skyBotB);
+}
 
 // Zombie
 class Zombie {
@@ -1010,7 +1147,8 @@ function startGame(){
   const w=WEAPONS['pistol'];
   G.ammo=w.mag; G.reserve=w.res; G.magSize=w.mag;
   G.reloading=false; G.shootCooldown=0; G.curWeapon='pistol'; curWDef=w;
-  camera.position.set(0, PH, 0);
+  camera.position.set(15, PH, 15);
+  camera.quaternion.identity();
   wave=0; waveActive=false; waveZombieCount=0;
   for (const k in weaponAmmo) delete weaponAmmo[k];
   // Clear rockets and spits from previous game
@@ -1089,6 +1227,12 @@ function frame(){
         if(screenShake < 0.01) screenShake = 0;
       }
       
+      // Day/night cycle
+      updateDayNight(dt);
+
+      // Stars visibility
+      stars.material.opacity = (1 - dayFactor) * 0.5;
+
       // Fog particle drift
       fogParticles.position.z += dt * 0.3;
       if(fogParticles.position.z > 10) fogParticles.position.z = -10;

@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide floating buttons (back, linktree)
         var backBtn = document.querySelector('.menu-back-btn');
         if (backBtn) backBtn.style.display = 'none';
-        var ltBtn = document.querySelector('a[href*="linktr.ee"]');
+        var ltBtn = document.querySelector('.linktree-float-btn');
         if (ltBtn) ltBtn.style.display = 'none';
 
         // Temporarily make the CV fill A4 width exactly (remove flex centering)
@@ -220,21 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
     pdfBtn.addEventListener('mouseenter', function () { this.style.background = '#4a9eff'; this.style.transform = 'translateY(-2px)'; this.style.boxShadow = '0 6px 20px rgba(74,158,255,0.4)'; });
     pdfBtn.addEventListener('mouseleave', function () { this.style.background = '#1f2a3a'; this.style.transform = 'translateY(0)'; this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)'; });
     pdfBtn.addEventListener('click', function () { pdfBtn.disabled = true; pdfBtn.style.opacity = '0.6'; generatePDF(); });
-
-    // Floating button: Linktree (left)
-    var ltBtn = document.createElement('a');
-    ltBtn.href = 'https://linktr.ee/jaimemunoznicolas';
-    ltBtn.target = '_blank';
-    ltBtn.rel = 'noopener';
-    ltBtn.innerHTML = '<span style="font-size:1.1rem;">🔗</span> Linktree';
-    ltBtn.setAttribute('aria-label', 'Abrir Linktree');
-    ltBtn.style.cssText = 'position:fixed;bottom:24px;left:24px;background:#1a3a2a;color:#8acc9a;border:1px solid rgba(138,204,154,0.3);border-radius:8px;padding:12px 20px;font-size:14px;font-family:inherit;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2);z-index:100;transition:all 0.3s ease;opacity:0;transform:translateY(10px);display:flex;align-items:center;gap:8px;text-decoration:none;';
-    document.body.appendChild(ltBtn);
-
-    setTimeout(function () { ltBtn.style.opacity = '1'; ltBtn.style.transform = 'translateY(0)'; }, 1600);
-
-    ltBtn.addEventListener('mouseenter', function () { this.style.background = '#2a5a3a'; this.style.color = '#fff'; this.style.borderColor = '#4caf50'; });
-    ltBtn.addEventListener('mouseleave', function () { this.style.background = '#1a3a2a'; this.style.color = '#8acc9a'; this.style.borderColor = 'rgba(138,204,154,0.3)'; });
 
     cv.style.opacity = '0'; cv.style.transition = 'opacity 0.5s ease';
     setTimeout(function () { cv.style.opacity = '1'; }, 50);

@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { $ } from './utils.js';
 import { initScene, renderer, camera, scene, renderMenuScene } from './scene.js';
-import { initMap, MAP_SIZE, HALF_MAP, getObstacles, mapData } from './map.js';
-import { initParticles, updateParticles, spawnExplosion, spawnSparks } from './particles.js';
+import { initMap, HALF_MAP, getObstacles, mapData } from './map.js';
+import { initParticles, updateParticles, spawnSparks } from './particles.js';
 import { WeaponManager, WEAPON_DEFS, WEAPON_ORDER } from './weapons.js';
 import { Bot, createBots, spawnBots } from './bots.js';
 import { initPlayer, playerState, playerPos, updatePlayer, applyDamage, getForwardRay } from './player.js';
@@ -129,11 +129,12 @@ function checkLineCollision(from, to) {
   if (dist < 0.5) return false;
   dir.normalize();
   const steps = Math.floor(dist / 0.4);
+  const obs = getObstacles();
+  const half = HALF_MAP - 0.2;
   for (let i = 1; i < steps; i++) {
     const p = new THREE.Vector3().copy(from).addScaledVector(dir, i * 0.4);
-    const half = HALF_MAP - 0.2;
     if (p.x < -half || p.x > half || p.z < -half || p.z > half) return true;
-    for (const w of getObstacles()) {
+    for (const w of obs) {
       if (p.x > w.minX && p.x < w.maxX && p.z > w.minZ && p.z < w.maxZ) return true;
     }
   }
@@ -224,8 +225,10 @@ function checkRoundComplete() {
 
     if (gameRound >= BOT_COUNTS.length) {
       setTimeout(() => {
+        if (gameRound === 0) return; // game was restarted
         playSound('victory');
         document.querySelector('.go-title').textContent = 'VICTORIA';
+        renderer.domElement.style.display = 'none';
         showGameOver(playerState.score, playerState.kills, gameRound, totalHits / Math.max(totalShots, 1));
         for (const b of bots) b.hpBar.bg.style.display = 'none';
         gameRunning = false;
@@ -263,9 +266,8 @@ document.addEventListener('mousedown', e => {
   }
 });
 
-// Hold fire for automatic weapons
 document.addEventListener('mouseup', e => {
-  if (e.button === 0) { /* auto-fire handled by key state */ }
+  if (e.button === 0) mouseDown = false;
 });
 
 document.addEventListener('pointerlockchange', () => {
@@ -355,10 +357,7 @@ function frame() {
       }
     }
 
-    // Auto-fire
-    if (keys['']) { } // placeholder
-    // For automatic weapons, check if mouse is held
-    // We track this via a flag
+    // Auto-fire handled by autoFireLoop via mouseDown flag
 
     // Bot positions for minimap
     const botPosArr = bots.filter(b => b.alive).map(b => b.getPos());
@@ -368,10 +367,10 @@ function frame() {
     const aliveBots = bots.filter(b => b.alive).length;
     updateHUD(weaponManager.getState(), gameRound, aliveBots, BOT_COUNTS[Math.min(gameRound - 1, BOT_COUNTS.length - 1)] || aliveBots);
 
-    // Player death check
     if (playerState.dead) {
       gameRunning = false;
       setTimeout(() => {
+        if (!playerState.dead) return;
         renderer.domElement.style.display = 'none';
         $('hud').style.display = 'none';
         showGameOver(playerState.score, playerState.kills, gameRound, totalHits / Math.max(totalShots, 1));
@@ -402,6 +401,6 @@ function autoFireLoop() {
   const def = weaponManager.getDef();
   if (def && def.automatic) {
     playerShoot();
+    setTimeout(autoFireLoop, 16);
   }
-  setTimeout(autoFireLoop, 16);
 }

@@ -194,6 +194,7 @@ export class WeaponManager {
 
     this.currentId = id;
     const w = this.weapons[id];
+    if (!w) return;
     this.group.add(w.model);
     w.model.visible = true;
     w.visible = true;
@@ -201,15 +202,17 @@ export class WeaponManager {
   }
 
   getCurrent() {
-    return this.weapons[this.currentId];
+    return this.weapons[this.currentId] || null;
   }
 
   getDef() {
-    return this.getCurrent().def;
+    const w = this.getCurrent();
+    return w ? w.def : null;
   }
 
   shoot(raycaster, onHit) {
     const w = this.getCurrent();
+    if (!w) return;
     const def = w.def;
     if (this.reloading) return;
     if (this.cooldown > 0) return;
@@ -243,6 +246,7 @@ export class WeaponManager {
 
   reload() {
     const w = this.getCurrent();
+    if (!w) return;
     const def = w.def;
     if (this.reloading || w.ammo === def.magSize || w.reserve <= 0) return;
     this.reloading = true;

@@ -11,7 +11,8 @@ body {
 }
 
 #gameCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; }
-.menu-bg-canvas { position: fixed; inset: 0; z-index: 0; }
+.menu-bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.menu-bg-canvas canvas { pointer-events: none; }
 
 /* ─── OVERLAYS ─── */
 .overlay {

@@ -17,6 +17,7 @@ export function initScene(container, menuContainer) {
   scene.fog = new THREE.FogExp2(0x080818, 0.006);
 
   camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 0.1, 200);
+  scene.add(camera);
 
   // Lights
   const ambient = new THREE.AmbientLight(0x303060, 0.5);

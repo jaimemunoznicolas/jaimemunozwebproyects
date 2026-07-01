@@ -1,0 +1,51 @@
+{
+  "name": "X0GPT - Asistente de Supervivencia IA",
+  "short_name": "X0GPT",
+  "description": "X0GPT - IA con acceso a internet, base de conocimientos y manual de supervivencia completo",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#ef4444",
+  "orientation": "any",
+  "categories": ["education", "utilities"],
+  "lang": "es",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Supervivencia",
+      "short_name": "Supervivencia",
+      "description": "Preguntas sobre supervivencia",
+      "url": "./index.html?q=supervivencia",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🆘</text></svg>", "sizes": "any"}]
+    },
+    {
+      "name": "Nuevo chat",
+      "short_name": "Nuevo",
+      "description": "Iniciar nueva conversación",
+      "url": "./index.html?new=1",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>", "sizes": "any"}]
+    },
+    {
+      "name": "Fuego",
+      "short_name": "Fuego",
+      "description": "Cómo hacer fuego",
+      "url": "./index.html?q=como+hacer+fuego",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>", "sizes": "any"}]
+    },
+    {
+      "name": "Agua",
+      "short_name": "Agua",
+      "description": "Purificar agua",
+      "url": "./index.html?q=purificar+agua",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>", "sizes": "any"}]
+    }
+  ]
+}

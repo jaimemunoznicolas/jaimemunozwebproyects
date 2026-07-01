@@ -37,6 +37,13 @@
       desc: 'Shooter zombie FPS: 14 tipos de zombies, 10 armas, oleadas infinitas, 5 biomas, jefes, clima dinámico, logros.',
       tags: ['html', 'css', 'js', 'threejs', 'webgl'],
     },
+    {
+      name: 'X0GPT',
+      path: 'X0GPT/index.html',
+      icon: '⚡',
+      desc: 'X0GPT: Asistente IA de supervivencia con acceso a internet, base de conocimientos y manual completo offline.',
+      tags: ['html', 'css', 'js', 'ai', 'survival'],
+    },
   ];
 
   /* ---- Canvas particles ---- */

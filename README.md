@@ -1,16 +1,16 @@
 # 🚀 Portafolio de Proyectos — Jaime Muñoz Nicolás
 
 <p align="center">
-  <img src="https://img.shields.io/badge/PROYECTOS-6-0088ff" />
-  <img src="https://img.shields.io/badge/LINEAS_TOTALES-10.230%2B-44cc44" />
-  <img src="https://img.shields.io/badge/ARCHIVOS-36%2B-ff8800" />
+  <img src="https://img.shields.io/badge/PROYECTOS-7-0088ff" />
+  <img src="https://img.shields.io/badge/LINEAS_TOTALES-21.000%2B-44cc44" />
+  <img src="https://img.shields.io/badge/ARCHIVOS-50%2B-ff8800" />
   <img src="https://img.shields.io/badge/TECNOLOGIAS-18-aa44ff" />
   <img src="https://img.shields.io/badge/DEPENDENCIAS_EXTERNAS-7-ff6b6b" />
   <img src="https://img.shields.io/badge/ESTADO-ACTIVO-00cc88" />
   <img src="https://img.shields.io/badge/ERRORES_CONOCIDOS-0-success" />
 </p>
 
-**6 proyectos independientes, 3 frameworks UI (Bootstrap), 7 dependencias externas, el resto 100% JavaScript vanilla.**  
+**7 proyectos independientes, 3 frameworks UI (Bootstrap), 7 dependencias externas, el resto 100% JavaScript vanilla.**  
 Un ecosistema web completo donde cada proyecto tiene identidad propia, desde un CV interactivo con PDF hasta un shooter 3D zombie con 14 tipos de enemigos y 6070 líneas de código, todo bajo un menú universal con partículas animadas que reaccionan al ratón.
 
 ---
@@ -26,10 +26,11 @@ Un ecosistema web completo donde cada proyecto tiene identidad propia, desde un 
 7. [Tarjetas Gráficas JM (GPU Hub)](#-tarjetas-gráficas-jm-gpu-hub)
 8. [Ultimate Calculadora](#-ultimate-calculadora)
 9. [Zombie Strike](#-zombie-strike)
-10. [Matriz Tecnológica Completa](#-matriz-tecnológica-completa)
-11. [Roadmap y Próximos Pasos](#-roadmap-y-próximos-pasos)
-12. [Guía de Uso](#-guía-de-uso)
-13. [Licencia](#-licencia)
+10. [X0GPT](#-x0gpt)
+11. [Matriz Tecnológica Completa](#-matriz-tecnológica-completa)
+12. [Roadmap y Próximos Pasos](#-roadmap-y-próximos-pasos)
+13. [Guía de Uso](#-guía-de-uso)
+14. [Licencia](#-licencia)
 
 ---
 
@@ -43,8 +44,9 @@ Un ecosistema web completo donde cada proyecto tiene identidad propia, desde un 
 | **GPU Hub** | ~5200+ | 21 + 80+ imágenes | 4 (Bootstrap, Firebase Auth+DB, Elfsight) | Matrix Canvas, Firebase | ✅ Completo |
 | **Ultimate Calculadora** | 1386 | 3 | 0 | Canvas API, Parser recursivo | ✅ Completo |
 | **Zombie Strike** | ~6070 | 3 | 1 (Three.js) | Three.js, Web Audio API | ✅ Completo |
+| **X0GPT** | ~4000 | 10 | 0 | Wikipedia API, DuckDuckGo API, NLP, PWA | ✅ Completo |
 
-> **Totales**: ~16.388+ líneas de código · 37+ archivos de código · 80+ imágenes de GPU · 7 dependencias externas (3 Firebase, 2 PDF, 1 Three.js, 1 Bootstrap) · 1 música de fondo (Elfsight)
+> **Totales**: ~21.000+ líneas de código · 50+ archivos de código · 80+ imágenes de GPU · 7 dependencias externas (3 Firebase, 2 PDF, 1 Three.js, 1 Bootstrap) · 1 música de fondo (Elfsight)
 
 ---
 
@@ -62,7 +64,8 @@ Un ecosistema web completo donde cada proyecto tiene identidad propia, desde un 
 | GPU Hub | 11 | 1 | 12 | 81 | 105 | ~5200 |
 | Calculadora | 1 | 1 | 1 | 0 | 3 | 1386 |
 | Zombie Strike | 1 | 1 | 1 | 0 | 3 | ~6070 |
-| **Total** | **17** | **6** | **17** | **90** | **130** | **~16.388** |
+| X0GPT | 1 | 1 | 8 | 0 | 10 | ~4000 |
+| **Total** | **20** | **7** | **26** | **90** | **141** | **~21.000** |
 
 </details>
 
@@ -77,6 +80,7 @@ Un ecosistema web completo donde cada proyecto tiene identidad propia, desde un 
 - 💬 **1 foro en tiempo real** con Firebase Realtime Database (GPU Hub)
 - ⭐ **1 sistema de valoraciones** con Firebase Firestore (CyberSafeLine)
 - 🔑 **Autenticación completa** con Firebase Auth (GPU Hub): login, registro, perfil
+- 🧠 **Asistente IA** con búsqueda en internet (Wikipedia + DuckDuckGo), NLP, chat inteligente, supervivencia offline (X0GPT)
 
 ---
 
@@ -160,6 +164,18 @@ Un ecosistema web completo donde cada proyecto tiene identidad propia, desde un 
 │   ├── index.html             ← DOM structure: menús, HUD, modals, botones
 │   ├── styles.css             ← Animaciones, overlays, HUD styles
 │   └── app.js                 ← ~6070 líneas: TODO el juego (ver sección Zombie Strike)
+│
+├── 📁 X0GPT/                    ← Asistente IA con supervivencia offline y búsqueda web
+│   ├── index.html             ← Interfaz chat tipo ChatGPT
+│   ├── styles.css             ← Tema oscuro brutal con glow effects
+│   ├── app.js                 ← Controlador principal, streaming de respuestas
+│   ├── nlp.js                 ← Motor NLP: tokenización, stemmer, 17 intenciones, entidades
+│   ├── api.js                 ← DuckDuckGo + Wikipedia API con cache y fallback
+│   ├── engine.js              ← Motor IA: búsqueda web primero, KB offline, supervivencia
+│   ├── knowledge.json         ← ~250 entradas de conocimiento general
+│   ├── survival.json          ← Manual de supervivencia: 1300+ líneas
+│   ├── sw.js                  ← Service Worker para PWA offline
+│   └── manifest.json          ← PWA manifest
 │
 ├── 📄 LICENSE                  ← MIT
 └── 📄 README.md                ← Este documento (¡aquí!)
@@ -900,31 +916,138 @@ app.js (~6070 líneas) — Estructura interna:
 
 ---
 
+## 🧠 X0GPT
+
+**Archivos**: `index.html` · `styles.css` · `app.js` · `nlp.js` · `api.js` · `engine.js` · `knowledge.json` · `survival.json` · `sw.js` · `manifest.json` (~4000 líneas)
+
+> **Asistente IA de supervivencia con búsqueda web** — Motor NLP propio, búsqueda en internet con DuckDuckGo + Wikipedia, base de conocimiento offline con ~1300+ líneas de supervivencia (guerra, naturaleza, crisis, salud, navegación, herramientas), streaming de respuestas, badges de fuente, modo PWA offline.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/LINEAS-4000-6366f1" />
+  <img src="https://img.shields.io/badge/FUENTES-2_(Wikipedia+%2B+DDG)-818cf8" />
+  <img src="https://img.shields.io/badge/NLP-17_INTENCIONES-4ade80" />
+  <img src="https://img.shields.io/badge/SUPERVIVENCIA-1300%2B_LIN-ef4444" />
+  <img src="https://img.shields.io/badge/PWA-OFFLINE-06b6d4" />
+  <img src="https://img.shields.io/badge/DEPENDENCIAS-0-c4b5fd" />
+</p>
+
+### Funcionalidades
+
+| Característica | Detalle |
+|:---------------|:--------|
+| **Búsqueda web primero** | DuckDuckGo + Wikipedia en paralelo, respuestas combinadas |
+| **NLP propio** | Tokenización, stemmer, 17 intenciones, extracción de entidades (200+ personas, 120+ lugares) |
+| **Supervivencia offline** | ~1300+ líneas: guerra, naturaleza, crisis, salud, navegación, herramientas, psicología |
+| **Knowledge base** | ~250 entradas: ciencia, historia, tecnología, geografía, chistes, datos curiosos |
+| **Streaming de respuestas** | Efecto de escritura progresiva con-awareness de HTML tags |
+| **Badges de fuente** | 🌐 Web, 📚 KB local, 🚑 Supervivencia, 💬 Conversación con % de confianza |
+| **PWA offline** | Service Worker cachea todos los assets, funciona sin internet |
+| **Contexto conversacional** | Mantiene historial de 20 mensajes, detecta follow-ups |
+| **Sentiment analysis** | Detecta tono positivo/negativo/neutral del usuario |
+| **Query expansion** | Sinónimos y expansión para mejores búsquedas web |
+| **Markdown en respuestas** | Negrita, código, enlaces — renderizado en tiempo real |
+| **Responsive** | Sidebar colapsable, diseño adaptable a móvil |
+
+### Arquitectura del motor IA
+
+```
+Pregunta del usuario
+        │
+        ▼
+┌─────────────────────┐
+│  NLP (nlp.js)       │ ← Tokenización, stemmer, intención, entidades, sentiment
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Intent Detection   │ ← Saludo, despedida, ayuda, creador → respuesta local
+└─────────┬───────────┘
+          │ (no es intent)
+          ▼
+┌─────────────────────┐
+│  Survival Check     │ ← Palabras clave de supervivencia → survival.json offline
+└─────────┬───────────┘
+          │ (no es supervivencia)
+          ▼
+┌─────────────────────┐
+│  🌐 WEB SEARCH      │ ← DuckDuckGo + Wikipedia en paralelo
+│  (API: api.js)      │    Cache 20min, fallback con query alternativa
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Combine Results    │ ← Mejor respuesta + fuentes + confianza
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Streaming Response │ ← Efecto escritura progresiva en UI
+└─────────────────────┘
+```
+
+### Archivos del proyecto
+
+| Archivo | Líneas | Función |
+|:--------|:------:|:--------|
+| `engine.js` | ~250 | Motor principal: orquesta NLP + API + KB + survival |
+| `api.js` | ~330 | DuckDuckGo Instant Answers + Wikipedia REST + cache |
+| `nlp.js` | ~350 | Tokenización, stemmer español, 17 intenciones, entidades |
+| `app.js` | ~265 | UI controller, streaming, badges, sidebar |
+| `survival.json` | ~1300 | Guerra, naturaleza, crisis, salud, herramientas |
+| `knowledge.json` | ~120 | ~250 entradas de conocimiento general |
+| `index.html` | ~97 | Interfaz ChatGPT-style |
+| `styles.css` | ~1200 | Tema oscuro brutal, glow effects, responsive |
+| `sw.js` | ~72 | Service Worker PWA offline |
+| `manifest.json` | ~19 | PWA manifest |
+
+### Flujo de búsqueda web
+
+```
+1. NLP.buildSearchQuery()     → Query optimizado según tipo de pregunta
+   │  (definición, cómo hacer, quién, dónde, comparación, lista)
+   │
+2. API.searchWithAlternatives()
+   │  ├── API.search(query)
+   │  │     ├── searchDuckDuckGo()  → Instant Answers, Related Topics, Definitions
+   │  │     └── searchWikipedia()   → Summary API + Search API fallback
+   │  │     └── combineResults()    → Mejor de ambas fuentes
+   │  │
+   │  └── Si confianza < 0.5:
+   │        ├── Reintentar con keywords
+   │        └── Reintentar con expandQuery()
+   │
+3. API.formatAnswer()         → Formatea respuesta limpia con fuentes
+   │
+4. Combinar con local KB      → Si hay info local relevante, añadir como suplemento
+```
+
+---
+
 ## 🧰 Matriz Tecnológica Completa
 
-| Tecnología | Versión | Menú | CV | CyberSafe | GPU Hub | Calc | Shooter |
-|:-----------|:-------:|:----:|:--:|:---------:|:-------:|:----:|:-------:|
-| **HTML5** | — | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **CSS3** (Flex/Grid) | — | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **CSS Custom Properties** | — | — | — | ✅ | ✅ | ✅ | ✅ |
-| **CSS Animations** | — | ✅ | ✅ | ✅ | — | ✅ | ✅ |
-| **CSS @media print** | — | — | ✅ | — | — | — | — |
-| **JavaScript Vanilla ES6+** | — | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **JavaScript Modules (type="module")** | — | — | — | ✅ | ✅ | — | ✅ |
-| **Canvas 2D API** | — | ✅ | — | — | ✅ | ✅ | ✅ |
-| **Three.js** | r160 | — | — | — | — | — | ✅ |
-| **Web Audio API** | — | — | — | — | — | — | ✅ |
-| **Firebase Auth** | v12 | — | — | — | ✅ | — | — |
-| **Firebase Realtime Database** | v12 | — | — | — | ✅ | — | — |
-| **Firebase Firestore** | v12 | — | — | ✅ | — | — | — |
-| **Bootstrap** | 5.3 | — | — | — | ✅ | — | — |
-| **html2canvas** | 1.4 | — | ✅ | — | — | — | — |
-| **jsPDF** | 2.5 | — | ✅ | — | — | — | — |
-| **Formspree** | — | — | — | ✅ | — | — | — |
-| **IntersectionObserver** | — | — | — | ✅ | — | — | — |
-| **localStorage** | — | ✅ | — | ✅ | ✅ | ✅ | ✅ |
-| **Google Fonts** | — | — | — | ✅ | — | ✅ | — |
-| **Elfsight (música)** | — | — | — | — | ✅ | — | — |
+| Tecnología | Versión | Menú | CV | CyberSafe | GPU Hub | Calc | Shooter | X0GPT |
+|:-----------|:-------:|:----:|:--:|:---------:|:-------:|:----:|:-------:|:-------:|
+| **HTML5** | — | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **CSS3** (Flex/Grid) | — | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **CSS Custom Properties** | — | — | — | ✅ | ✅ | ✅ | ✅ | — |
+| **CSS Animations** | — | ✅ | ✅ | ✅ | — | ✅ | ✅ | ✅ |
+| **CSS @media print** | — | — | ✅ | — | — | — | — | — |
+| **JavaScript Vanilla ES6+** | — | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **JavaScript Modules (type="module")** | — | — | — | ✅ | ✅ | — | ✅ | — |
+| **Canvas 2D API** | — | ✅ | — | — | ✅ | ✅ | ✅ | — |
+| **Three.js** | r160 | — | — | — | — | — | ✅ | — |
+| **Web Audio API** | — | — | — | — | — | — | ✅ | — |
+| **Firebase Auth** | v12 | — | — | — | ✅ | — | — | — |
+| **Firebase Realtime Database** | v12 | — | — | — | ✅ | — | — | — |
+| **Firebase Firestore** | v12 | — | — | ✅ | — | — | — | — |
+| **Bootstrap** | 5.3 | — | — | — | ✅ | — | — | — |
+| **html2canvas** | 1.4 | — | ✅ | — | — | — | — | — |
+| **jsPDF** | 2.5 | — | ✅ | — | — | — | — | — |
+| **Formspree** | — | — | — | ✅ | — | — | — | — |
+| **IntersectionObserver** | — | — | — | ✅ | — | — | — | — |
+| **localStorage** | — | ✅ | — | ✅ | ✅ | ✅ | ✅ | — |
+| **Google Fonts** | — | — | — | ✅ | — | ✅ | — | — |
+| **Elfsight (música)** | — | — | — | — | ✅ | — | — | — |
 
 ---
 
@@ -1018,8 +1141,6 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 <p align="center">
   <sub>Hecho con dedicación, horas de código y muchas tazas de café por Jaime Muñoz Nicolás.</sub>
-  <br>
-  <sub>Estudiante de Grado Superior en Informática · IES Las Espeñetas, Orihuela</sub>
   <br>
   <sub>🔗 <a href="https://linktr.ee/jaimemunoznicolas">linktr.ee/jaimemunoznicolas</a> · 📧 munoznicolasjaime@gmail.com · 📞 +34 629 978 325</sub>
 </p>

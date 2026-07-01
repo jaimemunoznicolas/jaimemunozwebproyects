@@ -350,6 +350,21 @@ h1 {
   color: #ff6b6b;
 }
 
+.tag-ai {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+
+.tag-survival {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.tag-privado {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
@@ -408,8 +423,206 @@ footer {
   letter-spacing: 0.3px;
 }
 
+/* ═══════════════════════════════════════════
+   LOCKED CARD
+   ═══════════════════════════════════════════ */
+.project-card.locked {
+  cursor: pointer;
+}
+
+.project-card.locked .card-icon {
+  filter: grayscale(0.3);
+}
+
+.project-card.locked:hover .card-icon {
+  filter: grayscale(0) drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));
+}
+
+.lock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* ═══════════════════════════════════════════
+   PASSWORD MODAL
+   ═══════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.3s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: #15152a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  animation: lockBounce 2s ease-in-out infinite;
+}
+
+@keyframes lockBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.modal h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.modal p {
+  font-size: 0.88rem;
+  color: #8888aa;
+  margin-bottom: 24px;
+}
+
+.modal-input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 4px 12px;
+  transition: border-color 0.3s;
+}
+
+.modal-input-group:focus-within {
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+.modal-input-group input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 1rem;
+  padding: 10px 8px;
+  outline: none;
+  font-family: inherit;
+}
+
+.modal-input-group input::placeholder {
+  color: #555577;
+}
+
+.modal-toggle-vis {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 8px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.modal-toggle-vis:hover {
+  opacity: 1;
+}
+
+.modal-error {
+  display: none;
+  color: #ef4444;
+  font-size: 0.82rem;
+  margin-top: 12px;
+  animation: shake 0.4s ease;
+}
+
+.modal-error.visible {
+  display: block;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+
+.modal-cancel {
+  background: rgba(255, 255, 255, 0.06);
+  color: #8888aa;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #aaaacc;
+}
+
+.modal-confirm {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+
+.modal-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+}
+
 @media (max-width: 640px) {
   h1 { font-size: 1.8rem; }
   .projects { grid-template-columns: 1fr; }
   .avatar { width: 80px; height: 80px; font-size: 28px; }
+  .modal { padding: 28px 24px; }
 }

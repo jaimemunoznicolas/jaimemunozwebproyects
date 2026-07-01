@@ -1,12 +1,6 @@
 (function () {
   'use strict';
 
-  /* ═══════════════════════════════════════════
-     PASSWORD PROTECTION — Obfuscated
-     ═══════════════════════════════════════════ */
-  const _0x4f2a = [49,50,51,52];
-  const _0x8b1c = _0x4f2a.map(function(c){return String.fromCharCode(c);}).join('');
-
   const projects = [
     {
       name: 'Curriculum',
@@ -49,14 +43,6 @@
       icon: '⚡',
       desc: 'X0GPT: Asistente IA de supervivencia con acceso a internet, base de conocimientos y manual completo offline.',
       tags: ['html', 'css', 'js', 'ai', 'survival'],
-    },
-    {
-      name: 'Otros Proyectos',
-      path: 'proyectosocultos/',
-      icon: '🔐',
-      desc: 'Proyectos privados protegidos con contraseña. Solo accesible con autorización.',
-      tags: ['privado'],
-      locked: true,
     },
   ];
 
@@ -169,33 +155,24 @@
 
     filtered.forEach((p) => {
       const card = document.createElement('a');
-      card.href = p.locked ? '#' : p.path;
-      card.className = 'project-card' + (p.locked ? ' locked' : '');
+      card.href = p.path;
+      card.className = 'project-card';
       card.innerHTML = `
         <div class="card-top">
           <span class="card-icon">${p.icon}</span>
-          <span class="card-arrow">${p.locked ? '' : '→'}</span>
+          <span class="card-arrow">→</span>
         </div>
         <h2>${p.name}</h2>
         <p>${p.desc}</p>
         <div class="card-tags">
-          ${p.tags.map((t) => `<span class="tag ${p.locked ? 'lock-badge' : 'tag-' + t}">${t}</span>`).join('')}
+          ${p.tags.map((t) => `<span class="tag tag-${t}">${t}</span>`).join('')}
         </div>
       `;
-
-      if (p.locked) {
-        card.addEventListener('click', function(e) {
-          e.preventDefault();
-          openPasswordModal(p.path);
-        });
-      } else {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width) * 100 + '%');
-          card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height) * 100 + '%');
-        });
-      }
-
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width) * 100 + '%');
+        card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height) * 100 + '%');
+      });
       container.appendChild(card);
     });
   }
@@ -206,72 +183,4 @@
     renderProjects(e.target.value.toLowerCase().trim());
   });
 
-  /* ---- Password Modal ---- */
-  const modal = document.getElementById('passwordModal');
-  const passwordInput = document.getElementById('passwordInput');
-  const modalError = document.getElementById('modalError');
-  const modalConfirm = document.getElementById('modalConfirm');
-  const modalCancel = document.getElementById('modalCancel');
-  const togglePassword = document.getElementById('togglePassword');
-  let pendingRedirect = null;
-
-  function openPasswordModal(targetPath) {
-    pendingRedirect = targetPath;
-    passwordInput.value = '';
-    modalError.classList.remove('visible');
-    modal.classList.add('active');
-    setTimeout(function() { passwordInput.focus(); }, 100);
-  }
-
-  function closePasswordModal() {
-    modal.classList.remove('active');
-    pendingRedirect = null;
-    passwordInput.value = '';
-    modalError.classList.remove('visible');
-  }
-
-  function attemptAccess() {
-    if (passwordInput.value === _0x8b1c) {
-      window.location.href = pendingRedirect;
-    } else {
-      modalError.classList.add('visible');
-      passwordInput.value = '';
-      passwordInput.focus();
-    }
-  }
-
-  if (modalConfirm) {
-    modalConfirm.addEventListener('click', attemptAccess);
-  }
-
-  if (modalCancel) {
-    modalCancel.addEventListener('click', closePasswordModal);
-  }
-
-  if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) closePasswordModal();
-    });
-  }
-
-  if (passwordInput) {
-    passwordInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') attemptAccess();
-      if (e.key === 'Escape') closePasswordModal();
-    });
-  }
-
-  if (togglePassword) {
-    togglePassword.addEventListener('click', function() {
-      var isPassword = passwordInput.type === 'password';
-      passwordInput.type = isPassword ? 'text' : 'password';
-      togglePassword.textContent = isPassword ? '🙈' : '👁️';
-    });
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closePasswordModal();
-    }
-  });
 })();

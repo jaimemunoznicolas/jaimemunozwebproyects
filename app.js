@@ -31,11 +31,11 @@
       tags: ['html', 'css', 'js'],
     },
     {
-      name: 'Strike Battle',
+      name: 'Zombie Strike',
       path: 'shooter/index.html',
-      icon: '🎯',
-      desc: 'FPS táctico 3D: 5 armas, 10 rondas, mapa 120m, bots con IA, minimapa, armadura, headshots.',
-      tags: ['html', 'css', 'js', 'threejs'],
+      icon: '🧟',
+      desc: 'Shooter zombie FPS: 14 tipos de zombies, 10 armas, oleadas infinitas, 5 biomas, jefes, clima dinámico, logros.',
+      tags: ['html', 'css', 'js', 'threejs', 'webgl'],
     },
   ];
 

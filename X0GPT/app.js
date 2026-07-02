@@ -154,9 +154,9 @@ function getSuggestions(entry) {
   const entryWords = new Set(entry.k.map(k => k.toLowerCase()));
   for (const e of K) {
     if (e === entry) continue;
-    const overlap = e.k.filter(k => entryWords.has(k.toLowerCase()));
-    if (overlap.length > 0) {
-      const score = overlap.length / e.k.length;
+    const kwOverlap = e.k.filter(k => entryWords.has(k.toLowerCase()));
+    if (kwOverlap.length > 0) {
+      const score = kwOverlap.length / e.k.length;
       topics.set(e, score);
     }
   }
@@ -294,22 +294,21 @@ function detectInsult(text) {
 }
 
 function evalMath(text) {
-  let expr = text.toLowerCase()
+  const cleaned = text.toLowerCase()
     .replace(/cuánto es|cuanto es|calcula|resuelve|haz la operación|resultado de/g, '')
     .replace(/por ciento|porcentaje/g, '%')
-    .replace(/x/g, '*')
     .replace(/\s+/g, '')
     .trim();
 
-  expr = expr.replace(/\(/g, '(').replace(/\)/g, ')');
-
-  const pctMatch = expr.match(/([\d.]+)\s*%\s*(de|of)\s*([\d.]+)/);
+  const pctMatch = cleaned.match(/([\d.]+)%\s*(de|of)\s*([\d.]+)/);
   if (pctMatch) {
     const pct = parseFloat(pctMatch[1]);
     const val = parseFloat(pctMatch[3]);
     const r = (pct / 100) * val;
     return pctMatch[1] + '% de ' + pctMatch[3] + ' es: **' + r + '**';
   }
+
+  const expr = cleaned.replace(/x/g, '*');
 
   const simpleMatch = expr.match(/^(-?\d+\.?\d*)\s*([\+\-\*\/\^])\s*(-?\d+\.?\d*)$/);
   if (simpleMatch) {
@@ -320,18 +319,6 @@ function evalMath(text) {
     if (ops[op]) {
       const r = ops[op](a, b);
       return 'El resultado de ' + text.trim() + ' es: **' + (Number.isFinite(r) ? r : 'Error: división por cero') + '**';
-    }
-  }
-
-  const parts = expr.match(/(-?\d+\.?\d*)\s*([\+\-\*\/\^])\s*(-?\d+\.?\d*)\s*([\+\-\*\/\^])?\s*(-?\d+\.?\d*)?/);
-  if (parts && !parts[4]) {
-    const a = parseFloat(parts[1]);
-    const op1 = parts[2];
-    const b = parseFloat(parts[3]);
-    const ops = {'+':(a,b)=>a+b,'-':(a,b)=>a-b,'*':(a,b)=>a*b,'/':(a,b)=>a/b,'^':(a,b)=>Math.pow(a,b)};
-    if (ops[op1]) {
-      const r = ops[op1](a, b);
-      return 'El resultado de ' + a + ' ' + op1 + ' ' + b + ' es: **' + (Number.isFinite(r) ? r : 'Error: división por cero') + '**';
     }
   }
 
@@ -434,11 +421,6 @@ function getIntentResponse(text) {
 
   if (int === 'insult') {
     return detectInsult(text);
-  }
-
-  if (int === 'math') {
-    const mathResult = evalMath(text);
-    if (mathResult) return mathResult;
   }
 
   return null;

@@ -6,20 +6,13 @@
   <title>X0GPT - Asistente IA</title>
   <meta name="description" content="X0GPT: Asistente de IA 100% offline. Gratuito, privado, sin descargas ni internet.">
   <meta name="theme-color" content="#0a0a1a">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="-1">
-  <script>
-    try {
-      if('caches' in window){caches.keys().then(function(n){n.forEach(function(k){caches.delete(k)});});}
-      if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()});});}
-    }catch(e){}
-  </script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="app">
     <header id="topbar">
       <div class="topbar-title">
+        <a href="../index.html" class="back-btn" title="Volver al menú">&#8592;</a>
         <span class="logo-icon">&#9889;</span>
         <span>X0GPT</span>
         <span class="badge">Offline IA</span>
@@ -57,12 +50,8 @@
     </div>
   </div>
 
-  <script>
-    var _v = Date.now();
-    document.write('<link rel="stylesheet" href="styles.css?v=' + _v + '">');
-    document.write('<script src="nlp.js?v=' + _v + '"><\/script>');
-    document.write('<script src="knowledge.js?v=' + _v + '"><\/script>');
-    document.write('<script src="app.js?v=' + _v + '"><\/script>');
-  </script>
+  <script src="nlp.js"></script>
+  <script src="knowledge.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

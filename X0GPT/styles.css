@@ -8,6 +8,8 @@ html,body { height:100%; font-family:'Segoe UI',system-ui,sans-serif; background
 #app { display:flex; flex-direction:column; height:100vh; height:100dvh; }
 #topbar { display:flex; align-items:center; justify-content:space-between; padding:10px 18px; border-bottom:1px solid var(--border); flex-shrink:0; }
 .topbar-title { display:flex; align-items:center; gap:8px; font-weight:600; font-size:1rem; }
+.back-btn { color:var(--dim); text-decoration:none; font-size:1.1rem; padding:4px 8px; border-radius:6px; transition:all 0.2s; line-height:1; }
+.back-btn:hover { background:rgba(255,255,255,0.06); color:var(--accent); }
 .logo-icon { font-size:1.2rem; }
 .badge { font-size:0.6rem; font-weight:500; background:rgba(168,85,247,0.15); color:var(--accent); padding:2px 8px; border-radius:20px; margin-left:4px; }
 .topbar-actions { display:flex; gap:2px; }

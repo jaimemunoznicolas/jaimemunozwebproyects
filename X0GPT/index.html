@@ -3,152 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>X0GPT - Asistente de Supervivencia IA</title>
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#ef4444">
-  <meta name="description" content="X0GPT - IA con acceso a internet, base de conocimientos y manual de supervivencia completo">
-  <meta name="keywords" content="IA, inteligencia artificial, supervivencia, chatbot, asistente, DuckDuckGo, Wikipedia">
-  <meta name="author" content="Jaime Muñoz">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="X0GPT">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <meta property="og:title" content="X0GPT - Asistente de Supervivencia IA">
-  <meta property="og:description" content="IA con acceso a internet, base de conocimientos y manual de supervivencia completo">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="es_ES">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="X0GPT - Asistente de Supervivencia IA">
-  <meta name="twitter:description" content="IA con acceso a internet, base de conocimientos y manual de supervivencia completo">
-  <link rel="preconnect" href="https://api.duckduckgo.com">
-  <link rel="preconnect" href="https://es.wikipedia.org">
+  <title>X0GPT - Asistente IA</title>
+  <meta name="description" content="X0GPT: Asistente de IA 100% offline. Gratuito, privado, sin descargas ni internet.">
+  <meta name="theme-color" content="#0a0a1a">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app">
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar" role="complementary" aria-label="Panel lateral">
-      <div class="sidebar-header">
-        <div class="logo">
-          <span class="logo-icon" aria-hidden="true">⚡</span>
-          <span class="logo-text">X0GPT</span>
-        </div>
-        <button class="sidebar-close" id="sidebarClose" aria-label="Cerrar panel">✕</button>
+  <div id="app">
+    <header id="topbar">
+      <div class="topbar-title">
+        <span class="logo-icon">&#9889;</span>
+        <span>X0GPT</span>
+        <span class="badge">Offline IA</span>
       </div>
+      <div class="topbar-actions">
+        <button id="exportBtn" title="Exportar">&#8595;</button>
+        <button id="clearBtn" title="Nuevo chat">&#65291;</button>
+      </div>
+    </header>
 
-      <button class="new-chat-btn" id="newChatBtn" aria-label="Nueva conversación">
-        <span class="plus-icon" aria-hidden="true">+</span>
-        Nueva conversación
-      </button>
-
-      <div class="sidebar-content">
-        <div class="status-card" id="statusCard">
-          <div class="status-row">
-            <span class="status-dot" id="statusDot" aria-hidden="true"></span>
-            <span id="statusText">Conectado</span>
-          </div>
-          <div class="status-details" id="statusDetails"></div>
-        </div>
-
-        <div class="sidebar-actions">
-          <button class="action-btn" id="clearChatBtn" aria-label="Limpiar chat">🗑️ Limpiar</button>
-          <button class="action-btn" id="exportChatBtn" aria-label="Exportar chat">📤 Exportar</button>
-          <button class="action-btn" id="importChatBtn" aria-label="Importar chat">📥 Importar</button>
-          <button class="action-btn" id="searchChatBtn" aria-label="Buscar en chat">🔍 Buscar</button>
-        </div>
-
-        <div class="suggestions">
-          <h3>Supervivencia</h3>
-          <button class="suggestion-btn" data-question="¿Cómo sobrevivir en el bosque?">🏕️ Sobrevivir en el bosque</button>
-          <button class="suggestion-btn" data-question="¿Cómo hacer fuego sin encendedor?">🔥 Hacer fuego sin encendedor</button>
-          <button class="suggestion-btn" data-question="¿Cómo purificar agua en la naturaleza?">💧 Purificar agua</button>
-          <button class="suggestion-btn" data-question="¿Qué hacer en un terremoto?">🌍 Terremoto</button>
-          <button class="suggestion-btn" data-question="¿Cómo construir un refugio?">🏠 Construir refugio</button>
-          <button class="suggestion-btn" data-question="¿Primeros auxilios básicos?">🏥 Primeros auxilios</button>
-          <button class="suggestion-btn" data-question="¿Cómo orientarse sin brújula?">🧭 Orientación</button>
-          <button class="suggestion-btn" data-question="¿Cómo hacer trampas para cazar?">🪤 Trampas</button>
-          <button class="suggestion-btn" data-question="¿Cómo hacer un torniquete?">🩹 Torniquete</button>
-          <button class="suggestion-btn" data-question="¿Qué hacer en una inundación?">🌊 Inundación</button>
-        </div>
-
-        <div class="suggestions">
-          <h3>Conocimiento</h3>
-          <button class="suggestion-btn" data-question="¿Qué es la inteligencia artificial?">🧠 Inteligencia artificial</button>
-          <button class="suggestion-btn" data-question="Explícame la fotosíntesis">🌿 Fotosíntesis</button>
-          <button class="suggestion-btn" data-question="¿Cómo funciona el internet?">🌐 Internet</button>
-          <button class="suggestion-btn" data-question="¿Qué es la relatividad de Einstein?">⚛️ Relatividad</button>
-          <button class="suggestion-btn" data-question="Dame un dato curioso">💡 Dato curioso</button>
-          <button class="suggestion-btn" data-question="¿Qué puedes hacer?">❓ Funciones</button>
-        </div>
-
-        <div class="sidebar-tips">
-          <h3>Atajos</h3>
-          <div class="tip"><kbd>Enter</kbd> Enviar</div>
-          <div class="tip"><kbd>Shift+Enter</kbd> Nueva línea</div>
-          <div class="tip"><kbd>Ctrl+K</kbd> Enfocar input</div>
-          <div class="tip"><kbd>Ctrl+L</kbd> Limpiar chat</div>
-          <div class="tip"><kbd>Esc</kbd> Cerrar panel</div>
-          <div class="tip"><kbd>Doble clic</kbd> Copiar mensaje</div>
+    <div id="chatArea" class="chat-area">
+      <div id="welcome" class="welcome">
+        <div class="welcome-icon">&#9889;</div>
+        <h1>X0GPT</h1>
+        <p class="welcome-subtitle">Asistente IA 100% offline</p>
+        <p class="welcome-desc">Sin instalaciones, sin internet, sin descargas. Solo pregunta.</p>
+        <div class="tips">
+          <div class="tip"><span>&#128522;</span> Saludar o preguntar cualquier tema</div>
+          <div class="tip"><span>&#127891;</span> Ciencia, historia, geograf&iacute;a, cultura</div>
+          <div class="tip"><span>&#128187;</span> Tecnolog&iacute;a, programaci&oacute;n, IA</div>
+          <div class="tip"><span>&#129657;</span> Supervivencia, primeros auxilios, salud</div>
+          <div class="tip"><span>&#127858;</span> Cocina, recetas, consejos pr&aacute;cticos</div>
+          <div class="tip"><span>&#128274;</span> 100% privado, todo en tu navegador</div>
         </div>
       </div>
+      <div id="messages" class="messages"></div>
+    </div>
 
-      <div class="sidebar-footer">
-        <a href="../index.html" class="back-link">← Volver al menú</a>
+    <div class="input-area">
+      <div class="input-wrapper">
+        <textarea id="userInput" rows="1" placeholder="Escribe un mensaje..." autocomplete="off"></textarea>
+        <button id="sendBtn">&#10148;</button>
       </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main" role="main">
-      <header class="header">
-        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
-          <span></span><span></span><span></span>
-        </button>
-        <h1 class="header-title">X0GPT</h1>
-        <div class="header-badge" id="headerBadge">
-          <span class="badge-dot" id="badgeDot" aria-hidden="true"></span>
-          <span id="connectionBadge">En línea</span>
-        </div>
-        <span class="status-indicator" id="statusIndicator" title="Estado del sistema">ℹ️</span>
-      </header>
-
-      <div class="chat-container" id="chatContainer">
-        <div class="messages" id="messages" role="log" aria-live="polite"></div>
-      </div>
-
-      <div class="input-area">
-        <div class="input-wrapper">
-          <textarea
-            id="chatInput"
-            placeholder="Pregúntame cómo sobrevivir, reparar, construir, o cualquier cosa..."
-            rows="1"
-            autocomplete="off"
-            aria-label="Escribe tu mensaje"
-            maxlength="2000"
-          ></textarea>
-          <button class="send-btn" id="sendBtn" aria-label="Enviar mensaje" disabled>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="input-footer">
-          <span class="char-count" id="charCount">0</span>
-          <span class="powered-by">X0GPT v5.0 • Enter para enviar</span>
-        </div>
-      </div>
-    </main>
+      <p class="input-footer" id="footer">X0GPT - 100% offline y privado</p>
+    </div>
   </div>
 
-  <div class="overlay" id="overlay"></div>
-
-  <script src="./nlp.js"></script>
-  <script src="./api.js"></script>
-  <script src="./engine.js"></script>
-  <script src="./app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    }
-  </script>
+  <script src="nlp.js"></script>
+  <script src="knowledge.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

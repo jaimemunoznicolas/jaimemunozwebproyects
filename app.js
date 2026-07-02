@@ -40,9 +40,9 @@
     {
       name: 'X0GPT',
       path: 'X0GPT/index.html',
-      icon: '⚡',
-      desc: 'X0GPT: Asistente IA de supervivencia con acceso a internet, base de conocimientos y manual completo offline.',
-      tags: ['html', 'css', 'js', 'ai', 'survival'],
+      icon: '🤖',
+      desc: 'X0GPT: Asistente IA offline 100% en navegador. NLP puro con base de conocimientos de supervivencia, ciencia, historia y más.',
+      tags: ['html', 'css', 'js', 'ai', 'nlp'],
     },
   ];
 

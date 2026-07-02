@@ -1,456 +1,287 @@
-const App = (() => {
-  const MAX_HISTORY = 200;
-  const STORAGE_KEY = 'x0gpt_chat';
-  let isProcessing = false;
-  let isStreaming = false;
-  let abortController = null;
-  let currentStreamInterval = null;
+const STORAGE_KEY = 'x0gpt_msgs';
+let messages = [];
+let isGenerating = false;
 
-  /* ═══════════════════════════════════════════
-     INITIALIZATION
-     ═══════════════════════════════════════════ */
-  function init() {
-    setupEventListeners();
-    loadHistory();
-    updateConnectionStatus();
-    window.addEventListener('online', updateConnectionStatus);
-    window.addEventListener('offline', updateConnectionStatus);
+const dom = {
+  chat: document.getElementById('chatArea'),
+  msgs: document.getElementById('messages'),
+  welcome: document.getElementById('welcome'),
+  input: document.getElementById('userInput'),
+  send: document.getElementById('sendBtn'),
+  footer: document.getElementById('inputFooter'),
+  exportBtn: document.getElementById('exportBtn'),
+  clearBtn: document.getElementById('clearBtn'),
+};
 
-    setTimeout(() => {
-      showWelcome();
-      updateStatusIndicator();
-    }, 100);
+function escapeHtml(t) {
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+function renderMarkdown(text) {
+  if (!text) return '';
+  let h = escapeHtml(text);
+  h = h.replace(/```(\w*)\n([\s\S]*?)```/g, (m, l, c) =>
+    '<pre><code' + (l ? ' class="lang-' + l + '"' : '') + '>' + escapeHtml(c.trim()) + '</code></pre>');
+  h = h.replace(/`([^`]+)`/g, '<code>$1</code>');
+  h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  h = h.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  h = h.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  h = h.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  h = h.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+  h = h.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+  h = h.replace(/^- (.+)$/gm, '<li>$1</li>');
+  h = h.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+  h = h.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+  h = h.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  h = h.replace(/\n\n/g, '</p><p>');
+  h = h.replace(/\n/g, '<br>');
+  return '<p>' + h + '</p>';
+}
+
+function appendMsg(role, text, typing) {
+  const div = document.createElement('div');
+  div.className = 'message ' + role;
+  const a = document.createElement('div');
+  a.className = 'msg-avatar';
+  a.textContent = role === 'user' ? 'T' : 'X';
+  const b = document.createElement('div');
+  b.className = 'msg-bubble';
+  if (typing) b.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  else if (role === 'user') b.textContent = text;
+  else b.innerHTML = renderMarkdown(text);
+  div.appendChild(a); div.appendChild(b);
+  dom.msgs.appendChild(div);
+  scrollBottom();
+  return div;
+}
+
+function scrollBottom() {
+  requestAnimationFrame(() => { dom.chat.scrollTop = dom.chat.scrollHeight; });
+}
+
+function renderAll() {
+  dom.msgs.innerHTML = '';
+  for (const m of messages) {
+    if (m.role === 'system') continue;
+    appendMsg(m.role, m.content, false);
+  }
+  scrollBottom();
+}
+
+function saveMsgs() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.filter(m => m.role !== 'system')));
+  } catch (e) {}
+}
+
+function loadMsgs() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (Array.isArray(saved) && saved.length > 0) {
+        messages = saved;
+        renderAll();
+        dom.welcome.style.display = 'none';
+        return;
+      }
+    }
+  } catch (e) {}
+  dom.welcome.style.display = 'flex';
+}
+
+/* ═══ Knowledge Matching ═══ */
+
+function findBestMatch(query) {
+  const userKeywords = extractKeywords(query);
+
+  if (userKeywords.length === 0) {
+    const tokens = tokenize(query);
+    if (tokens.length === 0) return null;
+    const filtered = removeStopWords(tokens);
+    if (filtered.length === 0) return null;
+    userKeywords.push(...filtered.map(stem));
   }
 
-  /* ═══════════════════════════════════════════
-     EVENT LISTENERS
-     ═══════════════════════════════════════════ */
-  function setupEventListeners() {
-    const sendBtn = document.getElementById('sendBtn');
-    const chatInput = document.getElementById('chatInput');
-    const clearBtn = document.getElementById('clearChatBtn');
-    const exportBtn = document.getElementById('exportChatBtn');
-    const importBtn = document.getElementById('importChatBtn');
-    const searchBtn = document.getElementById('searchChatBtn');
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarClose = document.getElementById('sidebarClose');
-    const overlay = document.getElementById('overlay');
-    const newChatBtn = document.getElementById('newChatBtn');
+  let best = null;
+  let bestScore = 0;
 
-    if (sendBtn) sendBtn.addEventListener('click', sendMessage);
-    if (chatInput) {
-      chatInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          sendMessage();
-        }
-      });
-      chatInput.addEventListener('input', autoResize);
-    }
-    if (clearBtn) clearBtn.addEventListener('click', clearChat);
-    if (exportBtn) exportBtn.addEventListener('click', exportChat);
-    if (importBtn) importBtn.addEventListener('click', importChat);
-    if (searchBtn) searchBtn.addEventListener('click', toggleSearchBar);
-    if (newChatBtn) newChatBtn.addEventListener('click', clearChat);
+  for (const entry of KNOWLEDGE) {
+    const entryStems = entry.keywords.map(stem);
+    const jaccard = jaccardSimilarity(userKeywords, entryStems);
+    const overlap = wordOverlap(userKeywords, entryStems);
 
-    // Sidebar toggle
-    function openSidebar() {
-      if (sidebar) sidebar.classList.add('open');
-      if (overlay) overlay.classList.add('active');
-    }
-    function closeSidebar() {
-      if (sidebar) sidebar.classList.remove('open');
-      if (overlay) overlay.classList.remove('active');
-    }
-    if (menuBtn) menuBtn.addEventListener('click', openSidebar);
-    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-    if (overlay) overlay.addEventListener('click', closeSidebar);
+    let score = Math.max(jaccard, overlap * 0.9);
 
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeSidebar();
-      if (e.ctrlKey && e.key === 'k') { e.preventDefault(); chatInput?.focus(); }
-      if (e.ctrlKey && e.key === 'l') { e.preventDefault(); clearChat(); }
-    });
+    const userTokens = tokenize(query);
+    const exactMatches = entry.keywords.filter(kw => {
+      const stemmed = stem(kw);
+      return userKeywords.some(uk => uk === stemmed);
+    }).length;
 
-    // Suggestion buttons
-    document.querySelectorAll('.suggestion-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const question = btn.dataset.question;
-        if (question && chatInput) {
-          chatInput.value = question;
-          sendMessage();
-          closeSidebar();
-        }
-      });
-    });
-
-    // Character count
-    if (chatInput) {
-      chatInput.addEventListener('input', () => {
-        const count = document.getElementById('charCount');
-        if (count) count.textContent = chatInput.value.length;
-      });
-    }
-  }
-
-  function autoResize() {
-    const ta = document.getElementById('chatInput');
-    if (!ta) return;
-    ta.style.height = 'auto';
-    ta.style.height = Math.min(ta.scrollHeight, 160) + 'px';
-  }
-
-  /* ═══════════════════════════════════════════
-     MESSAGING
-     ═══════════════════════════════════════════ */
-  async function sendMessage() {
-    const chatInput = document.getElementById('chatInput');
-    const text = chatInput?.value.trim();
-    if (!text || isProcessing) return;
-
-    chatInput.value = '';
-    chatInput.style.height = 'auto';
-    isProcessing = true;
-    updateSendButton(true);
-    addMessage(text, 'user');
-
-    const thinkingMsg = addMessage('Pensando...', 'bot', true);
-
-    try {
-      abortController = new AbortController();
-      const response = await Engine.processMessage(text);
-      removeMessage(thinkingMsg);
-      isStreaming = true;
-      await streamResponse(response.text);
-      isStreaming = false;
-      saveHistory();
-    } catch (error) {
-      removeMessage(thinkingMsg);
-      addMessage('Error al procesar tu mensaje. Intenta de nuevo.', 'bot');
-      isStreaming = false;
+    if (exactMatches > 0) {
+      score += exactMatches * 0.15;
     }
 
-    isProcessing = false;
-    updateSendButton(false);
-    scrollToBottom();
-    updateStatusIndicator();
-  }
-
-  async function streamResponse(text) {
-    const msgDiv = addMessage('', 'bot', false, true);
-    const contentDiv = msgDiv?.querySelector('.message-content');
-    if (!contentDiv) return;
-
-    const chars = [...text];
-    let i = 0;
-    let currentHTML = '';
-
-    return new Promise((resolve) => {
-      currentStreamInterval = setInterval(() => {
-        if (i >= chars.length) {
-          clearInterval(currentStreamInterval);
-          currentStreamInterval = null;
-          contentDiv.innerHTML = formatText(text);
-          scrollToBottom();
-          resolve();
-          return;
-        }
-
-        const chunk = chars.slice(i, i + 5).join('');
-        currentHTML += chunk;
-        i += 5;
-
-        contentDiv.innerHTML = formatText(currentHTML) + (i < chars.length ? '<span class="cursor">▌</span>' : '');
-        scrollToBottom();
-      }, 20);
-    });
-  }
-
-  function stopStreaming() {
-    if (currentStreamInterval) {
-      clearInterval(currentStreamInterval);
-      currentStreamInterval = null;
-      isStreaming = false;
+    if (score > bestScore) {
+      bestScore = score;
+      best = entry;
     }
   }
 
-  /* ═══════════════════════════════════════════
-     MESSAGE RENDERING — XSS-Safe
-     ═══════════════════════════════════════════ */
-  function addMessage(text, role, isTemporary = false, isStreaming = false) {
-    const chatContainer = document.getElementById('messages') || document.getElementById('chatMessages');
-    if (!chatContainer) return null;
+  return bestScore >= 0.3 ? best : null;
+}
 
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `message ${role}-message`;
-    if (isTemporary) msgDiv.classList.add('temporary');
-    if (isStreaming) msgDiv.classList.add('streaming');
+/* ═══ Generate Response ═══ */
 
-    const icon = document.createElement('div');
-    icon.className = 'message-icon';
-    icon.textContent = role === 'user' ? '👤' : '⚡';
+function generateResponse(text) {
+  const lower = text.toLowerCase().trim();
+  const intent = detectIntent(text);
+  const processed = processText(text);
 
-    const content = document.createElement('div');
-    content.className = 'message-content';
-    content.textContent = text;
-    if (!isTemporary && !isStreaming) {
-      content.innerHTML = formatText(text);
+  if (intent === 'greeting') {
+    const hora = new Date().getHours();
+    if (hora < 12) return '¡Buenos días! Soy X0GPT, tu asistente personal. ¿En qué puedo ayudarte hoy?';
+    if (hora < 18) return '¡Buenas tardes! Soy X0GPT, tu asistente personal. ¿En qué puedo ayudarte?';
+    return '¡Buenas noches! Soy X0GPT, tu asistente personal. ¿En qué necesitas ayuda?';
+  }
+
+  if (intent === 'thanks') return '¡De nada! Me alegra poder ayudarte. ¿Necesitas algo más?';
+  if (intent === 'farewell') return '¡Hasta luego! Cuídate y no dudes en volver si necesitas ayuda. Estaré aquí.';
+  if (intent === 'fine') return '¡Me alegra que estés bien! ¿En qué puedo ayudarte hoy?';
+
+  if (intent === 'about') {
+    const qStems = processed;
+    if (qStems.some(s => s === 'hac' || s === 'pod' || s === 'funcion' || s === 'servici' || s === 'util')) {
+      const entry = KNOWLEDGE.find(e => e.keywords.includes('funcion'));
+      if (entry) return entry.ans;
     }
-
-    msgDiv.appendChild(icon);
-    msgDiv.appendChild(content);
-    chatContainer.appendChild(msgDiv);
-    scrollToBottom();
-    return msgDiv;
+    const entry = KNOWLEDGE.find(e => e.keywords.includes('x0gpt') && e.keywords.includes('quien'));
+    if (entry) return entry.ans;
   }
 
-  function removeMessage(msgDiv) {
-    if (msgDiv && msgDiv.parentNode) {
-      msgDiv.parentNode.removeChild(msgDiv);
+  if (intent === 'question' || intent === 'statement') {
+    const match = findBestMatch(text);
+    if (match) return match.ans;
+  }
+
+  const mathMatch = text.match(/(\d+)\s*([\+\-\*\/\^])\s*(\d+)/);
+  if (mathMatch) {
+    const ops = { '+': (a,b)=>a+b, '-': (a,b)=>a-b, '*': (a,b)=>a*b, '/': (a,b)=>a/b, '^': (a,b)=>Math.pow(a,b) };
+    const r = ops[mathMatch[2]](parseFloat(mathMatch[1]), parseFloat(mathMatch[3]));
+    return 'El resultado de ' + mathMatch[1] + ' ' + mathMatch[2] + ' ' + mathMatch[3] + ' es: **' + r + '**';
+  }
+
+  const fallbacks = [
+    'Interesante pregunta. No tengo información específica sobre ese tema en mi base de conocimiento. ¿Puedo ayudarte con otro tema? Tengo información sobre ciencia, historia, geografía, tecnología, salud, supervivencia y muchos más.',
+    'Buena pregunta. No tengo una respuesta preparada para eso, pero puedo hablarte de otros temas como ciencia, historia, geografía, salud o tecnología. ¿Qué te gustaría saber?',
+    'No estoy seguro de tener información sobre eso. Mi conocimiento es amplio pero no infinito. ¿Quieres preguntarme sobre otro tema?',
+    'No encontré información específica sobre eso en mi base de datos. ¿Te interesa algún otro tema como ciencia, historia, geografía, tecnología, salud o supervivencia?',
+    'Esa es una pregunta interesante, pero no tengo información al respecto. ¿Qué te gustaría saber? Puedo ayudarte con muchos temas diferentes.'
+  ];
+
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+}
+
+/* ═══ Send ═══ */
+
+async function sendMessage() {
+  const text = dom.input.value.trim();
+  if (!text || isGenerating) return;
+
+  dom.input.value = '';
+  dom.input.style.height = 'auto';
+
+  if (messages.length === 0) dom.welcome.style.display = 'none';
+
+  messages.push({ role: 'user', content: text });
+  appendMsg('user', text, false);
+  scrollBottom();
+
+  messages.push({ role: 'assistant', content: '' });
+  const msgDiv = appendMsg('assistant', '', true);
+
+  isGenerating = true;
+  dom.send.disabled = true;
+  dom.input.disabled = true;
+
+  await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+
+  const response = generateResponse(text);
+
+  const bubble = msgDiv.querySelector('.msg-bubble');
+
+  let shown = '';
+  let idx = 0;
+  const speed = 15 + Math.random() * 20;
+
+  function typeChar() {
+    if (idx < response.length) {
+      shown += response[idx];
+      idx++;
+      bubble.innerHTML = renderMarkdown(shown) + '<span class="stream-cursor"></span>';
+      scrollBottom();
+      const delay = response[idx - 1] === '\n' ? speed * 3 : speed;
+      setTimeout(typeChar, delay);
+    } else {
+      bubble.innerHTML = renderMarkdown(response);
+      scrollBottom();
+      messages[messages.length - 1].content = response;
+      saveMsgs();
+      isGenerating = false;
+      dom.send.disabled = false;
+      dom.input.disabled = false;
+      dom.input.focus();
     }
   }
 
-  function getChatContainer() {
-    return document.getElementById('messages') || document.getElementById('chatMessages');
-  }
+  typeChar();
+}
 
-  function formatText(text) {
-    if (!text) return '';
-    let html = escapeHtml(text);
-    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    html = html.replace(/`(.*?)`/g, '<code>$1</code>');
-    html = html.replace(/\n/g, '<br>');
-    html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
-    html = html.replace(/<\/ul>\s*<ul>/g, '');
-    return html;
-  }
+/* ═══ Events ═══ */
 
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
+dom.input.addEventListener('input', () => {
+  dom.input.style.height = 'auto';
+  dom.input.style.height = Math.min(dom.input.scrollHeight, 120) + 'px';
+});
 
-  /* ═══════════════════════════════════════════
-     CHAT MANAGEMENT
-     ═══════════════════════════════════════════ */
-  function clearChat() {
-    const container = getChatContainer();
-    if (container) container.innerHTML = '';
-    Engine.clearContext();
+dom.input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+dom.send.addEventListener('click', sendMessage);
+
+dom.clearBtn.addEventListener('click', () => {
+  if (messages.length === 0) return;
+  if (confirm('¿Iniciar un nuevo chat?')) {
+    messages = []; dom.msgs.innerHTML = '';
+    dom.welcome.style.display = 'flex';
     localStorage.removeItem(STORAGE_KEY);
-    showWelcome();
-    updateStatusIndicator();
+    dom.input.focus();
   }
+});
 
-  function exportChat() {
-    const data = {
-      version: '2.0',
-      exported: new Date().toISOString(),
-      app: 'X0GPT',
-      messages: getChatHistory()
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `x0gpt-chat-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+dom.exportBtn.addEventListener('click', () => {
+  if (messages.length === 0) return;
+  let t = 'X0GPT - Chat Export\n' + new Date().toLocaleString() + '\n─────────────────\n\n';
+  for (const m of messages) {
+    if (m.role === 'system') continue;
+    t += (m.role === 'user' ? 'Tú' : 'X0GPT') + ':\n' + m.content + '\n\n';
   }
+  const blob = new Blob([t], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'x0gpt-chat-' + new Date().toISOString().slice(0, 10) + '.txt';
+  a.click(); URL.revokeObjectURL(url);
+});
 
-  function importChat() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      try {
-        const text = await file.text();
-        const data = JSON.parse(text);
-        if (data.messages && Array.isArray(data.messages)) {
-          clearChat();
-          for (const msg of data.messages) {
-            addMessage(msg.text, msg.role);
-          }
-          saveHistory();
-        }
-      } catch (err) {
-        addMessage('Error al importar el chat. Archivo inválido.', 'bot');
-      }
-    };
-    input.click();
-  }
+/* ═══ Init ═══ */
 
-  function toggleSearchBar() {
-    let searchBar = document.getElementById('chatSearchBar');
-    if (searchBar) {
-      searchBar.remove();
-      return;
-    }
-    searchBar = document.createElement('div');
-    searchBar.id = 'chatSearchBar';
-    searchBar.className = 'chat-search-bar';
-    searchBar.innerHTML = `
-      <input type="text" id="chatSearchInput" placeholder="Buscar en el chat..." class="chat-search-input">
-      <button id="chatSearchNext" class="chat-search-btn">↓</button>
-      <button id="chatSearchPrev" class="chat-search-btn">↑</button>
-      <button id="chatSearchClose" class="chat-search-btn">✕</button>
-    `;
-    const header = document.querySelector('.chat-header');
-    if (header) header.after(searchBar);
-
-    let searchIndex = -1;
-    let matches = [];
-
-    function doSearch() {
-      const query = document.getElementById('chatSearchInput')?.value.toLowerCase();
-      if (!query) { clearHighlights(); return; }
-      const messages = document.querySelectorAll('.message-content');
-      matches = [];
-      messages.forEach((m, i) => {
-        m.classList.remove('highlight');
-        if (m.textContent.toLowerCase().includes(query)) {
-          m.classList.add('highlight');
-          matches.push(m);
-        }
-      });
-      searchIndex = matches.length > 0 ? 0 : -1;
-      if (matches.length > 0) matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    function clearHighlights() {
-      document.querySelectorAll('.message-content.highlight').forEach(m => m.classList.remove('highlight'));
-      matches = [];
-      searchIndex = -1;
-    }
-
-    document.getElementById('chatSearchInput')?.addEventListener('input', doSearch);
-    document.getElementById('chatSearchNext')?.addEventListener('click', () => {
-      if (matches.length === 0) return;
-      searchIndex = (searchIndex + 1) % matches.length;
-      matches[searchIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-    document.getElementById('chatSearchPrev')?.addEventListener('click', () => {
-      if (matches.length === 0) return;
-      searchIndex = (searchIndex - 1 + matches.length) % matches.length;
-      matches[searchIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-    document.getElementById('chatSearchClose')?.addEventListener('click', () => {
-      searchBar.remove();
-    });
-    document.getElementById('chatSearchInput')?.focus();
-  }
-
-  function getChatHistory() {
-    const messages = [];
-    const container = getChatContainer();
-    if (container) {
-      container.querySelectorAll('.message').forEach(msg => {
-        const isUser = msg.classList.contains('user-message');
-        const content = msg.querySelector('.message-content');
-        if (content) {
-          messages.push({ role: isUser ? 'user' : 'bot', text: content.textContent });
-        }
-      });
-    }
-    return messages;
-  }
-
-  function saveHistory() {
-    const messages = getChatHistory().slice(-MAX_HISTORY);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-    } catch (e) {
-      console.warn('Storage full, trimming...');
-      const trimmed = messages.slice(-50);
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed)); } catch (e2) {}
-    }
-  }
-
-  function loadHistory() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return;
-      const messages = JSON.parse(saved);
-      if (!Array.isArray(messages)) return;
-      const container = getChatContainer();
-      if (!container) return;
-      container.innerHTML = '';
-      for (const msg of messages) {
-        if (msg.text && msg.role) {
-          addMessage(msg.text, msg.role);
-        }
-      }
-    } catch (e) {
-      console.error('Load history error:', e);
-    }
-  }
-
-  /* ═══════════════════════════════════════════
-     UI HELPERS
-     ═══════════════════════════════════════════ */
-  function showWelcome() {
-    const container = getChatContainer();
-    if (!container) return;
-    container.innerHTML = '';
-
-    const welcome = document.createElement('div');
-    welcome.className = 'welcome-screen';
-    welcome.innerHTML = `
-      <div class="welcome-icon">⚡</div>
-      <h2>X0GPT</h2>
-      <p>Tu asistente inteligente con acceso a internet y conocimiento offline</p>
-      <div class="welcome-features">
-        <div class="feature">🔍 Búsqueda en tiempo real</div>
-        <div class="feature">📚 Base de conocimientos</div>
-        <div class="feature">🆘 Guía de supervivencia</div>
-        <div class="feature">💬 Conversación natural</div>
-      </div>
-      <p class="welcome-hint">Escribe tu pregunta para comenzar</p>
-    `;
-    container.appendChild(welcome);
-  }
-
-  function scrollToBottom() {
-    const container = getChatContainer();
-    if (container) container.scrollTop = container.scrollHeight;
-  }
-
-  function updateSendButton(processing) {
-    const sendBtn = document.getElementById('sendBtn');
-    if (sendBtn) {
-      sendBtn.disabled = processing;
-      sendBtn.textContent = processing ? '⏳' : '➤';
-    }
-  }
-
-  function updateConnectionStatus() {
-    const badge = document.getElementById('connectionBadge');
-    const dot = document.getElementById('badgeDot');
-    const online = navigator.onLine;
-    if (badge) {
-      badge.textContent = online ? 'En línea' : 'Sin conexión';
-    }
-    if (dot) {
-      dot.classList.toggle('offline', !online);
-    }
-  }
-
-  function updateStatusIndicator() {
-    const status = document.getElementById('statusIndicator');
-    if (status) {
-      const s = Engine.getStatus();
-      status.title = `KB: ${s.knowledgeLoaded ? '✅' : '❌'} | Survival: ${s.survivalLoaded ? '✅' : '❌'} | Contexto: ${s.contextSize}`;
-    }
-  }
-
-  return { init };
-})();
-
-document.addEventListener('DOMContentLoaded', () => App.init());
+loadMsgs();
+dom.footer.textContent = 'X0GPT funciona 100% offline. Tus datos se quedan en tu navegador.';
+dom.input.disabled = false;
+dom.send.disabled = false;
+dom.input.focus();

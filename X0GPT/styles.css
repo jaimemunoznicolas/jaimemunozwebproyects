@@ -5,7 +5,7 @@
   --r:12px; --rl:18px;
 }
 html,body { height:100%; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow:hidden; }
-#app { display:flex; flex-direction:column; height:100vh; }
+#app { display:flex; flex-direction:column; height:100vh; height:100dvh; }
 #topbar { display:flex; align-items:center; justify-content:space-between; padding:10px 18px; border-bottom:1px solid var(--border); flex-shrink:0; }
 .topbar-title { display:flex; align-items:center; gap:8px; font-weight:600; font-size:1rem; }
 .logo-icon { font-size:1.2rem; }
@@ -55,6 +55,10 @@ html,body { height:100%; font-family:'Segoe UI',system-ui,sans-serif; background
 .msg-copy { background:none; border:none; cursor:pointer; font-size:0.8rem; padding:2px 6px; border-radius:4px; transition:background 0.2s; }
 .msg-copy:hover { background:rgba(255,255,255,0.08); }
 .msg-time { font-size:0.65rem; color:var(--dim); margin-top:4px; }
+.suggestions { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 16px 42px; animation:msgIn 0.3s ease; }
+.suggestion-chip { background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.25); color:var(--accent2); font-size:0.78rem; padding:5px 12px; border-radius:20px; cursor:pointer; transition:all 0.2s; font-family:inherit; white-space:nowrap; }
+.suggestion-chip:hover { background:rgba(168,85,247,0.2); border-color:var(--accent); transform:translateY(-1px); }
+.suggestion-chip:active { transform:translateY(0); }
 .input-area { border-top:1px solid var(--border); padding:12px 18px 14px; background:var(--bg); flex-shrink:0; }
 .input-wrapper { display:flex; align-items:flex-end; gap:8px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--rl); padding:6px 6px 6px 14px; max-width:720px; margin:0 auto; transition:border-color 0.25s; }
 .input-wrapper:focus-within { border-color:rgba(168,85,247,0.3); }
@@ -69,4 +73,9 @@ html,body { height:100%; font-family:'Segoe UI',system-ui,sans-serif; background
   .welcome h1 { font-size:1.5rem; }
   .messages { padding:12px 12px 8px; }
   .input-area { padding:8px 10px 10px; }
+  .suggestions { margin-left:0; padding:0 4px; }
+  .message { gap:8px; margin-bottom:14px; }
+  .msg-avatar { width:26px; height:26px; font-size:0.7rem; }
+  .msg-bubble { font-size:0.88rem; }
+  .tip { padding:8px 10px; font-size:0.75rem; }
 }

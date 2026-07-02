@@ -1,16 +1,16 @@
 const SW = new Set([
   'de','la','que','el','en','y','a','los','del','se','las','por','un','para','con','no',
   'una','su','al','lo','como','más','pero','sus','le','ya','este','entre','porque','todo',
-  'esta','sin','son','también','me','está','muy','este','ese','esa','ti','te','eso','cual',
-  'donde','quien','cuando','cómo','qué','hay','ser','más','tan','cada','puede','debe','tiene',
+  'esta','sin','son','también','me','está','muy','ese','esa','ti','te','eso','cual',
+  'donde','quien','cuando','cómo','qué','hay','ser','tan','cada','puede','debe','tiene',
   'hace','era','han','tenido','tienen','hacer','podría','mis','eres','somos','soy','sea','he',
   'has','había','haber','estoy','estás','estamos','están','estaba','fuera','fue','voy','vas',
   'va','vamos','van','iban','iba','sido','suelen','suele','dicha','dicho','mismo','misma',
   'otros','otra','otro','unas','unos','tanto','poco','mucha','mucho','muchas','muchos','varios',
   'varias','durante','ante','bajo','contra','hasta','mediante','tras','sobre','según','desde',
-  'hacia','vía','muy','casi','quizá','quizás','acaso','tal','también','siquiera','ambos',
-  'cualquier','cuando','como','donde','porque','pues','sino','mas','sea','tanto','cuanto',
-  'etc','es','ser','son','eres','somos','soy','era','eras','éramos','eran','www','https','http',
+  'hacia','vía','casi','quizá','quizás','acaso','tal','siquiera','ambos',
+  'cualquier','cuando','como','donde','porque','pues','sino','mas','cuanto',
+  'etc','es','son','eres','somos','soy','era','eras','éramos','eran','www','https','http',
   'fue','ir','ido','iba','iban','vaya','vayas','vayamos','vayan','fuera','fuesen','fuese',
   'hubo','hubiera','hubiese','hubieran','hubiesen','hubiéramos','hubiésemos',
   'habré','habrás','habrá','habremos','habréis','habrán','habría','habrías',
@@ -21,46 +21,40 @@ const SW = new Set([
   'dijo','dijeron','dijera','dijeras','dijéramos','dijeran','dijese','dijesen',
   'ello','ellos','ellas','nos','nosotros','vos','vosotros','uds','ustedes',
   'ningún','ninguna','ningunos','ningunas','algún','alguna','algunos','algunas',
-  'cualquier','cualquiera','cualesquiera','quienquiera','sean','fuésemos',
-  'ante','bajo','cabe','contra','desde','durante','hacia','hasta','mediante',
-  'para','por','según','sin','so','sobre','tras','versus','vía',
-  'salvo','excepto','incluso','más','menos','acerca','además','alrededor',
-  'apenas','aproximadamente','bastante','cerca','cierto','como','conforme',
-  'consigo','cuanto','debajo','delante','demás','dentro','detrás','dondequiera',
-  'encima','enfrente','entonces','especialmente','excepto','frente','gracias',
-  'incluso','jamás','lejos','mientras','mismísimo','nada','nadie','ni',
-  'ninguna parte','no obstante','nunca','pa','pero','po','próximo','pues',
-  'punto','qué','quien','quién','quienes','quienés','sino','sí','tal',
-  'tampoco','tan','tanto','todo','todos','tras','tras','uh','umm','ah','eh',
-  'oh','ajá','claro','vale','bueno','listo','hecho','visto','dicho',
-  'primer','primero','primera','segundo','segunda','tercer','tercera',
-  'último','última','próximo','próxima','pasado','pasada','presente',
-  'primeros','primeras','segundos','segundas','terceros','terceras',
+  'cualquiera','cualesquiera','quienquiera','sean','fuésemos',
+  'salvo','excepto','incluso','menos','acerca','además','alrededor',
+  'apenas','aproximadamente','bastante','cerca','cierto','conforme',
+  'consigo','debajo','delante','demás','dentro','detrás','dondequiera',
+  'encima','enfrente','entonces','especialmente','frente',
+  'jamás','lejos','mientras','mismísimo','nada','nadie','ni',
+  'no obstante','nunca','pero','próximo',
+  'punto','quién','quienes','quienés','sí',
+  'tampoco','todo','todos',
+  'uh','umm','ah','eh','oh','ajá','claro','vale','bueno','listo','hecho','visto','dicho',
   'mil','millón','millones','billón','billones','trillón','trillones',
   'cien','cientos','ciento','quinientos','quinientas','setecientos',
   'novecientos','ochocientos','seiscientos','trescientos','cuatrocientos',
   'doscientos','doscientas','trescientas','cuatrocientas','quinientas',
   'seiscientas','setecientas','ochocientas','novecientas',
-  '1º','2º','3º','4º','5º','6º','7º','8º','9º','10º',
   'primera','segunda','tercera','cuarta','quinta','sexta','séptima','octava',
-  'novena','décima','undécima','duodécima',' última','penúltima','anteúltima',
-  'antepenúltimo','antepenúltima','susodicho','susodicha','susodichos','susodichas',
-  'consabido','consabida','consabidos','consabidas','expresado','expresada',
-  'indicado','indicada','mencionado','mencionada'];
+  'novena','décima','última','penúltima','anteúltima',
+  'antepenúltimo','antepenúltima','susodicho','susodicha',
+  'expresado','expresada','indicado','indicada','mencionado','mencionada'
+]);
 const SUFFIXES = [
   'mente','ción','sión','miento','mientos','mienta','mientas',
   'ando','iendo','ador','adora','adores','adoras','ante','antes','anza','anzas',
   'azgo','azgos','ísimo','ísima','ísimos','ísimas','ciónes','siones',
-  'aba','ada','ido','ido','ido','aba','ías','ías','ar','er','ir','ado','ido',
-  'ando','iendo','a','o','os','as','es','e','os','an','mos','ste','ron','ré',
+  'aba','ada','ido','ías','ar','er','ir','ado',
+  'a','o','os','as','es','e','an','mos','ste','ron','ré',
   'rás','rá','remos','réis','rán','ría','rías','ríamos','ríais','rían',
-  'se','le','lo','la','los','las','dad','dades','ble','bles','ción','ciones',
+  'se','le','lo','la','los','las','dad','dades','ble','bles',
   'ista','istas','ismo','ismos','tud','tudes','ario','aria','arios','arias',
   'ero','era','eros','eras','dor','dora','dores','doras','tor','tora','sor','sora',
   'ivo','iva','ivos','ivas','izo','iza','izos','izas',
   'dura','duras','dero','dera','deros','deras','tero','tera','teros','teras',
   'anejo','aneja','anejos','anejas','engo','enga','engos','engas',
-  'eza','ezas','izo','iza','izos','izas','izo','iza','izos','izas',
+  'eza','ezas',
   'ito','ita','itos','itas','ico','ica','icos','icas','illo','illa','illos','illas',
   'uelo','uela','uelos','uelas','ucho','ucha','uchos','uchas','azo','aza','azos','azas',
   'ote','ota','otes','otas','ón','ona','ones','onas',
@@ -71,16 +65,16 @@ const SYN = {
   'movil':'telefono','celular':'telefono','smartphone':'telefono','iphone':'telefono','android':'telefono','móvil':'telefono',
   'programa':'codigo','software':'programa','desarrollo':'programa','desarrolla':'programa',
   'web':'internet','sitio':'internet','pagina':'internet','navega':'internet','página':'internet',
-  'coche':'auto','carro':'auto','automovil':'auto','vehiculo':'auto','auto':'auto',
+  'coche':'auto','carro':'auto','automovil':'auto','vehiculo':'auto',
   'empleo':'trabajo','labor':'trabajo','profesion':'trabajo','oficio':'trabajo','trabaja':'trabajo','trabaj':'trabajo',
   'casa':'hogar','vivienda':'hogar','domicilio':'hogar','residencia':'hogar',
   'enfermo':'enfermedad','malestar':'enfermedad','dolencia':'enfermedad','dolen':'enfermedad',
   'medicina':'salud','sanidad':'salud','saludable':'salud','médic':'salud',
   'pais':'nacion','nacion':'pais','territorio':'pais','país':'nacion',
-  'chico':'joven','muchacho':'joven','adolescente':'joven','jóven':'joven','joven':'joven',
+  'chico':'joven','muchacho':'joven','adolescente':'joven','jóven':'joven',
   'alimento':'comida','comestible':'comida','nutricion':'comida','aliment':'comida',
   'educacion':'aprender','enseñanza':'aprender','formacion':'aprender','educ':'aprender','enseñ':'aprender','aprend':'aprender',
-  'inteligencia':'ia','ia':'inteligencia','iai':'inteligencia',
+  'inteligencia':'ia','iai':'inteligencia',
   'robot':'ia','automatizacion':'ia','algoritmo':'programa',
   'estrella':'sol','luminosidad':'sol','solar':'sol','luminos':'sol',
   'numero':'matematicas','calculo':'matematicas','suma':'matematicas','numer':'matematicas',
@@ -133,9 +127,8 @@ const SYN = {
   'arquitectura':'edificio','construccion':'edificio','ingenieria':'edificio',
   'escuela':'educacion','universidad':'educacion','colegio':'educacion','academia':'educacion',
   'bosque':'naturaleza','selva':'naturaleza','jungla':'naturaleza','sabana':'naturaleza','tundra':'naturaleza',
-  'heroe':'mitologia','mito':'mitologia','leyenda':'mitologia','dios':'mitologia',
+  'heroe':'mitologia','mito':'mitologia','leyenda':'mitologia',
   'nobel':'premio','oscar':'premio','grammy':'premio','galardon':'premio',
-  'idiota':'insulto','tonto':'insulto','estupido':'insulto','imbecil':'insulto','mentecat':'insulto',
   'broma':'humor','chiste':'humor','risa':'humor','comedia':'humor','gracios':'humor',
   'deuda':'credito','prestamo':'credito','hipoteca':'credito','credito':'credito',
   'seguro':'proteccion','garantia':'proteccion','cobertura':'proteccion',
@@ -146,7 +139,7 @@ const SYN = {
   'terrorismo':'seguridad','violencia':'seguridad','crimen':'seguridad','delito':'seguridad',
   'pintor':'artista','escultor':'artista','dibujante':'artista','ilustrador':'artista',
   'actor':'actuacion','actriz':'actuacion','actuacion':'actuacion','actu':'actuacion',
-  'bailar':'danza','bailarin':'danza','danza':'danza','ball':'danza',
+  'bailar':'danza','bailarin':'danza','danza':'danza',
   'cantante':'canto','canto':'canto','vocalista':'canto',
   'director':'cineasta','productor':'cineasta','guionista':'cineasta',
   'periodista':'comunicacion','reportero':'comunicacion','noticia':'comunicacion','medios':'comunicacion',
@@ -154,10 +147,10 @@ const SYN = {
   'deportista':'atleta','gimnasta':'atleta','nadador':'atleta','corredor':'atleta',
   'mariposa':'insecto','abeja':'insecto','hormiga':'insecto','mosca':'insecto','escarabajo':'insecto',
   'leon':'felino','tigre':'felino','pantera':'felino','leopardo':'felino','guepardo':'felino',
-  'lobo':'canino','zorro':'canino','coyote':'canino','perro':'canino',
+  'lobo':'canino','zorro':'canino','coyote':'canino',
   'ballena':'mamifero','delfin':'mamifero','foca':'mamifero','morsa':'mamifero',
-  'aguila':'rapaz','halcon':'rapaz','buitre':'rapaz','cernicalo':'rapaz','rapaz':'rapaz',
-  'tiburon':'pez','sardina':'pez','atun':'pez','salmón':'pez','pez':'pez',
+  'aguila':'rapaz','halcon':'rapaz','buitre':'rapaz','cernicalo':'rapaz',
+  'tiburon':'pez','sardina':'pez','atun':'pez','salmón':'pez',
   'rosa':'flor','girasol':'flor','tulipan':'flor','margarita':'flor','orquidea':'flor','clavel':'flor',
   'roble':'arbol','pino':'arbol','cedro':'arbol','sauce':'arbol','palmera':'arbol','eucalipto':'arbol',
   'soltero':'estadocivil','casado':'estadocivil','divorciado':'estadocivil','viudo':'estadocivil',
@@ -190,8 +183,8 @@ const SYN = {
   'pasaporte':'viaje','visa':'viaje','visado':'viaje','documentacion':'viaje',
   'hotel':'alojamiento','hostal':'alojamiento','hostel':'alojamiento','albergue':'alojamiento',
   'crucero':'barco','velero':'barco','yate':'barco','buque':'barco','navio':'barco',
-  'avion':'aereo','helicoptero':'aereo','aeroplano':'aereo','aereo':'aereo',
-  'tren':'ferrocarril','metro':'ferrocarril','tranvia':'ferrocarril','ferrocarril':'ferrocarril',
+  'avion':'aereo','helicoptero':'aereo','aeroplano':'aereo',
+  'tren':'ferrocarril','metro':'ferrocarril','tranvia':'ferrocarril',
   'bicicleta':'transporte','moto':'transporte','patinete':'transporte',
   'autobus':'transporte','camion':'transporte','taxi':'transporte','uber':'transporte',
   'carretera':'via','autopista':'via','calle':'via','camino':'via','senda':'via',
@@ -199,7 +192,7 @@ const SYN = {
   'ladrillo':'construccion','cemento':'construccion','hormigon':'construccion','acero':'construccion',
   'ascensor':'edificio','escalera':'edificio','rampa':'edificio',
   'ventana':'casa','puerta':'casa','techo':'casa','suelo':'casa','pared':'casa',
-  'dormitorio':'habitacion','cocina':'habitacion','baño':'habitacion','salon':'habitacion','comedor':'habitacion',
+  'dormitorio':'habitacion','salon':'habitacion','comedor':'habitacion',
   'sofa':'mueble','mesa':'mueble','silla':'mueble','armario':'mueble','cama':'mueble','estanteria':'mueble',
   'nevera':'electrodomestico','lavadora':'electrodomestico','microondas':'electrodomestico','horno':'electrodomestico',
   'aspiradora':'limpieza','fregona':'limpieza','escoba':'limpieza','recogedor':'limpieza',
@@ -217,12 +210,12 @@ const SYN = {
   'boxeador':'boxeo','ring':'boxeo','puñetazo':'boxeo','guante':'boxeo',
   'luchador':'lucha','llave':'lucha','combate':'lucha','wrestling':'lucha',
   'karateca':'karate','cinta':'karate','kat':'karate','kumite':'karate',
-  'judoka':'judo','tatami':'judo','i.':'judo',
+  'judoka':'judo','tatami':'judo',
   'esquiador':'esqui','pista':'esqui','snowboard':'esqui','remonte':'esqui',
   'surfista':'surf','ola':'surf','tabla':'surf','pico':'surf',
   'escalador':'escalada','roca':'escalada','pared':'escalada','rapel':'escalada','arnes':'escalada',
   'ajedrez':'tablero','tablero':'ajedrez','pieza':'ajedrez','jaque':'ajedrez','mate':'ajedrez',
-  'videojuego':'juego','consola':'juego','pc':'juego','steam':'juego','playstation':'juego',
+  'videojuego':'juego','consola':'juego','steam':'juego','playstation':'juego',
   'dado':'azar','probabilidad':'azar','suerte':'azar','aleatorio':'azar',
   'moneda':'divisa','euro':'divisa','dolar':'divisa','libra':'divisa','yen':'divisa','peso':'divisa',
   'oro':'metal','plata':'metal','cobre':'metal','hierro':'metal','aluminio':'metal','bronce':'metal',
@@ -238,7 +231,7 @@ const SYN = {
   'base':'datos','sql':'datos','mysql':'datos','mongodb':'datos','oracle':'datos',
   'javascript':'lenguaje','python':'lenguaje','java':'lenguaje','c++':'lenguaje','rust':'lenguaje',
   'html':'web','css':'web','frontend':'web','backend':'web','fullstack':'web',
-  'app':'aplicacion','aplicacion':'aplicacion','programa':'aplicacion','software':'aplicacion',
+  'app':'aplicacion','aplicacion':'aplicacion',
   'inteligencia':'ia','artificial':'ia','machine':'ia','deep':'ia','red neuronal':'ia',
   'chatgpt':'ia','copilot':'ia','gemini':'ia','claude':'ia',
   'facebook':'redsocial','instagram':'redsocial','twitter':'redsocial','tiktok':'redsocial',
@@ -321,7 +314,7 @@ const SYN = {
   'congelacion':'frio','hipotermia':'frio','frostbite':'frio',
   'insolacion':'calor','golpe calor':'calor','deshidratacion':'calor',
   'altura':'montaña','mal altura':'montaña','apnea':'montaña','oxigeno':'montaña',
-  'brujula':'orientacion','gps':'orientacion','mapa':'orientacion','norte':'orientacion',
+  'brujula':'orientacion','mapa':'orientacion','norte':'orientacion',
   'supervivencia':'supervivencia','superviviente':'supervivencia','naufrago':'supervivencia',
   'sed':'agua','hambre':'comida','inanicion':'comida','ayuno':'comida',
   'yesca':'fuego','pedernal':'fuego','mechero':'fuego','cerilla':'fuego',
@@ -334,7 +327,8 @@ const SYN = {
   'contaminacion':'ambiente','polucion':'ambiente','residuo':'ambiente','vertido':'ambiente',
   'energia solar':'renovable','energia eolica':'renovable','biomasa':'renovable','geotermica':'renovable',
   'extincion':'especie','amenazada':'especie','protegida':'especie','conservacion':'especie',
-  'nacional':'parque','reserva':'parque','monumento':'parque','patrimonio':'parque'};
+  'nacional':'parque','reserva':'parque','monumento':'parque','patrimonio':'parque'
+};
 const INTENTS = [
   {n:'greeting', p:/(^|\s)(hola|buen[oa]|saludo|hey|que tal|qué tal|cómo estás|como estas|buenas|buen día|buen dia|saludos cordiales|qué hay|que hay|qué onda|que onda|hello|hi)/},
   {n:'thanks', p:/^(gracias|muchas gracias|te agradezco|se agradece|graci|thank you|thanks|agradecido|mil gracias|muchísimas gracias)/},
@@ -342,22 +336,27 @@ const INTENTS = [
   {n:'about', p:/^(quién eres|quien eres|qué eres|que eres|qué puedes hacer|que puedes hacer|qué haces|que haces|quién te creo|quien te creo)/i},
   {n:'fine', p:/^(bien|estoy bien|bien y tú|bien y tu|todo bien|genial|excelente|muy bien|bastante bien|regular|más o menos|ahí vamos)/i},
   {n:'question', p:/\?|^(qué |que |cómo |como |cuál |cual |dónde |donde |quién |quien |cuándo |cuando |por qué|porque |para qué|hay |sabes |conoces |puedes|podrías|podria|cuéntame|cuentame|explica|dime|defíneme|define|significa)/i},
-  {n:'request', p:/^(cuenta|dime|dígame|dígame|quiero|quisiera|necesito|puedes|podrías|podria|me gustaría|recomiéndame|recomiendame|sugiéreme|sugiereme)/i},
+  {n:'request', p:/^(cuenta|dime|dígame|quiero|quisiera|necesito|puedes|podrías|podria|me gustaría|recomiéndame|recomiendame|sugiéreme|sugiereme)/i},
   {n:'negative', p:/^(no|naa|nop|pus|pss|no sé|no sab|para nada|en absoluto|quién sabe|quien sabe|nunca|jamás|ni modo)/i},
-  {n:'affirmative', p:/^(sí|sí|si|ok|vale|de acuerdo|claro|bueno|dale|sip|simón|simon|por supuesto|desde luego|cierto|así es|exacto|correcto|de una|va|okey|okay|sale vale)/i},
+  {n:'affirmative', p:/^(sí|si|ok|vale|de acuerdo|claro|bueno|dale|sip|simón|simon|por supuesto|desde luego|cierto|así es|exacto|correcto|de una|va|okey|okay|sale vale)/i},
   {n:'whos', p:/^(quién es|quien es|quién era|quien era|quién fue|quien fue|quién será|quien será)/i},
   {n:'where', p:/^(dónde está|donde está|dónde esta|donde esta|dónde queda|donde queda|dónde se encuentra|donde se encuentra)/i},
   {n:'when', p:/^(cuándo fue|cuando fue|cuándo ocurrió|cuando ocurrio|cuándo nació|cuando nacio|cuándo empezó|cuando empezo|cuándo terminó|cuando termino)/i},
   {n:'how', p:/^(cómo se|como se|cómo hacer|como hacer|cómo hago|como hago|cómo puedo|como puedo|cómo funciona|como funciona|cómo se hace|como se hace)/i},
-  {n:'definition', p:/\b(qué significa|que significa|qué es |que es |qué son |que son |qué es un|que es un|qué es una|que es una)\b/i},
-  {n:'compare', p:/\bdiferencia|diferencias|comparar|comparación|mejor que|peor que|vs |versus\b/i},
+  {n:'definition', p:/\b(qué significa|que significa|qué es un|que es un|qué es una|que es una|qué es el|que es el|qué es la|que es la|qué es lo|que es lo)\b/i},
+  {n:'compare', p:/\bdiferencia|diferencias|comparar|comparación|mejor que|peor que|vs |versus|comparar con|comparado con|prefieres/i},
   {n:'opinion', p:/^(crees|opinas|piensas|cuál es tu opinión|cuál es tu opinion|qué opinas|que opinas|qué piensas|que piensas)/i},
   {n:'recommend', p:/^(recomiéndame|recomiendame|qué me recomiendas|que me recomiendas|sugiéreme|sugiereme|aconsejame|aconsejame)/i},
   {n:'time', p:/\b(qué hora es|que hora es|hora actual|hora exacta|qué hora tienes|que hora tienes)\b/i},
   {n:'date', p:/\b(qué día es|que dia es|qué fecha|que fecha|día de hoy|fecha actual)\b/i},
   {n:'math', p:/^(cuánto es|cuanto es|calcula|resuelve|haz la operación|resultado de)/i},
   {n:'weather', p:/\b(clima|tiempo|temperatura|pronóstico|lluvia|hará|soleado)\b/i},
-  {n:'greeting_time', p:/(buenos días|buenas tardes|buenas noches|buen día|buena tarde|buena noche)/i}
+  {n:'greeting_time', p:/(buenos días|buenas tardes|buenas noches|buen día|buena tarde|buena noche)/i},
+  {n:'follow_up', p:/^(y eso\??|cuéntame más|cuentame más|explica eso|explícame|por qué|porque|cómo así|como asi|y por qué|y por que|y cómo|y como|y cuándo|y cuando|cuéntame más de eso|dime más|más información|info|detalles|detalla|amplía|amplia|profundiza|desarrolla|sigue|continúa|continua|qué más|que mas|y entonces|entonces|y qué pasa|que pasa|qué sigue|que sigue|cuál es el siguiente|cual es el siguiente|y ahora|ahora qué|ahora que)/i},
+  {n:'help', p:/^(ayuda|help|comandos|comando|opciones|qué puedo|que puedo|cómo usar|como usar|manual|tutorial|instrucciones|guía|guia)/i},
+  {n:'joke', p:/^(cuéntame un chiste|cuentame un chiste|chiste|dime un chiste|algo gracioso|diviérteme|divierteme|hasme reír|hasme reir|reir|reír)/i},
+  {n:'curiosity', p:/^(dato curioso|sabías que|sabias que|curiosidad|algo interesante|cuéntame algo|cuentame algo|sorpréndeme|sorprendeme|algo que no sepa)/i},
+  {n:'insult', p:/^(idiota|tonto|estúpido|estupido|imbecil| imbécil|burro|pendejo|pelotudo|gilipollas|cabrón|cabron|hijo de puta|hdpm|stfu|shut up|calla|cállate|callate|shut)/i}
 ];
 function tok(text) {
   if (!text) return [];
@@ -427,7 +426,7 @@ function contain(a, b) {
 }
 function sentiment(text) {
   const pwords = ['bien','feliz','alegre','contento','genial','excelente','maravilloso','bueno','bonito','hermoso','fantástico','increíble','mejor','amor','paz','alegría','felicidad','gracias','gusta','encanta','divertido','lindo','perfecto','súper','super','bacán','bacano','chido','padre','pura','vida','hermosa','magnífico','espléndido','notable','extraordinario','estupendo','brillante','formidable','interesante','agradable','cómodo','placentero','divertidísimo','buenísimo','fantástico','espectacular','impresionante','precioso','adorable','encantador','inolvidable','emocionante','apasionante','asombroso','grandioso'];
-  const nwords = ['mal','triste','enojado','enfadado','molesto','cansado','aburrido','horrible','terrible','feo','malo','peor','odio','rabia','furia','temor','miedo','pánico','horror','asustado','preocupado','deprimido','solo','soledad','llorar','llanto','enfermedad','dolor','sufrir','sufrimiento','tristeza','depresión','ansiedad','estrés','stress','cansancio','fracaso','perder','pérdida','muerte','morir','muerto','desgraciado','infeliz','pésimo','fatiga','agotado','horrendo','asqueroso','repugnante','detestable','aborrecible','odioso','terrible','espantoso','lamentable','deplorable','desastroso','fatal','nefasto','calamitoso','funesto','aborrezco','detesto','desprecio','asco','repulsión'];
+  const nwords = ['mal','triste','enojado','enfadado','molesto','cansado','aburrido','horrible','terrible','feo','malo','peor','odio','rabia','furia','temor','miedo','pánico','horror','asustado','preocupado','deprimido','solo','soledad','llorar','llanto','enfermedad','dolor','sufrir','sufrimiento','tristeza','depresión','ansiedad','estrés','stress','cansancio','fracaso','perder','pérdida','muerte','morir','muerto','desgraciado','infeliz','pésimo','fatiga','agotado','horrendo','asqueroso','repugnante','detestable','aborrecible','odioso','espantoso','lamentable','deplorable','desastroso','fatal','nefasto','calamitoso','funesto','aborrezco','detesto','desprecio','asco','repulsión'];
   const tokens = tok(text);
   let p = 0, n = 0;
   for (const t of tokens) {
@@ -440,4 +439,61 @@ function sentiment(text) {
   if (ratio > 0.1) return 'positive';
   if (ratio < -0.1) return 'negative';
   return 'neutral';
+}
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const d = Array.from({length: m + 1}, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) d[i][0] = i;
+  for (let j = 0; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+    }
+  }
+  return d[m][n];
+}
+function fuzzyMatch(query, candidates, threshold) {
+  threshold = threshold || 0.6;
+  const lq = query.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const c of candidates) {
+    const lc = c.toLowerCase();
+    if (lc === lq) return {match: c, score: 1};
+    if (lc.includes(lq) || lq.includes(lc)) {
+      const score = Math.min(lq.length, lc.length) / Math.max(lq.length, lc.length);
+      if (score > bestScore) { bestScore = score; best = c; }
+    }
+  }
+  if (best && bestScore >= threshold) return {match: best, score: bestScore};
+  const words = lq.split(/\s+/);
+  for (const c of candidates) {
+    const lc = c.toLowerCase();
+    const cw = lc.split(/\s+/);
+    let matches = 0;
+    for (const w of words) {
+      if (cw.some(cw2 => cw2.includes(w) || w.includes(cw2) || levenshtein(w, cw2) <= Math.max(1, Math.floor(w.length * 0.3)))) matches++;
+    }
+    const score = matches / Math.max(words.length, cw.length);
+    if (score > bestScore) { bestScore = score; best = c; }
+  }
+  return bestScore >= threshold ? {match: best, score: bestScore} : null;
+}
+function normalize(text) {
+  let t = text.toLowerCase().trim();
+  const reps = [
+    [/\bq\b/g, 'que'], [/\bxq\b/g, 'porque'], [/\bporq\b/g, 'porque'],
+    [/\bxd\b/g, ''], [/\bmlg\b/g, ''], [/\bwna\b/g, 'buena'],
+    [/\bbn\b/g, 'bien'], [/\bmn\b/g, 'muy'], [/\btp\b/g, 'también'],
+    [/\bns\b/g, 'no sé'], [/\bbs\b/g, 'bestia'], [/\bbn\b/g, 'bueno'],
+    [/\bcm\b/g, 'cómo'], [/\bq\b/g, 'que'], [/\bd\b/g, 'de'],
+    [/\bx\b/g, 'por'], [/\ba\b/g, 'a'], [/\be\b/g, 'y'],
+    [/\bpr\b/g, 'para'], [/\b2\b/g, 'dos'], [/\b4\b/g, 'cuatro'],
+    [/\b5\b/g, 'cinco'], [/\b6\b/g, 'seis'], [/\b7\b/g, 'siete'],
+    [/\b8\b/g, 'ocho'], [/\b9\b/g, 'nueve']
+  ];
+  for (const [pat, rep] of reps) t = t.replace(pat, rep);
+  return t;
 }

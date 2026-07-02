@@ -8,8 +8,13 @@
   <meta name="theme-color" content="#0a0a1a">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="styles.css?v=2">
+  <meta http-equiv="Expires" content="-1">
+  <script>
+    try {
+      if('caches' in window){caches.keys().then(function(n){n.forEach(function(k){caches.delete(k)});});}
+      if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()});});}
+    }catch(e){}
+  </script>
 </head>
 <body>
   <div id="app">
@@ -52,8 +57,12 @@
     </div>
   </div>
 
-  <script src="nlp.js?v=2"></script>
-  <script src="knowledge.js?v=2"></script>
-  <script src="app.js?v=2"></script>
+  <script>
+    var _v = Date.now();
+    document.write('<link rel="stylesheet" href="styles.css?v=' + _v + '">');
+    document.write('<script src="nlp.js?v=' + _v + '"><\/script>');
+    document.write('<script src="knowledge.js?v=' + _v + '"><\/script>');
+    document.write('<script src="app.js?v=' + _v + '"><\/script>');
+  </script>
 </body>
 </html>
